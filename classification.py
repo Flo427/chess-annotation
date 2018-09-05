@@ -6,59 +6,13 @@ import re
 Extract comments of .pgn-file
 """
 
-files = [
-	'bali02.pgn',
-	'chessdoctor.pgn',
-	'd00_chess_informant.pgn',
-	'electronic_campfire.pgn',
-	'europe_echecs.pgn',
-	'exeter_lessons_from_tal.pgn',
-	'famous_games.pgn',
-	'GM_games.pgn',
-	'great_masters.pgn',	
-	'hartwig.pgn',
-	'hayes.pgn',
-	'human_computer.pgn',
-	'immortal_games.pgn',
-	'kasp_top.pgn',
-	'kk.pgn',
-	'koltanowski.pgn',
-	'kramnik.pgn',
-	'linares_2001.pgn',
-	'linares_2002.pgn',
-	'middleg.pgn',
-	'moscow64.pgn',
-	'newyork1924.pgn',
-	'perle.pgn',
-	'polgar.pgn',
-	'pon_korch.pgn',
-	'romero.pgn',
-	'russian_chess.pgn',
-	'scarborough_2001.pgn',
-	'scca.pgn',
-	'schiller.pgn',
-	'semicomm.pgn',
-	'top_games.pgn',
-	'vc_89_99.pgn',
-	'vc_2000.pgn',
-	'vc_2001.pgn',
-	'wijk_2003_annotated.pgn',
-	'wijk_2004_annotated.pgn',
-	'world_matches.pgn',
-]
-comment_data = []
+raw = open('middleg.pgn', 'rb').read()
+str = raw.decode('utf-8')
 
-def read_comments_of_file(file, comment_data):
-	raw = open(file, 'rb').read()
-	str = raw.decode('iso-8859-1')
+comments_with_nag = re.findall(r'\$(?P<class>[0-9]+)\s*{(?P<comment>[^{}]*)}', str)
 
-	comments_with_nag = re.findall(r'\$(?P<class>[0-9]+)\s*{(?P<comment>[^{}]*)}', str)
-
-	comment_data += [(pair[1].lower().split(), pair[0])
-		for pair in comments_with_nag]
-		
-for file in files:
-	read_comments_of_file('files/' + file, comment_data)
+comment_data = [(pair[1].lower().split(), pair[0])
+	for pair in comments_with_nag]
 	
 random.shuffle(comment_data)
 #print(comment_data[:5])

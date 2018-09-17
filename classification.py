@@ -48,17 +48,27 @@ files = [
 ]
 comment_data = []
 
-def read_comments_of_file(file, comment_data):
+def read_comments_of_file(file, comment_data, cfd):
 	raw = open(file, 'rb').read()
 	str = raw.decode('iso-8859-1')
 
 	comments_with_nag = re.findall(r'\$(?P<class>[0-9]+)\s*{(?P<comment>[^{}]*)}', str)
+	print(file, len(comments_with_nag))
 
 	comment_data += [(pair[1].lower().split(), pair[0])
 		for pair in comments_with_nag]
 		
+	fdist = nltk.FreqDist()
+	for pair in comments_with_nag:
+		fdist[pair[0]] += 1
+	#print(fdist.most_common(1000))
+	cfd[file] = fdist
+
+cfd = nltk.ConditionalFreqDist()	
 for file in files:
-	read_comments_of_file('files/' + file, comment_data)
+	read_comments_of_file('files/' + file, comment_data, cfd)
+	
+cfd.tabulate()
 	
 random.shuffle(comment_data)
 #print(comment_data[:5])

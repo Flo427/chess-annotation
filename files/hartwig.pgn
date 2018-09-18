@@ -1306,7 +1306,7 @@ _With the flitting exception of a temporary queen sack, this was a "gritty" game
 (16.Nxd5 ! exd5 17.Qxd5+ Kg7 18.Rd2 ! {Black's resources are stretched defending f2, d7, and his king.} 18...Bb6 (18...Bc6 {is a better defense but it's less critical since white obviously gets back the piece.} 19.Qe5+ Qf6 20. Qxf6+ Rxf6 21.Rdxf2) 19.Rxf8 Kxf8 20.Bc4 {and white is winning.})
 16...dxe4 ?
 {He played this quickly, presumably happy because in the ending he is not likely to lose, i.e. the old "playing for two results"... yet Fritz found another spoiler.}
-(16...Rf5 ! 17.Qd6 (17.Qc3 dxe4 18.Bxe4 Rf4 19.Qd3 Qc7) 17...dxe4 (17...Bd4 {{this is actually the line that had worried me most during the game.} 18.Rxf5 gxf5 19.Bb5) 18.Bxe4 Bc5 !! {and black is winning.})
+(16...Rf5 ! 17.Qd6 (17.Qc3 dxe4 18.Bxe4 Rf4 19.Qd3 Qc7) 17...dxe4 (17...Bd4 {this is actually the line that had worried me most during the game.} 18.Rxf5 gxf5 19.Bb5) 18.Bxe4 Bc5 !! {and black is winning.})
 17.Bc4 !
 (17.Bb5 ?? Rf5 {is no good.})
 17...Qf6

@@ -298,7 +298,7 @@ Forced. Bad would be (17... Nd5 18. Qc2) (17... Nd7 18. Qg4 Kh8 19. Qh5 when Qf7
 }
 18. Qh5 
 {
-threatening to win a pawn by Bh7+ and Qf7. Also possible was (18. Qg4 Bg5 19.Rcd1 {And then Bg3 and f4.)
+threatening to win a pawn by Bh7+ and Qf7. Also possible was (18. Qg4 Bg5 19.Rcd1 {And then Bg3 and f4.})
 }
 18... Nf8 19. Rcd1 Qc7 20. Bxh6 $3 
 {
@@ -314,7 +314,7 @@ The correct way. Wrong would be (21. Qxh6 Rad8 when black is out of danger.)
 }
 21... f5 
 {
-If (21... Bg5 22. h4 Qxe5 23. hxg5 hxg5 24. Rg4 {the attack still continues.)
+If (21... Bg5 22. h4 Qxe5 23. hxg5 hxg5 24. Rg4 {the attack still continues.})
 }
 22. exf6 Bxf6 23. Rg4+ Bg7 24. Qxh6 
 {
@@ -457,7 +457,7 @@ A move too late.
 }
 13...Nd4 $1 14. Nc3 
 {
-What else ? If 14. Re1 Nc2 15. Qxc2 Bxf2+ 16. Kxf2 Rxc2 -+){
+What else ? If 14. Re1 Nc2 15. Qxc2 Bxf2+ 16. Kxf2 Rxc2 -+
 }
 14...Qe7 $1
 {

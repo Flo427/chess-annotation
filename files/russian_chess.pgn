@@ -45,7 +45,7 @@
 28. Kh1 $1
 {The point. White is perfectly coordinated and is ready to tie Black completely with 29.Rag1.}
 28...Nf4 $2
-({During the game I was very worried about} 28...Nf8 $5. {I had seen the right ideax} 29.Qa7 $1 Rb3 $1 30.Ng5 h6 31.Nf7+ Kh7  32.Rh3 $1 ({after} 32.Rag1 $2 {with idea 33.Nxd6} Rxf3 $1) {Black is suddenly even better and Black is forced to go for} 32...Rxf3 (32...Ng6 33.Rxh6+ gxh6 34.Ng5+ Kh8 35.Qh7#) 33.Ng5+ Qxg5 34.Rxf3 $20})
+({During the game I was very worried about} 28...Nf8 $5. {I had seen the right ideax} 29.Qa7 $1 Rb3 $1 30.Ng5 h6 31.Nf7+ Kh7  32.Rh3 $1 ({after} 32.Rag1 $2 {with idea 33.Nxd6} Rxf3 $1) {Black is suddenly even better and Black is forced to go for 32...Rxf3 (32...Ng6 33.Rxh6+ gxh6 34.Ng5+ Kh8 35.Qh7#) 33.Ng5+ Qxg5 34.Rxf3 $20})
 29. Nxg7 Ne2 30. Nf5 $1
 {That's what Alexei probably missed. White has no intention of protecting the exchange - once Black take on g3, the game will be over.}
 30...Rgb8 31. Qd3 Rb2 32. Rf1 $1
@@ -489,7 +489,7 @@ Deserves attention} 14...Bh6 15.b4 (15.h4 f5 16.h5 Kg7 17.b4) 15...f5 {with comp
 14. Qe3 $1 
 (14. Qxb5 Qb6 $12)
 14...Qb6 15. Rxd5 $1
-(15. Nxd5 $2 exd5 16. Rxd5 Nd7 $17)( 15. Bxb5 $2 Rb8 $16 {with idea} 16. b3 Ne4})
+(15. Nxd5 $2 exd5 16. Rxd5 Nd7 $17)( 15. Bxb5 $2 Rb8 $16 {with idea 16. b3 Ne4})
 15...exd5 16. Nxd5 Qd8 17. Qxc5+ Ne7 18. Nc3 $1 $44
 (18. Qxe7+ Qxe7 19. Nxe7 Kxe7 20. Bxb5 Rd8 (20...Bb7 $5 21. Re1+ Kf6 $5 22. Ne5 Bxg2 $5) 21. Re1+ Kf8 $12)
 18...a6 
@@ -676,7 +676,7 @@ Well, master Khavsky inculcated us steadfast disgust for moves like g2-g4 and g7
 ({I refused} 17...Bxd5 {without thinking a bit; it's obvious at first sight that dominating over almost all open files and diagonals, White easily forces the opponent's defence. In my opinion, the most spectacular way is the following:} 18. Rd1 Rc8 19. Qa4 Rc5 (19...Bc6 20. Qd4 f6 21. gxf6 Rxf6 22. Bh3 $18) 20. Bh3 f5 21. gxf6 Nxf6 22. Qxa7 g6 (22...Rf7 23. Be6 $1 $18)( 22...Rc7 23. Rxd5 $1 $18) 23. Be6+ Kh8 24. Rg5 $18.)
 18. Rd1 
 {18. Qc3 Ne5)
-(18. Bb5 Rc8 19. Qa4 Ne5 20. Bxe8 Nd3+ 21. Kf1 Qxe8 Black {has more than a sufficient compensation for an exchange.}
+(18. Bb5 Rc8 19. Qa4 Ne5 20. Bxe8 Nd3+ 21. Kf1 Qxe8 Black has more than a sufficient compensation for an exchange.}
 18...a6 
 ({White plans to transfer the queen at the center, to the square d4, through d2 or a4, and Black can't prevent it. My last move is connected with the preparation of the advance b6-b5 with the purpose to open a way out to the queen and to take the important square c4 under control} 18...b5 19. Bxb5 Qa5+ 20. Qc3) 
 ({But this plan proves to be somewhat sluggish. It was worth to choose} 18...Rc8 19. Qa4 Ne5 20. Qxe4 Nc4 {and if White sacrifices the queen} 21. Qxc4 Rxc4 22. Bxc4 Qc7 {leading to unclear play})
@@ -1157,7 +1157,7 @@ But, as a matter of the fact, after 21. Qe2 the pawn b4 is not under attack, so 
  25.Qe3+ {with the idea Nh3-g5})
 21...h5
 (21...Ng7 $5 22.h4 $5
-(22.Nxd5 $5 Nxd5 23.Qxc4 Bc6 24.Qd3 (24.Qd3 {with the idea} -- 25.c4 Ne7 26.d5 $44}) (24.Qa6 $2 g5 $1 25.Qxa7+ Nc7 $21) )
+(22.Nxd5 $5 Nxd5 23.Qxc4 Bc6 24.Qd3 (24.Qd3 {with the idea -- 25.c4 Ne7 26.d5 $44}) (24.Qa6 $2 g5 $1 25.Qxa7+ Nc7 $21) )
 ( 22.Qg2 $5)
  22...h5 $5 (22...g5 23.Nxe6 $1 Nxe6 24.Rf6 Rxf6 25.ef6 Nf5 26.Rf1 $40 ) 23.Bh3 g5 24.hxg5 Bxc2)
  22.Bf3 h4 23.g4 Ng3 $2

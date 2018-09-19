@@ -4219,7 +4219,7 @@ checkmate.}
 {This gives black hope again. This appears to be toying 
 of emotions.}
 26. a5??
-Still allows white to take on g6. Observe: 27. Qxg6 Rff7 
+{Still allows white to take on g6. Observe: 27. Qxg6 Rff7 
 28. Ne4 Qf8 29. Ng5! Rxc5+ 30. Kb1 Rc1+ (every single other 
 legal move on the board is mate very interestingly!) 
 31. Kxc1 Qc8+ 32. Kb2 Rxf2+ 33. Kb3 Kg8 34. Rxh6 a4+ 35. 
@@ -4227,30 +4227,30 @@ Ka3 Qc3+ 36. Kxa4 Qc2+ 37. Qxc2 Rxc2 and the b-pawn marches
 forward for the checkmate. This calculation is less 
 impressive then it looks. There are almost all checks 
 or forcing moves involved and it's much easier to calculate 
-deep variations with forced moves involved.
+deep variations with forced moves involved.}
 27. Qe6??
-Handing his opponent counterchances again.
+{Handing his opponent counterchances again.}
 27. axb4 28. Rxh6+
-Finally seeing the move that was begging to be played 
-forever. Still, 28. Qxg6 was still more forcing.
-28. Bxh6 29. Rxh6+ Rh7 30. Qxe5?
-30. Qxg6 adds to the pressure and doesn't let black slip 
-in more defensive opportunities.
+{Finally seeing the move that was begging to be played 
+forever. Still, 28. Qxg6 was still more forcing.}
+28. Bxh6 29. Rxh6+ Rh7 30. Qxe5+?
+{30. Qxg6 adds to the pressure and doesn't let black slip 
+in more defensive opportunities.}
 30. Rf6??
-This hands the game to white again. 30. Qf6 was black's 
-only chance.
+{This hands the game to white again. 30. Qf6 was black's 
+only chance.}
 31. Rxh7+?!
-Missing the punishment for Black's last move which is 31. Rxg6!.
+{Missing the punishment for Black's last move which is 31. Rxg6!.}
 31. Kxh7 32. Ne4 Rf5 33. Qh2+ Rh5 34. Qf4 Rh1+ 35. Kb2 Qd4+ 
 36. Kc2???
-Losing the game to an accidental forced mate.
+{Losing the game to an accidental forced mate.}
 36. Qd1+! 37. Kb2 Qb1 Checkmate 0-1
-This was a topsy turvy game that I'm assuming was due to 
+{This was a topsy turvy game that I'm assuming was due to 
 time trouble on yahoo. You both play rather decently through 
 the opening, though some lines were less than the best 
 choice of theory. However, you need to work on tactics 
 and exploiting weakening moves by your opponents king. 
-Overall a good game.
+Overall a good game.}
 
 [Event "Analyzed Games"]
 [Site "ChessDoctor.com"]

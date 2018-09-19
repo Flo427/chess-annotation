@@ -58,8 +58,14 @@ def read_comments_of_file(file, comment_data, cfd):
 	comment_data += [(pair[1].lower().split(), pair[0])
 		for pair in comments_with_nag]
 		
+	comments_with_symbol = re.findall(r'(?P<class>[!\?]{1,2})\s*{(?P<comment>[^{}]*)}', str)
+	print(file, len(comments_with_symbol))
+		
+	comment_data += [(pair[1].lower().split(), pair[0])
+		for pair in comments_with_symbol]
+
 	fdist = nltk.FreqDist()
-	for pair in comments_with_nag:
+	for pair in comments_with_symbol:
 		fdist[pair[0]] += 1
 	#print(fdist.most_common(1000))
 	cfd[file] = fdist

@@ -9,6 +9,47 @@ Extract comments of .pgn-file
 files = [
 	'bali02.pgn',
 	'chessdoctor.pgn',
+#	'd00_chess_informant.pgn',
+#	'electronic_campfire.pgn',
+#	'europe_echecs.pgn',
+#	'exeter_lessons_from_tal.pgn',
+#	'famous_games.pgn',
+#	'GM_games.pgn',
+#	'great_masters.pgn',	
+#	'hartwig.pgn',
+#	'hayes.pgn',
+#	'human_computer.pgn',
+#	'immortal_games.pgn',
+#	'kasp_top.pgn',
+#	'kk.pgn',
+#	'koltanowski.pgn',
+	'kramnik.pgn',
+#	'linares_2001.pgn',
+	'linares_2002.pgn',
+#	'middleg.pgn',
+#	'moscow64.pgn',
+#	'newyork1924.pgn',
+#	'perle.pgn',
+	'polgar.pgn',
+#	'pon_korch.pgn',
+#	'romero.pgn',
+#	'russian_chess.pgn',
+#	'scarborough_2001.pgn',
+	'scca.pgn',
+#	'schiller.pgn',
+#	'semicomm.pgn',
+	'top_games.pgn',
+#	'vc_89_99.pgn',
+#	'vc_2000.pgn',
+#	'vc_2001.pgn',
+#	'wijk_2003_annotated.pgn',
+#	'wijk_2004_annotated.pgn',
+#	'world_matches.pgn',
+]
+
+english_files = [
+	'bali02.pgn',
+	'chessdoctor.pgn',
 	'd00_chess_informant.pgn',
 	'electronic_campfire.pgn',
 #	'europe_echecs.pgn',
@@ -48,6 +89,43 @@ files = [
 ]
 
 dict = {
+	"1": 1,
+	"2": 2,
+	"3": 1,
+	"4": 2,
+	"5": 1,
+	"6": 2,
+	"!": 1,
+	"?": 2,
+	"!!": 1,
+	"??": 2,
+	"!?": 1,
+	"?!": 2,
+	"7": 0,
+	"8": 0,
+	"10": 0,
+	"11": 0,
+	"12": 0,
+	"13": 0,
+	"14": 0,
+	"15": 0,
+	"16": 0,
+	"17": 0,
+	"18": 0,
+	"19": 0,
+	"22": 0,
+	"32": 0,
+	"36": 0,
+	"40": 0,
+	"44": 0,
+	"132": 0,
+	"133": 0,
+	"138": 0,
+	"142": 0,
+	"146": 0,
+}
+
+full_dict = {
 	"1": 1,
 	"2": 2,
 	"3": 3,
@@ -141,7 +219,8 @@ training_fdata, devtest_fdata, test_fdata = featuresets[:cut1], featuresets[cut1
 Train a classifier
 """
 
-classifier = nltk.NaiveBayesClassifier.train(training_fdata)
+#classifier = nltk.classify.DecisionTreeClassifier.train(training_fdata)
+classifier = nltk.classify.NaiveBayesClassifier.train(training_fdata)
 
 """
 Error analysis
@@ -161,6 +240,6 @@ for (comment, tag) in test_data:
 #	print('correct=%-8s guess=%-8s comment=%-100s' % (tag, guess, comment))
 	
 print(nltk.classify.accuracy(classifier, test_fdata))
-print(classifier.show_most_informative_features(5))
+#print(classifier.show_most_informative_features(50))
 
 print(nltk.ConfusionMatrix(tags,guesses).pretty_format())

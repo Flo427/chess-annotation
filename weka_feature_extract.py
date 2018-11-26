@@ -1,5 +1,4 @@
 import nltk
-import random
 import re
 
 """
@@ -9,42 +8,39 @@ Extract comments of .pgn-file
 files = [
 	'bali02.pgn',
 	'chessdoctor.pgn',
-#	'd00_chess_informant.pgn',
-#	'electronic_campfire.pgn',
-#	'europe_echecs.pgn',
-#	'exeter_lessons_from_tal.pgn',
-#	'famous_games.pgn',
-#	'GM_games.pgn',
-#	'great_masters.pgn',	
-#	'hartwig.pgn',
-#	'hayes.pgn',
-#	'human_computer.pgn',
-#	'immortal_games.pgn',
-#	'kasp_top.pgn',
-#	'kk.pgn',
-#	'koltanowski.pgn',
+	'd00_chess_informant.pgn',
+	'electronic_campfire.pgn',
+	'exeter_lessons_from_tal.pgn',
+	'famous_games.pgn',
+	'GM_games.pgn',
+	'great_masters.pgn',	
+	'hartwig.pgn',
+	'hayes.pgn',
+	'human_computer.pgn',
+	'immortal_games.pgn',
+	'kk.pgn',
+	'koltanowski.pgn',
 	'kramnik.pgn',
-#	'linares_2001.pgn',
+	'linares_2001.pgn',
 	'linares_2002.pgn',
-#	'middleg.pgn',
-#	'moscow64.pgn',
-#	'newyork1924.pgn',
-#	'perle.pgn',
+	'middleg.pgn',
+	'moscow64.pgn',
+	'newyork1924.pgn',
 	'polgar.pgn',
-#	'pon_korch.pgn',
-#	'romero.pgn',
-#	'russian_chess.pgn',
-#	'scarborough_2001.pgn',
+	'pon_korch.pgn',
+	'romero.pgn',
+	'russian_chess.pgn',
+	'scarborough_2001.pgn',
 	'scca.pgn',
-#	'schiller.pgn',
-#	'semicomm.pgn',
+	'schiller.pgn',
+	'semicomm.pgn',
 	'top_games.pgn',
-#	'vc_89_99.pgn',
-#	'vc_2000.pgn',
-#	'vc_2001.pgn',
-#	'wijk_2003_annotated.pgn',
-#	'wijk_2004_annotated.pgn',
-#	'world_matches.pgn',
+	'vc_89_99.pgn',
+	'vc_2000.pgn',
+	'vc_2001.pgn',
+	'wijk_2003_annotated.pgn',
+	'wijk_2004_annotated.pgn',
+	'world_matches.pgn',
 ]
 
 dict = {
@@ -84,9 +80,7 @@ dict = {
 	"146": 0,
 }
 
-comment_data = []
-
-def read_comments_of_file(file, comment_data, cfd):
+def read_comments_of_file(file, comment_data):
 	raw = open(file, 'rb').read()
 	str = raw.decode('iso-8859-1')
 
@@ -95,17 +89,9 @@ def read_comments_of_file(file, comment_data, cfd):
 		
 	comment_data += [(pair[1].lower().split(), dict[pair[0]]) for pair in comments if dict[pair[0]]]
 
-	fdist = nltk.FreqDist()
-	for pair in comments:
-		fdist[dict[pair[0]]] += 1
-	cfd[file] = fdist
-
-cfd = nltk.ConditionalFreqDist()	
+comment_data = []
 for file in files:
-	read_comments_of_file('files/' + file, comment_data, cfd)	
-#cfd.tabulate()
-	
-random.shuffle(comment_data)
+	read_comments_of_file('files/' + file, comment_data)	
 
 """
 Ectract classification features
@@ -113,27 +99,31 @@ Ectract classification features
 
 from nltk.corpus import stopwords
 
-threshold = 100
-fd_all_words = nltk.FreqDist()
-for (words,_) in comment_data:
-	for w in set(words) - set(stopwords.words('english')):
-		fd_all_words[w] += 1
-top_words = [word for (word, freq) in fd_all_words.most_common(threshold)]
-
 def rating_features(comment):
 	features = {}
 	for word in top_words:
 		features[word] = comment.count(word)
 	return features
 
+threshold = 1000
+fd_all_words = nltk.FreqDist()
+for (words,_) in comment_data:
+	for w in set(words) - set(stopwords.words('english')):
+		fd_all_words[w] += 1
+print(len(fd_all_words))
+top_words = [word for (word, freq) in fd_all_words.most_common()]
 featuresets = [(rating_features(c), g) for (c,g) in comment_data]
+
+"""
+Write arff file
+"""
 
 def write_arff():
     arff = open("chess-annotations.arff", "w")
     RELATION_NAME = "comment"									 
     arff.write("@RELATION " + RELATION_NAME + "\n")
     for word in top_words:
-        arff.write("@ATTRIBUTE COUNT(" + str(word).replace("'", "").replace(",", "") + ") REAL\n")
+        arff.write("@ATTRIBUTE COUNT(" + str(word).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") REAL\n")
     arff.write("@ATTRIBUTE POSITIVE {True, False}\n") 
     arff.write("@DATA\n")
     for (features, g) in featuresets:

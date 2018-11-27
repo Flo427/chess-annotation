@@ -80,14 +80,17 @@ dict = {
 	"146": 0,
 }
 
+from nltk.tokenize import RegexpTokenizer
+
 def read_comments_of_file(file, comment_data):
 	raw = open(file, 'rb').read()
 	str = raw.decode('iso-8859-1')
-
+	tokenizer = RegexpTokenizer('(?:\w\.)+|[\w\d\-\']+|\.+|#[\w\d]{2}|1/2|[!\?]+|[\-\+/=]+|\S|\s+')
+    
 	comments = re.findall(r'\$(?P<class>[0-9]+)\s*{(?P<comment>[^{}]*)}', str)		#NAG
 	comments += re.findall(r'(?P<class>[!\?]{1,2})\s*{(?P<comment>[^{}]*)}', str)	#symbol
 		
-	comment_data += [(pair[1].lower().split(), dict[pair[0]]) for pair in comments if dict[pair[0]]]
+	comment_data += [(tokenizer.tokenize(pair[1].lower()), dict[pair[0]]) for pair in comments if dict[pair[0]]]
 
 comment_data = []
 for file in files:
@@ -108,7 +111,7 @@ def rating_features(comment):
 threshold = 1000
 fd_all_words = nltk.FreqDist()
 for (words,_) in comment_data:
-	for w in set(words) - set(stopwords.words('english')):
+	for w in set(words):
 		fd_all_words[w] += 1
 print(len(fd_all_words))
 top_words = [word for (word, freq) in fd_all_words.most_common()]
@@ -123,7 +126,7 @@ def write_arff():
     RELATION_NAME = "comment"									 
     arff.write("@RELATION " + RELATION_NAME + "\n")
     for word in top_words:
-        arff.write("@ATTRIBUTE COUNT(" + str(word).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") REAL\n")
+        arff.write("@ATTRIBUTE COUNT(" + str(word).replace(" ", "_blank_").replace("\n", "_new_line_").replace("\t", "_tab_").replace("\r", "_carriage_return_").replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") INTEGER\n")
     arff.write("@ATTRIBUTE POSITIVE {True, False}\n") 
     arff.write("@DATA\n")
     for (features, g) in featuresets:

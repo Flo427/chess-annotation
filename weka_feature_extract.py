@@ -44,18 +44,18 @@ files = [
 ]
 
 dict = {
-	"1": 1,
-	"2": 2,
+	"1": 2,
+	"2": 5,
 	"3": 1,
-	"4": 2,
-	"5": 1,
-	"6": 2,
-	"!": 1,
-	"?": 2,
+	"4": 6,
+	"5": 3,
+	"6": 4,
+	"!": 2,
+	"?": 5,
 	"!!": 1,
-	"??": 2,
-	"!?": 1,
-	"?!": 2,
+	"??": 6,
+	"!?": 3,
+	"?!": 4,
 	"7": 0,
 	"8": 0,
 	"10": 0,
@@ -127,14 +127,11 @@ def write_arff():
     arff.write("@RELATION " + RELATION_NAME + "\n")
     for word in top_words:
         arff.write("@ATTRIBUTE COUNT(" + str(word).replace(" ", "_blank_").replace("\n", "_new_line_").replace("\t", "_tab_").replace("\r", "_carriage_return_").replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") INTEGER\n")
-    arff.write("@ATTRIBUTE POSITIVE {True, False}\n") 
+    arff.write("@ATTRIBUTE CLASS {1, 2, 3, 4, 5, 6}\n") 
     arff.write("@DATA\n")
     for (features, g) in featuresets:
         buff = ""
-        if 2 - g:
-            buff += (",".join([str(features[f]) for f in features]) + ', True' + "\n")
-        else:
-            buff += (",".join([str(features[f]) for f in features]) + ', False' + "\n")
+        buff += (",".join([str(features[f]) for f in features]) + ", " + str(g) + "\n")        
         arff.write(buff)
 
 write_arff()  

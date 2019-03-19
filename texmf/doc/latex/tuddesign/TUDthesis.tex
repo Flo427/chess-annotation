@@ -4,10 +4,15 @@
 
 \usepackage[english]{babel}
 \usepackage{listings}
+\usepackage{floatrow}
+% Table float box with bottom caption, box width adjusted to content
+\newfloatcommand{capbtabbox}{table}[][\FBwidth]
+\restylefloat{table}
+
 \usepackage[
     backend=biber, % biber ist das Standard-Backend für Biblatex. Für die Abwärtskompatibilität kann hier auch bibtex oder bibtex8 gewählt werden (siehe biblatex-Dokumentation)
-    style=authortitle, %numeric, authortitle, alphabetic etc.
-    autocite=footnote, % Stil, der mit \autocite verwendet wird
+    style=alphabetic, %numeric, authortitle, alphabetic etc.
+    autocite=plain, % Stil, der mit \autocite verwendet wird
     sorting=nty, % Sortierung: nty = name title year, nyt = name year title u.a.
     sortcase=false,
     url=false,
@@ -45,13 +50,65 @@
   \setcounter{page}{3}
   \clearpage
   
-  \paragraph{List of Figures}
-  %\listoffigures\addcontentsline{toc}{chapter}{\listfigurename}
+  \listoffigures
+  \listoftables
   \clearpage
   
   \section{Introduction}
 
   \subsection{Motivation}
+  
+  \begin{figure}
+\begin{floatrow}
+\capbtabbox{%
+      \begin{tabular}{| l | l |}
+    	\hline
+    	Symbol & Meaning \\ \hline
+    	K & King \\ \hline
+    	Q & Queen \\ \hline
+    	R & Rook \\ \hline
+    	B & Bishop \\ \hline
+    	N & Knight \\ \hline
+    	\textit{blank} & Pawn \\ \hline
+      \end{tabular}
+      \quad
+      \begin{tabular}{| l | l | l |}
+    	\hline
+    	Symbol & Meaning & Example \\ \hline
+    	x & Capture & Rxa1 \\ \hline
+    	+ & Check & Nf6+ \\ \hline
+    	\# & Checkmate & Bb7\# \\ \hline
+    	0-0 & Castling kingside & \\ \hline
+    	0-0-0 & Castling queenside & \\ \hline
+    	= & Promotion & fxg1=Q+ \\ \hline
+      \end{tabular}
+}{%
+      \caption{Baic chess notations}
+      \label{tab:bsic_chess_notations}
+}
+\ffigbox{%
+	  \includegraphics[scale=0.5]{images/algebraic_notation.png}
+}{%
+	  \caption{Suare names in algebraic notation}
+	  % https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg (18.03.2019, 20:56)
+      \label{fig:suare_names}
+}
+\end{floatrow}
+\end{figure}
+
+
+
+	\begin{table}[H]
+      \centering
+
+	\end{table}
+	
+	\begin{figure}[H]
+	  \centering
+	\end{figure}
+
+
+
 
   \subsection{Problem description}
 
@@ -93,6 +150,7 @@
       - how to handle differences in class counts?
       
       - how to handle too many attributes? -> attribute selection
+  \clearpage
   
   \section{Approach}
 
@@ -100,32 +158,11 @@
     Nur Weka-Classification oder auch ersten Ansatz der NLTK-Classification mit reinnehmen?
 
   \subsubsection{PGN-format}
-    Structure of PGN-file, comments in PGN-file
-    
-    \begin{table}
-      \centering
-      \begin{tabular}{| l | l | l |}
-    	\hline
-    	Symbol & Meaning & Example \\ \hline
-    	x & capture & \\ \hline
-    	+ & check & \\ \hline
-    	\# & checkmate & \\ \hline
-    	0-0 & castling kingside & \\ \hline
-    	0-0-0 & castling queenside & \\ \hline
-    	= & promotion & \\ \hline
-      \end{tabular}
-      \caption{Basic chess notations}
-	\end{table}
-	
-	\begin{figure}
+    PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure \ref{fig:sample_pgn_game}.
+
+	\begin{figure}[H]
 	  \centering
-	  \includegraphics{images/algebraic_notation.png}
-	  \caption{Square names in algebraic notation}
-	  % https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg (18.03.2019, 20:56)
-	\end{figure}
-	
-	\begin{figure}
-	  \lstset{commentstyle=\color{blue},morecomment=[s]{\{}{\}},moredelim=[is][\bfseries]{\\textbf\{}{\}},moredelim=[is][\color{red}]{\\nag\{}{\}}}
+      \lstset{commentstyle=\color{blue},morecomment=[s]{\{}{\}},moredelim=[is][\bfseries]{\\textbf\{}{\}},moredelim=[is][\color{red}]{\\nag\{}{\}}}
 	  \begin{lstlisting}	  
 [Event "Deutschland "]
 [Site "?"]
@@ -158,15 +195,98 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 38. Kxf2 Bxc3 39. Re7 \nag{$18})) \textbf{0-1}
 	  \end{lstlisting}	  
 
-      \caption{Sample PGN game}	
+      \caption{Sample PGN game}
+      \begin{tabular}{r@{: }l r@{: }l}
+        blue & comments & red & NAGs
+      \end{tabular}
+      \label{fig:sample_pgn_game}
 	\end{figure}
+	
+    A PGN game contains first a list of tuples with general information of the game (“tag pairs”). Seven of those tags are mandatory (Seven Tag Roster: Event, Site, Date, Round, White, Black, Result), the other tags are optional. \\\\
+    Afterwards the “movetext” section starts. The chess moves themselves are represented using SAN (Standard Algebraic Notation). A move pair (one move of white and one of black) starts with the move pair number followed by a dot and a blank, then the move of white, another blank and the move of black, e.g. 
+    \begin{quotation}
+      7. Bg5 a6.
+    \end{quotation}    
+    Each move contains the piece by a single upper-case letter except of the pawn (see table \ref{tab:basic_chess_notations}) followed by the square the piece is moved to (see figure \ref{fig:square_names}). Hence, the example describes the seventh move of both players in the game; white moves his dark-squared bishop to the square g5 and black moves his a-file-pawn to a6. If a piece of the opponent is placed on the destination square, this piece is captured and in the move an "x" is inserted immediately before the destination square. In this case, if the capturing piece is a pawn, the lower-case letter of the previous file of the pawn is used at the beginning of the move, e.g. "exd5". Whenever a move pair is interrupted by a comment, the move of black is prefaced by the move pair number, an ellipsis and a blank: 
+    \begin{quotation}
+      Nxf4 \$2 \{doesn't work because of\} 27... exf2+
+    \end{quotation}
+    Additionally, there are some further moves with a special notation (see table \ref{tab:basic_chess_notations}). In cases of disambiguation of pieces, an additional letter for the file or a number for the rank is used. In summary, a move can contain between two and seven signs in SAN \autocite[Chapter~8]{Edwards1994}.
+	
+	\begin{table}[H]
+      \centering
+      \begin{tabular}{| l | l |}
+    	\hline
+    	Symbol & Meaning \\ \hline
+    	K & King \\ \hline
+    	Q & Queen \\ \hline
+    	R & Rook \\ \hline
+    	B & Bishop \\ \hline
+    	N & Knight \\ \hline
+    	\textit{blank} & Pawn \\ \hline
+      \end{tabular}
+      \quad
+      \begin{tabular}{| l | l | l |}
+    	\hline
+    	Symbol & Meaning & Example \\ \hline
+    	x & Capture & Rxa1 \\ \hline
+    	+ & Check & Nf6+ \\ \hline
+    	\# & Checkmate & Bb7\# \\ \hline
+    	0-0 & Castling kingside & \\ \hline
+    	0-0-0 & Castling queenside & \\ \hline
+    	= & Promotion & fxg1=Q+ \\ \hline
+      \end{tabular}
+      \caption{Basic chess notations}
+      \label{tab:basic_chess_notations}
+	\end{table}
+	
+	\begin{figure}[H]
+	  \centering
+	  \includegraphics[scale=0.5]{images/algebraic_notation.png}
+	  \caption{Square names in algebraic notation}
+	  % https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg (18.03.2019, 20:56)
+      \label{fig:square_names}
+	\end{figure}
+	
+	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAG (see below) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table \ref{tab:comment_move_combinations}.
+	
+	\begin{table}[H]
+      \centering
+      \begin{tabular}{| l | l |}
+    	\hline
+    	Combination & Example \\ \hline
+    	Move, Comment & e4 \{Black wins space.\} \\ \hline
+    	Comment, Move & \{Weaker is\} 39. Bxe6 \\ \hline
+    	Move, Comment, Move & Nxf4 \$2 \{doesn't work because of\} 27... exf2+ \\ \hline
+    	Comment, Move, Comment & \{Because of the blunder\} 24. Txf8 \{Black wins immediately\} \\ \hline
+      \end{tabular}      
+      \caption{Comment-move combinations}
+      \label{tab:comment_move_combinations}
+    \end{table}
     
+    Besides, by convention there should not be nested braces, however, sometimes nested braces are used to comment different move variants separately.	Those variants need not be part of a comment and are written down in parenthesis. The enumeration of the moves proceeds within a variant and is set back before a new variant starts or the game itself continues. 
+   
   \subsubsection{Chessbase-DB}
   	Transformation to PGN, language detection using polyglot
   
   \subsubsection{NAGs}
 	Symbols and corresponding NAGs
 	
+	\begin{table}[H]
+      \begin{tabular}{| l | l | l |}
+    	\hline
+    	NAG & Symbol & Meaning \\ \hline
+    	x & Capture & Rxa1 \\ \hline
+    	+ & Check & Nf6+ \\ \hline
+    	\# & Checkmate & Bb7\# \\ \hline
+    	0-0 & Castling kingside & \\ \hline
+    	0-0-0 & Castling queenside & \\ \hline
+    	= & Promotion & fxg1=Q+ \\ \hline
+      \end{tabular}
+      \caption{Meaning of NAGs}
+      \label{tab:meaning_of_nags}
+	\end{table}
+
   \subsubsection{Python NLTK}
 	RegExp parsing, tokenization, extraction of comment and class  
   
@@ -208,12 +328,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
   \clearpage
   
   \paragraph{References}
+  \printbibliography
   \clearpage
   
-    %\begin{figure}
-                 %\centering
-                 %\includegraphics[clip,width=0.48\textwidth]{TUDreport-fig}
-                 %\caption[Lorem ipsum dolor sit amet]{Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed vitae ligula. Integer pharetra ornare eros. Phasellus vitae magna eget metus iaculis consectetuer. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.}
-             %\end{figure}
-
 \end{document}

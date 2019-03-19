@@ -57,58 +57,6 @@
   \section{Introduction}
 
   \subsection{Motivation}
-  
-  \begin{figure}
-\begin{floatrow}
-\capbtabbox{%
-      \begin{tabular}{| l | l |}
-    	\hline
-    	Symbol & Meaning \\ \hline
-    	K & King \\ \hline
-    	Q & Queen \\ \hline
-    	R & Rook \\ \hline
-    	B & Bishop \\ \hline
-    	N & Knight \\ \hline
-    	\textit{blank} & Pawn \\ \hline
-      \end{tabular}
-      \quad
-      \begin{tabular}{| l | l | l |}
-    	\hline
-    	Symbol & Meaning & Example \\ \hline
-    	x & Capture & Rxa1 \\ \hline
-    	+ & Check & Nf6+ \\ \hline
-    	\# & Checkmate & Bb7\# \\ \hline
-    	0-0 & Castling kingside & \\ \hline
-    	0-0-0 & Castling queenside & \\ \hline
-    	= & Promotion & fxg1=Q+ \\ \hline
-      \end{tabular}
-}{%
-      \caption{Baic chess notations}
-      \label{tab:bsic_chess_notations}
-}
-\ffigbox{%
-	  \includegraphics[scale=0.5]{images/algebraic_notation.png}
-}{%
-	  \caption{Suare names in algebraic notation}
-	  % https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg (18.03.2019, 20:56)
-      \label{fig:suare_names}
-}
-\end{floatrow}
-\end{figure}
-
-
-
-	\begin{table}[H]
-      \centering
-
-	\end{table}
-	
-	\begin{figure}[H]
-	  \centering
-	\end{figure}
-
-
-
 
   \subsection{Problem description}
 
@@ -213,42 +161,45 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     \end{quotation}
     Additionally, there are some further moves with a special notation (see table \ref{tab:basic_chess_notations}). In cases of disambiguation of pieces, an additional letter for the file or a number for the rank is used. In summary, a move can contain between two and seven signs in SAN \autocite[Chapter~8]{Edwards1994}.
 	
-	\begin{table}[H]
-      \centering
-      \begin{tabular}{| l | l |}
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[10.4cm]{%
+        \begin{tabular}{| l | l |}
     	\hline
     	Symbol & Meaning \\ \hline
-    	K & King \\ \hline
-    	Q & Queen \\ \hline
-    	R & Rook \\ \hline
-    	B & Bishop \\ \hline
-    	N & Knight \\ \hline
-    	\textit{blank} & Pawn \\ \hline
-      \end{tabular}
-      \quad
-      \begin{tabular}{| l | l | l |}
-    	\hline
-    	Symbol & Meaning & Example \\ \hline
-    	x & Capture & Rxa1 \\ \hline
-    	+ & Check & Nf6+ \\ \hline
-    	\# & Checkmate & Bb7\# \\ \hline
-    	0-0 & Castling kingside & \\ \hline
-    	0-0-0 & Castling queenside & \\ \hline
-    	= & Promotion & fxg1=Q+ \\ \hline
-      \end{tabular}
-      \caption{Basic chess notations}
-      \label{tab:basic_chess_notations}
-	\end{table}
-	
-	\begin{figure}[H]
-	  \centering
-	  \includegraphics[scale=0.5]{images/algebraic_notation.png}
-	  \caption{Square names in algebraic notation}
-	  % https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg (18.03.2019, 20:56)
-      \label{fig:square_names}
-	\end{figure}
-	
-	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAG (see below) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table \ref{tab:comment_move_combinations}.
+    	  K & King \\ \hline
+    	  Q & Queen \\ \hline
+    	  R & Rook \\ \hline
+    	  B & Bishop \\ \hline
+    	  N & Knight \\ \hline
+    	  \textit{blank} & Pawn \\ \hline
+        \end{tabular}
+        \begin{tabular}{| l | l | l |}
+    	  \hline
+    	  Symbol & Meaning & Example \\ \hline
+    	  x & Capture & Rxa1 \\ \hline
+    	  + & Check & Nf6+ \\ \hline
+    	  \# & Checkmate & Bb7\# \\ \hline
+    	  0-0 & Castling kingside & \\ \hline
+    	  0-0-0 & Castling queenside & \\ \hline
+    	  = & Promotion & fxg1=Q+ \\ \hline
+        \end{tabular}
+      }{%
+        \caption{Basic chess notations}
+        \label{tab:basic_chess_notations}
+      }
+      \ffigbox[6.6cm]{%
+	    \includegraphics[scale=0.5]{images/algebraic_notation.png}
+      }{%
+	    \caption{Square names in algebraic notation\protect\footnotemark}
+        \label{fig:square_names}
+      }
+      \end{floatrow}
+    \end{figure}
+    
+  	\footnotetext{\url{https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg}, (18.03.2019, 20:56)}
+  	
+	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAGs (see below) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table \ref{tab:comment_move_combinations}.
 	
 	\begin{table}[H]
       \centering

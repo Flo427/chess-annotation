@@ -248,6 +248,38 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 
   \subsubsection{Generating training instances}
     structure of arff-file
+	a brilliant counterattack of white
+	a big mistake of black	   
+    
+	\begin{figure}[H]
+	  \centering
+      \lstset{keywordstyle=\color{blue},morekeywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
+	  \begin{lstlisting}
+@RELATION comment
+@ATTRIBUTE COUNT(brilliant) NUMERIC
+@ATTRIBUTE TFIDF(mistake) REAL
+@ATTRIBUTE CLASS {good,bad}
+@DATA
+1,0.0,good
+0,0.06,bad	  
+	  \end{lstlisting}	  
+
+      \caption{Sample arff file}
+      \label{fig:sample_arff_file}
+	\end{figure}
+
+	\begin{figure}[H]
+	  \centering
+      \lstset{keywordstyle=\color{blue},morekeywords={@DATA}}
+	  \begin{lstlisting}
+@DATA
+{1 2, 3 good}
+{2 0.06, 3 bad}	  
+	  \end{lstlisting}	  
+
+      \caption{Sample sparse arff file}
+      \label{fig:sample_sparse_arff_file}
+	\end{figure}
   \clearpage
   
   \section{Experiment setup}

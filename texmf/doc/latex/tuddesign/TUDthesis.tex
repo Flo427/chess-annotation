@@ -5,6 +5,7 @@
 \usepackage[english]{babel}
 \usepackage{listings}
 \usepackage{floatrow}
+\usepackage{multirow}
 % Table float box with bottom caption, box width adjusted to content
 \newfloatcommand{capbtabbox}{table}[][\FBwidth]
 \restylefloat{table}
@@ -71,42 +72,88 @@
     mindestens 5 Seiten
   \clearpage
   
+  \subsection{Multi-class problems}
+  \label{subsec:multi_class_problems}
+    multi -> binary via 1-vs-1 1-vs-all
+  
+  \subsection{Cost-sensitive learning}
+  \label{subsec:cost_sensitive_learning}
+  
+  \subsection{Word embeddings}
+  \label{subsec:word_embeddings}
+  
   \section{Concept}
-    - general problem: structured data easier to evaluate than unstructured data, possibility to build statistics (how good is a product rated?, political attitude?, player/game statistics in chess -> average count of good/bad moves in a chess game, average count of good/bad moves by a specific player (-> talent scouting?))
-    --> EXTRACT KNOWLEDGE OUT OF UNSTRUCTURED INFORMATION
-    - general [in this case]: comments [chess annotations] should be converted to symbols (=classes) [chess symbols]
-    - step 1: define input and output
-      - possible input types (symbol: detection of handwritten letters, word/sentence: detection of language, page/file: detection of author
-      - possible output types (letter, language, author)
-        - "precision": language = language family|language|dialect -> chess: good move vs. brilliant/good/slightly good move
-    - step 2: find a database (or similar source) with sufficient information to extract data from
-    - step 3: define conditions that filtered data sets has to fulfill
-      - language restriction
-      - minimal comment length
-      - supervised/unsupervised learning
-        - in case of
-        
-    - step 5: tokenize the text
-      - handling of punctuation
-    - step 6: token preprocessing
-      - remove stopwords
-      - lowercase
-      - stemming
-        
-      - how to handle order of classes?
-      
-      - how to handle differences in class counts?
-      
-      - how to handle too many attributes? -> attribute selection
+  
+    \begin{figure}[H]
+      \centering
+      \includegraphics{images/text_mining_pipeline}
+      \caption{Processing pipeline of text mining}
+      \label{fig:text_mining_pipeline}
+    \end{figure}
+  
+  \subsection{Definition of the problem and goals}
+  \label{subsec:definition_of_the_problem_and_goals}
+  
+  \subsection{Identification of data}
+  
+  \subsection{Organization of the text}
+  
+  \subsection{Feature extraction}
+  
+  \subsection{Analysis}
+  
+    \begin{figure}[H]
+      \centering
+      \includegraphics[scale=0.5]{images/learning_approaches_sentiment_analysis}
+      \caption{Learning approaches for sentiment analysis\autocite{Halibas2018}\protect\footnotemark}
+      \label{fig:learning_approaches_sentiment_analysis}
+    \end{figure}
+    
+    \footnotetext{\url{https://www.researchgate.net/figure/Sentiment-Analysis-Source-4-Fig-1_fig1_324360275}, (11.04.2019, 23:43)}
+  
+    \begin{table}[H]
+      \begin{tabular}{cc|c|c|c|c|l}
+        \cline{3-5}
+        & & \multicolumn{3}{ c| }{Predicted class} \\ \cline{3-6}
+        & & a & b & c & Total \\ \cline{1-6}
+        \multicolumn{1}{ |c  }{\multirow{3}{*}{Actual class} } &
+        \multicolumn{1}{ |c| }{a} & 88 & 10 & 2 & 100 & \\ \cline{2-6}
+        \multicolumn{1}{ |c  }{} &
+        \multicolumn{1}{ |c| }{b} & 14 & 40 & 6 & 60 & \\ \cline{2-6}
+        \multicolumn{1}{ |c  }{} &
+        \multicolumn{1}{ |c| }{c} & 18 & 10 & 12 & 40 & \\ \cline{1-6}
+        \multicolumn{1}{  c  }{} &
+        \multicolumn{1}{ |c| }{Total} & 120 & 60 & 20 & 200 & \\ \cline{2-6}
+      \end{tabular}      
+      \begin{tabular}{cc|c|c|c|c|l}
+        \cline{3-5}
+        & & \multicolumn{3}{ c| }{Predicted class} \\ \cline{3-6}
+        & & a & b & c & Total \\ \cline{1-6}
+        \multicolumn{1}{ |c  }{\multirow{3}{*}{Actual class} } &
+        \multicolumn{1}{ |c| }{a} & 60 & 30 & 10 & 100 & \\ \cline{2-6}
+        \multicolumn{1}{ |c  }{} &
+        \multicolumn{1}{ |c| }{b} & 36 & 18 & 6 & 60 & \\ \cline{2-6}
+        \multicolumn{1}{ |c  }{} &
+        \multicolumn{1}{ |c| }{c} & 24 & 12 & 4 & 40 & \\ \cline{1-6}
+        \multicolumn{1}{  c  }{} &
+        \multicolumn{1}{ |c| }{Total} & 120 & 60 & 20 & 200 & \\ \cline{2-6}
+      \end{tabular}      
+      \caption{Actual (left) and expected (right) outcomes of three-class-classification, cf.\autocite[Chapter~5.7]{Witten2005}}
+      \label{tab:actual_and_expected_outcomes_of_three_class_classification}
+    \end{table}  
+
+  \subsection{Validation and evaluation}
+  \label{subsec:validation_and_evaluation}
   \clearpage
   
-  \section{Approach}
-
+  \section{Experimental setup}
+  \label{sec:experimental_setup}
+  
   \subsection{Data set extraction}
     Nur Weka-Classification oder auch ersten Ansatz der NLTK-Classification mit reinnehmen?
 
   \subsubsection{PGN-format}
-    PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure \ref{fig:sample_pgn_game}.
+    PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure~\ref{fig:sample_pgn_game}.
 
 	\begin{figure}[H]
 	  \centering
@@ -155,11 +202,11 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     \begin{quotation}
       7. Bg5 a6.
     \end{quotation}    
-    Each move contains the piece by a single upper-case letter except of the pawn (see table \ref{tab:basic_chess_notations}) followed by the square the piece is moved to (see figure \ref{fig:square_names}). Hence, the example describes the seventh move of both players in the game; white moves his dark-squared bishop to the square g5 and black moves his a-file-pawn to a6. If a piece of the opponent is placed on the destination square, this piece is captured and in the move an "x" is inserted immediately before the destination square. In this case, if the capturing piece is a pawn, the lower-case letter of the previous file of the pawn is used at the beginning of the move, e.g. "exd5". Whenever a move pair is interrupted by a comment, the move of black is prefaced by the move pair number, an ellipsis and a blank: 
+    Each move contains the piece by a single upper-case letter except of the pawn (see table~\ref{tab:basic_chess_notations}) followed by the square the piece is moved to (see figure~\ref{fig:square_names}). Hence, the example describes the seventh move of both players in the game; white moves his dark-squared bishop to the square g5 and black moves his a-file-pawn to a6. If a piece of the opponent is placed on the destination square, this piece is captured and in the move an "x" is inserted immediately before the destination square. In this case, if the capturing piece is a pawn, the lower-case letter of the previous file of the pawn is used at the beginning of the move, e.g. "exd5". Whenever a move pair is interrupted by a comment, the move of black is prefaced by the move pair number, an ellipsis and a blank: 
     \begin{quotation}
       Nxf4 \$2 \{doesn't work because of\} 27... exf2+
     \end{quotation}
-    Additionally, there are some further moves with a special notation (see table \ref{tab:basic_chess_notations}). In cases of disambiguation of pieces, an additional letter for the file or a number for the rank is used. In summary, a move can contain between two and seven signs in SAN \autocite[Chapter~8]{Edwards1994}.
+    Additionally, there are some further moves with a special notation (see table~\ref{tab:basic_chess_notations}). In cases of disambiguation of pieces, an additional letter for the file or a number for the rank is used. In summary, a move can contain between two and seven signs in SAN \autocite[Chapter~8]{Edwards1994}.
 	
     \begin{figure}[H]
       \begin{floatrow}
@@ -189,7 +236,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
         \label{tab:basic_chess_notations}
       }
       \ffigbox[6.6cm]{%
-	    \includegraphics[scale=0.5]{images/algebraic_notation.png}
+	    \includegraphics[scale=0.5]{images/algebraic_notation}
       }{%
 	    \caption{Square names in algebraic notation\protect\footnotemark}
         \label{fig:square_names}
@@ -199,7 +246,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     
   	\footnotetext{\url{https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg}, (18.03.2019, 20:56)}
   	
-	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAGs (see below) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table \ref{tab:comment_move_combinations}.
+	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAGs (see below) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table~\ref{tab:comment_move_combinations}.
 	
 	\begin{table}[H]
       \centering

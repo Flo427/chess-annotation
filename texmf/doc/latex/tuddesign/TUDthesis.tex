@@ -1,16 +1,19 @@
 \documentclass[article,type=msc,colorback,accentcolor=tud7b]{tudthesis}
 
-%Markus Zopf
+%TODO: Markus Zopf
 
 \usepackage[english]{babel}
 \usepackage{amsmath}
+\usepackage{array}
 \usepackage{enumitem}
 \usepackage{listings}
 \usepackage{floatrow}
 \usepackage{multirow}
+\usepackage{subfig}
 % Table float box with bottom caption, box width adjusted to content
 \newfloatcommand{capbtabbox}{table}[][\FBwidth]
 \restylefloat{table}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \usepackage[
     backend=biber, % biber ist das Standard-Backend für Biblatex. Für die Abwärtskompatibilität kann hier auch bibtex oder bibtex8 gewählt werden (siehe biblatex-Dokumentation)
@@ -45,7 +48,7 @@
   \affidavit{Florian Beck}
   
   \input{abstract}
-  %auch in deutsch
+  %TODO: auch in deutsch
   \clearpage
   
   \setcounter{tocdepth}{3}
@@ -69,12 +72,64 @@
   \subsection{Structure of the thesis}
   \clearpage
   
-  \section{Basics}
+  \section{Basics (TODO)}
     Sentiment Analysis and classification, Ordinal Classification, Word Embeddings, TF-IDF
     mindestens 5 Seiten
   
   \subsection{Multiclass classification}
   \label{subsec:multiclass_classification}
+  
+    \begin{figure}[H]
+      \centering
+      \includegraphics{images/one_against_all_or_one}
+      \caption[One-against-all vs. one-against-one approach]{One-against-all (left) vs. one-against-one approach (right)\protect\footnotemark}
+      \label{fig:one_against_all_or_one}
+    \end{figure}
+    
+    \footnotetext{J. Fürnkranz, Machine Learning and Data Mining | Learning Rule Sets, V3.0, p.45\&47}
+  
+    \begin{table}[H]
+      \centering
+      \setlength\tabcolsep{1.5pt}
+      \subfloat[One-against-all]{
+      \begin{tabular}{ |C{1.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}| } 
+        \hline
+        class & $f_{1}$ & $f_{2}$ & $f_{3}$ & $f_{4}$ & $f_{5}$ \\ \hline
+        1 & 1 & 0 & 0 & 0 & 0 \\ \hline
+        2 & 0 & 1 & 0 & 0 & 0 \\ \hline
+        3 & 0 & 0 & 1 & 0 & 0 \\ \hline
+        4 & 0 & 0 & 0 & 1 & 0 \\ \hline
+        5 & 0 & 0 & 0 & 0 & 1 \\ \hline
+      \end{tabular}
+      }
+      \quad
+      \subfloat[One-against-one]{
+      \begin{tabular}{ |C{1.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}| } 
+        \hline
+        class & $f_{1}$ & $f_{2}$ & $f_{3}$ & $f_{4}$ & $f_{5}$ & $f_{6}$ & $f_{7}$ & $f_{8}$ & $f_{9}$ & $f_{10}$ \\ \hline
+        1 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+        2 & 1 & 0 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 0 \\ \hline
+        3 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline
+        4 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 0 & 1 \\ \hline
+        5 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 1 & 1 \\ \hline
+      \end{tabular}
+      }
+      
+      \subfloat[Exhaustive error-correcting output code]{
+      \begin{tabular}{ |C{1.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}|C{0.5cm}| } 
+        \hline
+        class & $f_{1}$ & $f_{2}$ & $f_{3}$ & $f_{4}$ & $f_{5}$ & $f_{6}$ & $f_{7}$ & $f_{8}$ & $f_{9}$ & $f_{10}$ & $f_{11}$ & $f_{12}$ & $f_{13}$ & $f_{14}$ & $f_{15}$ \\ \hline
+        1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+        2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\ \hline
+        3 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\ \hline
+        4 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 \\ \hline
+        5 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 0 & 1 \\ \hline
+      \end{tabular}
+      }
+      \caption[Output codes for a multiclass classification problem]{Different output codes for a multiclass classification problem with five classes}
+      \label{tab:exhaustive_ecoc}
+   \end{table}
+
 
   \subsection{Ordinal classification}
   \label{subsec:ordinal_classification}
@@ -90,6 +145,7 @@
   
     This chapter describes how to solve a general problem of extracting knowledge out of natural language sources and defines which steps have to be considered. Therefore, in the following the focus is set on universal approaches to accomplish such a task. Specific ideas and solutions adjusted to the sentiment classification task for chess annotations will be dealt with in section~\ref{sec:experimental_setup}. \\\\
     The solution of a text mining problem comprises several steps from definition to evaluation. Figure~\ref{fig:text_mining_pipeline} shows a possible process model based on approaches of \citeauthor{Schieber2014} \autocite{Schieber2014} and \citeauthor{Kwartler2017} \autocite{Kwartler2017}. The model consists of six steps, which are now presented one after the other.
+    
     \begin{figure}[H]
       \centering
       \includegraphics{images/text_mining_pipeline}
@@ -173,12 +229,13 @@
     A different approach for representing text data are word embeddings. The previous approaches are based on the one-hot representation: the feature vector has the same length as the size of the vocabulary. Besides the already mentioned problems due to less meaningful features and overfitting, in a one-hot representation the model cannot handle words that do not appear in the labeled training data \autocite{Turian2010}. In contrast to this, word embeddings offer a distributed representation which is dense, lowdimensional, and real-valued. They are learned on a big general corpus and can therefore associate each word with a corresponding vector. The combination of those vectors yields the document vector. The features and advantages of word embeddings have already been discussed in subsection~\ref{subsec:word_embeddings}.
 
   \subsection{Analysis}
+  \label{subsec:analysis}
     In the previous chapter, the data was prepared so that we can now apply analysis procedures to the data in vector representation. The goal of this step is to find characteristics, dependencies and rules to be able to make predictions for new input data. In figure~\ref{fig:learning_approaches_sentiment_analysis} there are some possible approaches listed that can be applied to sentiment analysis problems. They can be divided into the two techniques of machine learning approaches and lexicon-based approaches \autocite{Kharde2016}.
     
     \begin{figure}[H]
       \centering
       \includegraphics[scale=0.5]{images/learning_approaches_sentiment_analysis}
-      \caption{Learning approaches for sentiment analysis\autocite{Halibas2018}\protect\footnotemark}
+      \caption[Learning approaches for sentiment analysis]{Learning approaches for sentiment analysis \autocite{Halibas2018}\protect\footnotemark}
       \label{fig:learning_approaches_sentiment_analysis}
     \end{figure}
     
@@ -204,7 +261,7 @@
         Simple neural networks are also a form of linear classifiers, since the function computed by a set of neurons is essentially linear. The simplest form of neural network, known as the perceptron (or single layer network) are essentially designed for linear separation, and work well for text. However, by using multiple layers of neurons, it is also possible to generalize the approach for non-linear separation. In such a network, the outputs of the neurons in the earlier layers feed into the neurons in the later layers. The training process of such networks is more complex, as the errors need to be back-propagated over different layers.
       \item Proximity-based Classifiers
       
-        Those classifiers use proximity measures for classification. All training instances are placed in a (high-dimensional) space, proximities of two documents can be calculated by Euclidian, Manhattan or other distance measurements. Then, the most common k-nearest-neighbor classifier identifies for a given test instance the k training instances with the smallest distance values. The most common (or highest-weighted) class among them becomes the class of the test instance.
+        Those classifiers use proximity measures for classification. All training instances are placed in a (high-dimensional) space, proximities of two documents can be calculated by Euclidian, Manhattan or other distance measurements. Then, the most common $k$-nearest-neighbor classifier identifies for a given test instance the $k$ training instances with the smallest distance values. The most common (or highest-weighted) class among them becomes the class of the test instance.
     \end{itemize}
     In the simplest version all of the six classifier types are applied to binary classification problems. If there are three or more classes, the classifier possibly has to be extended to handle this multiclass problem, e.g. for SVM Classifiers. Another possibility is to split the multiclass problem into several binary problems as seen in subsection~\ref{subsec:multiclass_classification}. The classification is made by several classifiers that are trained to differentiate either between one class and the rest (one-against-all) or pairwise between each two classes (one-against-one). Further concepts for the customization of classifiers are boosting and bagging, the formation of ensembles or the handling of ordinal classes \autocite{Aggarwal2012}. \\\\
     For sentiment analysis problems, apart from machine learning approaches also lexicon-based approaches are suitable. Lexicon-based approaches mainly rely on a sentiment lexicon, i.e., a collection of known and precompiled sentiment terms, phrases and even idioms, developed for traditional genres of communication. To determine the polarity score of a text, the polarity scores of the terms are combined in a certain way, e.g. by addition. There are two subtypes of lexicon-based approaches. The dictionary-based approach uses a list of terms called dictionary, where the collection and scores are both created manually. Manual creation may be time-consuming, but it is usually possible to create optimally customized dictionaries with good results. The corpus-based approach uses already existent dictionaries of a specific domain, which have been constructed based on a big corpus. There are statistic techniques like latent semantic analysis (LSA) as well as semantic techniques using synonyms, antonyms or other relationships from thesaurus like WordNet \autocite{Kharde2016}.
@@ -255,7 +312,7 @@ Instead of using an absolute accuracy value it can make sense to use a relative 
         \multicolumn{1}{  c  }{} &
         \multicolumn{1}{ |c| }{Total} & 120 & 60 & 20 & 200 & \\ \cline{2-6}
       \end{tabular}      
-      \caption{Actual (left) and expected (right) outcomes of three-class-classification, cf.\autocite[Chapter~5.7]{Witten2005}}
+      \caption[Outcomes of three-class-classification]{Actual (left) and expected (right) outcomes of three-class-classification, cf.\autocite[Chapter~5.7]{Witten2005}}
       \label{tab:actual_and_expected_outcomes_of_three_class_classification}
     \end{table}
       
@@ -369,7 +426,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \ffigbox[6.6cm]{%
 	    \includegraphics[scale=0.5]{images/algebraic_notation}
       }{%
-	    \caption{Square names in algebraic notation\protect\footnotemark}
+	    \caption[Square names in algebraic notation]{Square names in algebraic notation\protect\footnotemark}
         \label{fig:square_names}
       }
       \end{floatrow}
@@ -429,34 +486,40 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 	a brilliant counterattack of white
 	a big mistake of black	   
     
-	\begin{figure}[H]
-	  \centering
-      \lstset{keywordstyle=\color{blue},morekeywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
-	  \begin{lstlisting}
+    \newsavebox{\complete}
+      \begin{lrbox}{\complete}
+        \lstset{keywordstyle=\color{blue},morekeywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
+        \begin{lstlisting}
 @RELATION comment
 @ATTRIBUTE COUNT(brilliant) NUMERIC
 @ATTRIBUTE TFIDF(mistake) REAL
 @ATTRIBUTE CLASS {good,bad}
 @DATA
-1,0.0,good
-0,0.06,bad	  
-	  \end{lstlisting}	  
-
-      \caption{Sample arff file}
-      \label{fig:sample_arff_file}
-	\end{figure}
-
-	\begin{figure}[H]
-	  \centering
-      \lstset{keywordstyle=\color{blue},morekeywords={@DATA}}
-	  \begin{lstlisting}
+1, 0.0, good
+0, 0.06, bad	  
+        \end{lstlisting}
+      \end{lrbox}
+    \newsavebox{\sparse}
+      \begin{lrbox}{\sparse}
+        \lstset{keywordstyle=\color{blue},morekeywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
+        \begin{lstlisting}
+@RELATION comment
+@ATTRIBUTE COUNT(brilliant) NUMERIC
+@ATTRIBUTE TFIDF(mistake) REAL
+@ATTRIBUTE CLASS {good,bad}
 @DATA
 {1 2, 3 good}
 {2 0.06, 3 bad}	  
-	  \end{lstlisting}	  
-
-      \caption{Sample sparse arff file}
-      \label{fig:sample_sparse_arff_file}
+        \end{lstlisting}
+      \end{lrbox}    
+    
+    \begin{figure}[H]
+	  \centering      
+	  \subfloat[complete]{\usebox{\complete}}
+	  \quad
+	  \subfloat[sparse]{\usebox{\sparse}}
+      \caption{Sample arff files}
+      \label{fig:sample_arff_files}
 	\end{figure}
   \clearpage
   

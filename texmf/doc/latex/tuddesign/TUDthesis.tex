@@ -81,6 +81,13 @@
   
     \begin{figure}[H]
       \centering
+      \includegraphics{images/problem_hierarchy_supervised_learning}
+      \caption{Problem hierarchy of supervised learning}
+      \label{fig:problem_hierarchy_supervised_learning}
+    \end{figure}
+
+    \begin{figure}[H]
+      \centering
       \includegraphics{images/one_against_all_or_one}
       \caption[One-against-all vs. one-against-one approach]{One-against-all (left) vs. one-against-one approach (right)\protect\footnotemark}
       \label{fig:one_against_all_or_one}
@@ -128,8 +135,14 @@
       }
       \caption[Output codes for a multiclass classification problem]{Different output codes for a multiclass classification problem with five classes}
       \label{tab:exhaustive_ecoc}
-   \end{table}
+    \end{table}
 
+    \begin{figure}[H]
+      \centering
+      \includegraphics{images/nested_dichotomies}
+      \caption[Two nested dichotomies]{Two nested dichotomies for a multiclass problem with five classes \autocite{Dong2005}\protect\footnotemark}
+      \label{fig:nested_dichotomies}
+    \end{figure}
 
   \subsection{Ordinal classification}
   \label{subsec:ordinal_classification}
@@ -224,7 +237,7 @@
     \end{itemize}
     Features need not be dependent of only one token. There are more advanced features that use accumulation of several tokens like the average token length. The above-mentioned values can also all be calculated if the tokens are grouped by category \autocite{Wang2010}. For problems concerning long input texts in natural languages like author detection another appropriate feature is the lexical diversity. It calculates the ratio between the count of distinct words (vocabulary) and the total word count. \\\\
     If the collection is passed in list representation, we can additionally create features by using combinations of sequential tokens. These sequences are called n-grams in general; 2-grams (bigrams) and 3-grams (trigrams) are particularly frequently used. With n-grams, the context also flows into the analysis, which is an advantage, for example, when recognizing negations (“not”, “good” vs. “not good”). \\\\
-    It makes sense to find in the first step as much features as possible while the computing and storage capacities are not exceeded. Thus, we get a large amount of potentially informative features. However, before passing the feature data to the learning algorithm, the dimension should be reduced to avoid redundancy and to accelerate the learning process. This step called feature selection is of particular importance for classifiers that, unlike NaiveBayes, are expensive to train. Second, feature selection often increases classification accuracy by eliminating noise features. A noise feature is one that, when added to the document representation, increases the classification error on new data. Such an incorrect generalization from an accidental property of the training set is called overfitting \autocite[Chapter~13.5]{Manning2008}. \\\\
+    It makes sense to find in the first step as much features as possible while the computing and storage capacities are not exceeded. Thus, we get a large amount of potentially informative features. However, before passing the feature data to the learning algorithm, the dimension should be reduced to avoid redundancy and to accelerate the learning process. This step called feature selection is of particular importance for classifiers that, unlike Naïve Bayes, are expensive to train. Second, feature selection often increases classification accuracy by eliminating noise features. A noise feature is one that, when added to the document representation, increases the classification error on new data. Such an incorrect generalization from an accidental property of the training set is called overfitting \autocite[Chapter~13.5]{Manning2008}. \\\\
     Selecting a subset of features requires a measurement value to compare the utilities of the features. Typical methods are Gini index, information gain, mutual information, $\chi^2$ or frequency-based feature selection \autocite[Chapter~2.1]{Aggarwal2012}. All of those methods are greedy, which can lead to redundant features. There are non-greedy methods that avoid redundancy, but they are rarely used in practice due to increased computing effort \autocite[Chapter~13.5]{Manning2008}. Finally, regardless of the choice of measurement features the features can be selected if they exceed a threshold value or all features are ranked and the best n features are selected. \\\\
     A different approach for representing text data are word embeddings. The previous approaches are based on the one-hot representation: the feature vector has the same length as the size of the vocabulary. Besides the already mentioned problems due to less meaningful features and overfitting, in a one-hot representation the model cannot handle words that do not appear in the labeled training data \autocite{Turian2010}. In contrast to this, word embeddings offer a distributed representation which is dense, lowdimensional, and real-valued. They are learned on a big general corpus and can therefore associate each word with a corresponding vector. The combination of those vectors yields the document vector. The features and advantages of word embeddings have already been discussed in subsection~\ref{subsec:word_embeddings}.
 

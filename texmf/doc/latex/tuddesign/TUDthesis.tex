@@ -64,19 +64,23 @@
 
   \subsection{Motivation}
 
-  \subsection{Problem description}
+  \subsection{Problem Description}
 
-  \subsection{Goal of the thesis}
+  \subsection{Goal of the Thesis}
     - is it possible to "convert" a chess annotation comment to the appropiate symbol by using a classifier
 
-  \subsection{Structure of the thesis}
+  \subsection{Structure of the Thesis}
   \clearpage
   
-  \section{Basics (TODO)}
-    Sentiment Analysis and classification, Ordinal Classification, Word Embeddings, TF-IDF
-    mindestens 5 Seiten
+  \section{Fundamentals}
   
-  \subsection{Multiclass classification}
+  \subsection{Sentiment Analysis}
+
+  \subsection{Word Embeddings}
+  \label{subsec:word_embeddings}
+  \clearpage
+  
+  \subsection{Multiclass Classification}
   \label{subsec:multiclass_classification}  
     Multiclass classification is a problem in the field of supervised learning. The task is the prediction of one class out of a finite set of three or more possible classes for each instance. As can be seen in figure~\ref{fig:problem_hierarchy_supervised_learning}, it can be distinguished from other problems in supervised learning. First, as the name implies, it is a classification problem because the range of values is finite rather than continuous, as is the case with a regression problem. Furthermore, each instance should be associated with exactly one class, which distinguishes it from the similar sounding multi-label classification, since each instance can be associated with any number of classes (= labels). Finally, the model to be learned has to choose from a set of $k$ classes with $k>2$, i.e. ${1,2,\dots,k}$. This makes the problem slightly more difficult than binary classification with $k=2$. Ordinal classification is a specialization of multiclass classification and will be discussed in detail in subsection~\ref{subsec:ordinal_classification}.
     
@@ -89,7 +93,7 @@
     
     Most algorithms applied to classification problems are explained by their application to binary classification problems, which cover a large part of the real-world use cases. However, these approaches cannot be adopted to multiclass problems without further ado. \citeauthor{Aly2005} describes with the decomposition into binary classification, hierarchical classification and the extension of algorithms the three groups of approaches to cope with the difficulties of multiclass classification \autocite{Aly2005}:
     \begin{itemize}
-      \item Decomposition into binary classification
+      \item Decomposition into Binary Classification
 
         A frequently chosen approach is the transformation of the multiclass classification problem into several binary classification subproblems, for which there are three different possibilities. In any case the results of subproblems have to be joined to be able to make a final prediction which is similar to ensemble learning. \\\\
         The first option called one-against-all splits the multiclass classification problem into $k$ binary classification subproblems. The classifier $f_{i}$ treats the instances of class $i$ as positive and instances of the $k-1$ other classes as negative. An example of one-against-all using an SVM-classifier is shown in figure~\ref{fig:one_against_all_or_one} on the left. For an unseen instance $x$ the class $k$ with the highest confidence score will be predicted:
@@ -111,10 +115,10 @@
         The third option is the usage of error-correcting output codes. Each class is assigned a unique binary string of length $n$; we will refer to these strings as “codewords”. During training for an example from class $i$, the desired outputs of these $n$ binary functions are specified by the codeword for class $i$. With artificial neural networks, these $n$ functions can be implemented by the $n$ output units of a single network \autocite[Section~1]{Dietterich1994}. Though, it is also possible to train all $n$ binary classifiers individually with an arbitrary algorithm. A test instance is assigned to the class that is closest to the code determined by the $n$ functions. \\
         Now the question arises, how the codewords respectively the binary functions are chosen most effectively. Out of all $2^{k}$ binary combinations for a $k$-class problem, after removing $2^{k-1}$ complements (e.g. all starting with $1$) and the uniform classifier there are $2^{k-1}-1$ possible classifiers, from which to be selected. A good error-correcting output code for a $k$-class problem should satisfy two properties \autocite[Subsection~2.3]{Dietterich1994}:
         \begin{itemize}
-          \item Row separation
+          \item Row Separation
 
             If in a code converting an arbitrary codeword into another arbitrary codeword needs $d$ changes of bits, the code has a so-called Hamming distance of $d$. The higher the Hamming distance, the better the row separation. A code with Hamming distance $d$ can detect up to $d-1$ and correct up to $\left\lfloor\frac{d-1}{2}\right\rfloor$ bits.
-          \item Column separation
+          \item Column Separation
 
             Each bit-position function $f_{i}$ should be uncorrelated with the functions to be learned for the other bit positions $f_{j}$; $j\neq i$. If two columns $i$ and $j$ (or the complement of $j$) are similar or identical, then when a deterministic learning algorithm such as C4.5 is applied to learn $f_{i}$ and $f_{j}$, it will make similar (correlated) mistakes.
         \end{itemize}
@@ -163,7 +167,7 @@
         \end{table}
 
         The exhaustive error-correcting code for $k=5$ is shown in table~\ref{tab:exhaustive_ecoc}. The hamming-distance of the code is $d=8$. Therefore, the code can detect up to $d-1=7$ and correct up to $\left\lfloor\frac{d-1}{2}\right\rfloor=3$ bits. Error-correcting output codes are a robust alternative to one-against-all and one-against-one approaches which outperforms them in most cases but also entail the disadvantages of a more complex training and model \autocite[Section~4]{Dietterich1994}.
-      \item Hierarchical classification
+      \item Hierarchical Classification
 
         Hierarchical classification, also known as nested dichotomies, is strictly speaking also a type of decomposition of a multiclass classification problem into binary classification problems. However, in this approach the output of the classifiers is not always used for the prediction but as the input for the next classifier. In this way, a hierarchy of classifiers and their subproblems is created. The first classifier is trained on the whole input space; the total set of all classes is suitably divided into two subsets between which the classifier distinguishes. This procedure is then continued recursively with the two subsets until all subsets only contain instances of a single class. This procedure creates a tree structure whose leaves are the set of instances of a class. As a result, this tree contains $k$ leaves and $k-1$ inner nodes representing the binary classifiers \autocite{Dong2005}. Two possibly outcomes of a multiclass classification problem with $5$ classes are shown in figure~\ref{fig:nested_dichotomies}.
 
@@ -175,7 +179,7 @@
         \end{figure}
 
         The probability of a class can be calculated by multiplying all probability estimates of the classifier along the path from the root to the class. This value differs for disparate nested dichotomies, wherefore usually various trees are computed and their probabilities are averaged. Though, for high $k$ there are too many different possibilities to build a nested dichotomy. Balanced nested dichotomies prove to be particularly suitable, since they require the shortest running time without affecting the accuracy negatively \autocite{Dong2005}. \citeauthor{Dong2005} developed methods to balance the nested dichotomies either by class or by data amount.
-      \item Extension of algorithms
+      \item Extension of Algorithms
 
         The third idea is the inversion of the first two approaches. Instead of modifying the problem and using the same classifier as for the binary classification, we now modify the classifier such that we can leave the classifier unchanged. Typical algorithms in machine learning are decision trees, pattern- or rule-based classifiers, probabilistic classifiers, SVM classifiers, neural network classifiers and proximity-based classifiers. A short description for every algorithm can be found in subsection~\ref{subsec:analysis}. Decision trees, pattern- or rule-based classifiers, probabilistic classifiers as Naïve Bayes and proximity-based classifiers as $k$-nearest-neighbor can be easily adapted to multiclass problems. For the other two algorithms some preliminary considerations are necessary. \\\\
         SVM classifiers use hyperplanes of dimension $D-1$ described by linear functions to separate the whole input space of dimension $D$ into two subspaces which ideally only contain a single class. Obviously, a single hyperplane is not sufficient for separating more than two classes. Approaches like one-against-all and one-against-one lead to ambiguous subspaces where either more than one class or no class is assigned to. We can avoid these difficulties by considering a single $k$-class discriminant comprising $k$ linear functions of the form
@@ -187,22 +191,25 @@
     \end{itemize}
     As mentioned in the beginning of this subsection, ordinal classification problems are a subgroup of multiclass classification problems. The following subsection describes the special properties of this type of problems and other approaches that are even better adapted to these properties than those presented here.
 
-  \subsection{Ordinal classification}
+  \subsection{Ordinal Classification}
   \label{subsec:ordinal_classification}
     Ordinal classification problems are a specialization of multiclass classification problems. They refer to an important category of real-world problems, in which the classes the class values exhibit a natural order. Thus, the class attribute is not nominal, but ordinal. However, the possibility of calculating the difference (essential for an interval class attribute) or even the quotient (essential for a ratio class attribute) is usually not given \autocite[Section~1]{Frank2001}. Ordinal classification may be viewed as a bridging problem between the two standard machine-learning tasks of classification and regression, because the set of classes has the property of a finite range given in classification problems as well as the property of a natural order given in regression problems \autocite[Section~1]{Kotsiantis2004}. \\\\
     As a specialization of a multiclass classification problem, ordinal classification problems can be approached with the same strategies as described above in subsection~\ref{subsec:multiclass_classification}. However, the additional information of the linear order of the classes is ignored. Two strategies tailored to ordinal classification problems taking this information into account are ordinal regression and an adapted transformation to binary classification problems.
     \begin{itemize}
-      \item Ordinal regression
+      \item Ordinal Regression
 
-        TODO 
-      \item Transformation to binary classification problems
+        In regression tasks, the output is a numeric value in a continuous range. The idea of ordinal regression is to treat the ordinal output as a numeric value. In this way the same approaches as for regression tasks can be used only with the extension that the predicted values still have to be mapped to the fixed classes. Nevertheless, most regression methods require some metric assumptions like building differences or ratios within the ordinal scale \autocite[Section~1]{Ruan2014}. Hence the result of the model depends on the choice of numeric values and their distances from each other. This leads to problems in many real-world applications, for example in the quantification of ordinal scales in opinion surveys. \\\\
+        Ordinal logistic models avoid this issue by only considering the ranking order of the classes \autocite[Chapter~13]{Harrell2015}. The most commonly used ordinal logistic model is the proportional odds model. It uses the logarithms of odds that the predicted class $y$ is one of the first $i$ classes together with a linear function, whereby the probability after forming is given by
+        \[\operatorname{P}(y\leq i|\mathbf{x})=\frac{1}{1+\exp\left[-\left(\mathbf{w}^{\mathrm{T}}\mathbf{x}+w_{i 0}\right)\right]}\]
+        where $\mathbf{x}$ is the test instance and $\mathbf{w}$ and $w_{i 0}$ the parameters of the linear function. There are many possible extensions to this ordinal model, among others replacing the cumulative probabilities with conditional probabilities or using a hazards model \autocite[Chapter~13]{Harrell2015}. 
+      \item Transformation to Binary Classification Problems
       
         A simpler approach using a transformation to binary classification problems is presented by \citeauthor{Frank2001}. In contrast to the binary classification approaches in multiclass classification it takes advantage of the order of the classes. The ordinal class attribute with ordered values $v_{1}<v_{2}<\dots< v_{k}$ is converted into $k-1$ binary attributes. The $i$-th binary attribute represents the test if the class attribute exceeds the value of the $i$-th class: $x>v_{i}$. This construction of binary attributes requires exactly two classifiers and their probabilities to determine whether a test instance $x$ belongs to a class $i$:
         \[\operatorname{P}\left(v_{i}\right)=\operatorname{P}\left(x>v_{i-1}\right)-\operatorname{P}\left(x>v_{i}\right)\]
         For the highest class, the first probability is $1$ and for the lowest, the second is $0$, which further simplifies the calculation. Finally, the class with the highest probability is predicted. \citeauthor{Frank2001} showed that for ordinal classification problems this approach outperforms the “naïve” one-against-all algorithm, which treats the class values as an unordered set \autocite{Frank2001}.
     \end{itemize}
   
-  \subsection{Cost-sensitive learning}
+  \subsection{Cost-sensitive Learning}
   \label{subsec:cost_sensitive_learning}
     In many classification problems the goal is the optimization of some performance measurement, most often the accuracy. However, the best solution in respect to the accuracy does not have to be the one with minimized costs, which is also often a goal to be achieved. Costs can not only arise from misclassifications, but also from additional tests or time for the creation of a better model. \citeauthor{Turney2002} divides the reasons for costs that a machine learning problem can entail into nine groups \autocite{Turney2002}:
     \begin{itemize}[noitemsep]
@@ -251,8 +258,6 @@
     \end{itemize}
 Note that the use of the costs as in one of the approaches presented here does not preclude a subsequent evaluation of the costs. In this way it can be checked whether a classifier who incorporates the costs into the learning process is actually superior to a classifier without knowledge of the costs.
 
-  \subsection{Word embeddings}
-  \label{subsec:word_embeddings}
   \clearpage
   
   \section{Concept}
@@ -267,7 +272,7 @@ Note that the use of the costs as in one of the approaches presented here does n
       \label{fig:text_mining_pipeline}
     \end{figure}
   
-  \subsection{Definition of the problem and goals}
+  \subsection{Definition of the Problem and Goals}
   \label{subsec:definition_of_the_problem_and_goals}
     In the first step we have to define the problem we want to solve. According to \citeauthor{Mitchell1997} a learning problem generally reads as follows: Improve over task $T$, with respect to performance measure $P$, based on experience $E$. The goal is therefore to generalize the experience in a way that allows to improve your performance on the task \autocite[Chapter~1]{Mitchell1997}.
     \begin{itemize}
@@ -288,7 +293,7 @@ Note that the use of the costs as in one of the approaches presented here does n
     \end{itemize}
     The following describes the procedure as generally as possible; we only assume that we face a classification problem in the field of text mining. Furthermore, the output value should be known for all instances, such that tasks of supervised learning can be applied automatically. As the input we use a document $d\in\mathbb{X}$, where $\mathbb{X}$ is the document space; and as the output a fixed set of classes $\mathbb{C}=\left\{c_{1},c_{2},\dots,c_{J}\right\}$. Using a learning method or learning algorithm, we then wish to learn a classifier or classification function $\gamma$ that maps documents to classes, i.e. $\gamma:\mathbb{X}\rightarrow\mathbb{C}$ \autocite[Chapter~13.1]{Manning2008}.
   
-  \subsection{Identification of data}
+  \subsection{Identification of Data}
     In the second step we need to find one or several data sources that offer an adequate number of instances, i.e. data sets of the previously defined input and output type. There are four characteristics to be aware of:
     \begin{itemize}
       \item Completeness
@@ -306,11 +311,11 @@ Note that the use of the costs as in one of the approaches presented here does n
     \end{itemize}
     After completing the second step we end up with an appropriate data set for the task defined in the first step. The data is in a homogeneous representation, but not necessarily in a structured form.
 
-  \subsection{Organization of the text}
+  \subsection{Organization of the Text}
     A big part of all data in the internet exists in the form of natural language. Usually, it is hard to evaluate the information contained in this data, because it is not structured in the same way. For example, in product reviews every customer can write his comment in a different kind, so that there is neither a certain order of the information nor a specification, which information the comment should provide. However, on the basis of an additional star rating it is possible to get a fast assessment of the customer’s attitude towards the product. So, if there is a need of further evaluation, it is helpful to have the data in a structured form instead of an unstructured form. \\\\
     Often it is not desirable or even impossible to get the unstructured data directly in a structured form, so we have to do the transformation on our own. This process of converting the data from an unstructured into a structured form is called information extraction. It is assumed that the input data is a single string, i.e. a sequence of characters. The sequence can contain just a few characters (e.g. tweets, comments) or thousands of characters (e.g. book contents). Even if in the most common cases this string is natural language, the procedure is similar for other input strings as well. In order not to falsify the data, we have to take into account the character encoding. The goal of this step is to reorganize the input from a string to a collection of tokens, also known as lexing or tokenization. This process takes place in three sub-steps:
     \begin{itemize}
-      \item Token identification
+      \item Token Identification
       
         A lexical token, shortly token, is a string with an identified meaning. The input string is split into substrings where each substring without meaning is discarded and all others are stored as tokens. The definition of a token depends on the use case. In natural language processing, the standard approach is to use blanks or other whitespace characters and interpunctuation symbols as separators of tokens. As a result, there are words as tokens. This general solution can be customized by interpreting whitespace characters and interpunctuation symbols (or combinations of them) as tokens. Words can also be further split at a hyphen or split into characters. The other way around, two or more words can be combined to one token, e.g. for names of persons or places (“New York”) or for usual phrases (“and so on”). All of the parts of the string that do not contain any information should be removed directly. Frequently used words as “and” or “that”, also called stopwords, do not provide added value and can be removed from the token collection. There are lists of stopwords available for common textual resources, but they may be customized for specific data sets. Other challenges in natural language processing include handling spelling mistakes, acronyms and special characters such as smileys \autocite{Kharde2016}.
       \item Normalization
@@ -322,7 +327,7 @@ Note that the use of the costs as in one of the approaches presented here does n
     \end{itemize}
     After finishing the chosen approaches of those three steps, we obtain the unstructured text data in a structured collection of tokens, possibly extended or replaced by their category or meaning. By splitting the string into tokens in the beginning, the tokens in the collection will be sorted in the same order as they occur in the input. The collection is in list form and the order is maintained. If the order and the count of tokens is irrelevant for further evaluation, a set can be used instead of a list. However, in most cases just the order is irrelevant but not the count of tokens, such that a multiset is the suitable form of collection. This multiset is known as “bag of words”.
   
-  \subsection{Feature extraction}
+  \subsection{Feature Extraction}
     Based on the created output from step three, now the characteristics of the input data are to be figured out by feature extraction. The idea is to calculate various scores, such that we can compare the input data instances with each other, especially concerning the sentiment and polarity. At the end of this step we want to obtain a representation that can be passed as a training set to learning algorithms. \\\\
     The default feature extraction approach is typically used in web search engines during the indexing step in information retrieval. The input is a list of documents in bag of words-representation or something similar. This results in a document-term-matrix, where each row describes a document and each column the count of a specific term. This concept can be generalized and transferred to our question. The column remains the description of the document as a vector whereas each column is the value of a specific feature. The model is called Vector Space Model (VSM) as it represents each document as a vector of features which simplifies the comparison of two documents by cosine similarity. Possible features with direct relation to the token are:
     \begin{itemize}
@@ -380,18 +385,18 @@ Note that the use of the costs as in one of the approaches presented here does n
     In the simplest version all of the six classifier types are applied to binary classification problems. If there are three or more classes, the classifier possibly has to be extended to handle this multiclass problem, e.g. for SVM Classifiers. Another possibility is to split the multiclass problem into several binary problems as seen in subsection~\ref{subsec:multiclass_classification}. The classification is made by several classifiers that are trained to differentiate either between one class and the rest (one-against-all) or pairwise between each two classes (one-against-one). Further concepts for the customization of classifiers are boosting and bagging, the formation of ensembles or the handling of ordinal classes \autocite{Aggarwal2012}. \\\\
     For sentiment analysis problems, apart from machine learning approaches also lexicon-based approaches are suitable. Lexicon-based approaches mainly rely on a sentiment lexicon, i.e., a collection of known and precompiled sentiment terms, phrases and even idioms, developed for traditional genres of communication. To determine the polarity score of a text, the polarity scores of the terms are combined in a certain way, e.g. by addition. There are two subtypes of lexicon-based approaches. The dictionary-based approach uses a list of terms called dictionary, where the collection and scores are both created manually. Manual creation may be time-consuming, but it is usually possible to create optimally customized dictionaries with good results. The corpus-based approach uses already existent dictionaries of a specific domain, which have been constructed based on a big corpus. There are statistic techniques like latent semantic analysis (LSA) as well as semantic techniques using synonyms, antonyms or other relationships from thesaurus like WordNet \autocite{Kharde2016}.
 
-  \subsection{Validation and evaluation}
+  \subsection{Validation and Evaluation}
   \label{subsec:validation_and_evaluation}
     The final step deals with the validation and evaluation of the results obtained from the previous analysis step. In subsection~\ref{subsec:definition_of_the_problem_and_goals} some performance measurements already have been presented. In the following only measurements for classification problems are discussed. Before discussing about those measurements, first of all we will specify how to arrange the data meaningfully to be able to perform most of the measurements. \\\\
     We already mentioned that for the evaluation the data should be split into a training and a test set. Formally speaking, a training set $\mathbb{D}$ of labeled documents $\langle d,c\rangle$ is given, where $\langle d,c\rangle\in\mathbb{X}\times\mathbb{C}$. For all unlabeled documents $d$ in the test set, the chosen classification function(s) $\gamma$ has to predict a class $c$ \autocite[Chapter~13.1]{Manning2008}. Generally, the larger the training set the better the classifier, although the returns begin to diminish once a certain volume of training data is exceeded. And the larger the test set, the more accurate the error estimate. There are different approaches to deal with this problem \autocite[Chapter~5]{Witten2005}:
     \begin{itemize}
-      \item Holdout method
+      \item Holdout Method
       
         The simplest approach is to determine a specific percentage that should be used for training (usually two thirds). The rest of the data is cut and hold out for the final validation of unseen data. Note that here data can either be used for training or for testing.
-      \item k-fold-Cross-validation
+      \item k-Fold-Cross-Validation
       
         The cross-validation tries to get away from wasting data by using all data both for training and for testing in different iterations. The data is split into $k$ folds (usually 10); $k-1$ of them are used for training and the remaining one for validation. The final measurement is the average of the measurement of all $k$ iterations and should outbid the simple holdout method in the performance value as well as in its accuracy. A non-random decomposition into folds, e.g. by previous sorting of the data records, can falsify the results.
-      \item Leave-one-out-validation
+      \item Leave-One-Out-Validation
       
         For even smaller data sets the leave-one-out-validation is a suitable approach. Here only one test instance is validated while the rest is used for training. This results in $n$ possible iterations where $n$ is the size of the data set. Similar approaches for small data sets with even more possible iterations are the leave-k-out-validation ($\binom{n}{k}$ possiblities) and the bootstrap method \autocite[Chapter~4]{Arlot2010}.
     \end{itemize}
@@ -448,12 +453,9 @@ Instead of using an absolute accuracy value it can make sense to use a relative 
 
   \clearpage
   
-  \section{Experimental setup}
+  \section{Experimental Setup}
   \label{sec:experimental_setup}
   
-  \subsection{Data set extraction}
-    Nur Weka-Classification oder auch ersten Ansatz der NLTK-Classification mit reinnehmen?
-
   \subsubsection{PGN-format}
     PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure~\ref{fig:sample_pgn_game}.
 
@@ -653,7 +655,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     which classifier to use? --> MCC (x3), OCC, RF, NBM
   \clearpage  
   
-  \section{Evaluation of results}
+  \section{Evaluation of Results}
     tables with number of attributes, tables with accuracies, comparison of confusion matrix\\
     each for simple approach, tf-idf, word embedding
   \clearpage  

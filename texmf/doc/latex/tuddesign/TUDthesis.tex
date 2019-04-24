@@ -74,15 +74,25 @@
   
   \section{Fundamentals}
   
+  \subsection{Text Mining}
+  
   \subsection{Sentiment Analysis}
 
   \subsection{Word Embeddings}
   \label{subsec:word_embeddings}
+    
+    \begin{figure}[H]
+      \centering
+      \includegraphics{images/word_embeddings}
+      \caption[CBOW and Skip-gram model]{CBOW and Skip-gram model \autocite{Mikolov2013}}
+      \label{fig:word_embeddings}
+    \end{figure}
+    
   \clearpage
   
   \subsection{Multiclass Classification}
   \label{subsec:multiclass_classification}  
-    Multiclass classification is a problem in the field of supervised learning. The task is the prediction of one class out of a finite set of three or more possible classes for each instance. As can be seen in figure~\ref{fig:problem_hierarchy_supervised_learning}, it can be distinguished from other problems in supervised learning. First, as the name implies, it is a classification problem because the range of values is finite rather than continuous, as is the case with a regression problem. Furthermore, each instance should be associated with exactly one class, which distinguishes it from the similar sounding multi-label classification, since each instance can be associated with any number of classes (= labels). Finally, the model to be learned has to choose from a set of $k$ classes with $k>2$, i.e. ${1,2,\dots,k}$. This makes the problem slightly more difficult than binary classification with $k=2$. Ordinal classification is a specialization of multiclass classification and will be discussed in detail in subsection~\ref{subsec:ordinal_classification}.
+    Multiclass classification is a problem in the field of supervised learning. The task is the prediction of one class out of a finite set of three or more possible classes for each instance. As can be seen in figure~\ref{fig:problem_hierarchy_supervised_learning}, it can be distinguished from other problems in supervised learning. First, as the name implies, it is a classification problem because the range of values is finite rather than continuous, as is the case with a regression problem. Furthermore, each instance should be associated with exactly one class, which distinguishes it from the similar sounding multi-label classification, since each instance can be associated with any number of classes (= labels). Finally, the model to be learned has to choose from a set of $k$ classes with $k>2$, i.e. $\{1,2,\dots,k\}$. This makes the problem slightly more difficult than binary classification with $k=2$. Ordinal classification is a specialization of multiclass classification and will be discussed in detail in subsection~\ref{subsec:ordinal_classification}.
     
     \begin{figure}[H]
       \centering
@@ -112,7 +122,7 @@
         The second option called one-against-one splits the multiclass classification problem into even more binary classification subproblems, in fact $\frac{k(k-1)}{2}$. This number results from the fact that now in each subproblem two classes are pairwise distinguished from each other. Since in the binary classifier between the classes $i$ and $j$ all instances of the classes except $i$ and $j$ can be discarded (see figure~\ref{fig:one_against_all_or_one} on the right), there are smaller subproblems than in one-against-all, which usually also create simpler models. However, the number of subproblems is $\frac{k}{2}$-times as high, which usually results in significantly more training time \autocite[Subsection~7.1.3]{Bishop2006}. \\
         The final decision is made by voting. All pairwise comparisons are summed up and the winner with the most partial victories is the output class. However, using the binary outputs of the subproblems, i.e. only the preferred class, often leads to several winners. There are different ways to handle these ambiguities. The first idea is weighting the subproblems differently, for example by modifying the output from $1$ to the accuracy and from $0$ to $1-$accuracy. Another idea called pairwise coupling can be used which includes probabilities for every subproblem in the calculation. \citeauthor{Wu2004} present a few pairwise coupling techniques that are more stable than using the simple voting approach \autocite{Wu2004}. \\\\
 
-        The third option is the usage of error-correcting output codes. Each class is assigned a unique binary string of length $n$; we will refer to these strings as “codewords”. During training for an example from class $i$, the desired outputs of these $n$ binary functions are specified by the codeword for class $i$. With artificial neural networks, these $n$ functions can be implemented by the $n$ output units of a single network \autocite[Section~1]{Dietterich1994}. Though, it is also possible to train all $n$ binary classifiers individually with an arbitrary algorithm. A test instance is assigned to the class that is closest to the code determined by the $n$ functions. \\
+        The third option is the usage of error-correcting output codes. Each class is assigned to a unique binary string of length $n$; we will refer to these strings as “codewords”. During training for an example from class $i$, the desired outputs of these $n$ binary functions are specified by the codeword for class $i$. With artificial neural networks, these $n$ functions can be implemented by the $n$ output units of a single network \autocite[Section~1]{Dietterich1994}. Though, it is also possible to train all $n$ binary classifiers individually with an arbitrary algorithm. A test instance is assigned to the class that is closest to the code determined by the $n$ functions. \\
         Now the question arises, how the codewords respectively the binary functions are chosen most effectively. Out of all $2^{k}$ binary combinations for a $k$-class problem, after removing $2^{k-1}$ complements (e.g. all starting with $1$) and the uniform classifier there are $2^{k-1}-1$ possible classifiers, from which to be selected. A good error-correcting output code for a $k$-class problem should satisfy two properties \autocite[Subsection~2.3]{Dietterich1994}:
         \begin{itemize}
           \item Row Separation
@@ -120,7 +130,7 @@
             If in a code converting an arbitrary codeword into another arbitrary codeword needs $d$ changes of bits, the code has a so-called Hamming distance of $d$. The higher the Hamming distance, the better the row separation. A code with Hamming distance $d$ can detect up to $d-1$ and correct up to $\left\lfloor\frac{d-1}{2}\right\rfloor$ bits.
           \item Column Separation
 
-            Each bit-position function $f_{i}$ should be uncorrelated with the functions to be learned for the other bit positions $f_{j}$; $j\neq i$. If two columns $i$ and $j$ (or the complement of $j$) are similar or identical, then when a deterministic learning algorithm such as C4.5 is applied to learn $f_{i}$ and $f_{j}$, it will make similar (correlated) mistakes.
+            Each bit-position function $f_{i}$ should be uncorrelated with the functions to be learned for the other bit positions $f_{j}$; $j\neq i$. If two columns $i$ and $j$ (or the complement of $j$) are similar or identical, then when a deterministic learning algorithm such as the decision tree classifier C4.5 is applied to learn $f_{i}$ and $f_{j}$, it will make similar (correlated) mistakes.
         \end{itemize}
         The classifier sets in the one-against-all and one-against-one approaches are feasible solutions. The one-against-all approach guarantees Hamming distances of $2$ for both row and column separation, the one-against-one approach even $2\times(k-2)$ for the row and $4$ (if $k>7$) for the column separation. The optimal row distance is achieved by the union of all $2^{k-1}-1$ binary combinations and called exhaustive code. Until $k=5$ the exhaustive code is just the union of all classifiers of the one-against-all and one-against-one approaches (or their inversions, see table~\ref{tab:exhaustive_ecoc}), but for $k>6$ the number of additional classifiers increases quickly, wherefore instead of an exhaustive code also a suitable subset of those classifiers can be sufficient and improve the column separation.
   
@@ -182,7 +192,7 @@
       \item Extension of Algorithms
 
         The third idea is the inversion of the first two approaches. Instead of modifying the problem and using the same classifier as for the binary classification, we now modify the classifier such that we can leave the classifier unchanged. Typical algorithms in machine learning are decision trees, pattern- or rule-based classifiers, probabilistic classifiers, SVM classifiers, neural network classifiers and proximity-based classifiers. A short description for every algorithm can be found in subsection~\ref{subsec:analysis}. Decision trees, pattern- or rule-based classifiers, probabilistic classifiers as Naïve Bayes and proximity-based classifiers as $k$-nearest-neighbor can be easily adapted to multiclass problems. For the other two algorithms some preliminary considerations are necessary. \\\\
-        SVM classifiers use hyperplanes of dimension $D-1$ described by linear functions to separate the whole input space of dimension $D$ into two subspaces which ideally only contain a single class. Obviously, a single hyperplane is not sufficient for separating more than two classes. Approaches like one-against-all and one-against-one lead to ambiguous subspaces where either more than one class or no class is assigned to. We can avoid these difficulties by considering a single $k$-class discriminant comprising $k$ linear functions of the form
+        SVM classifiers use hyperplanes of dimension $D-1$ described by linear functions to separate the whole input space of dimension $D$ into two subspaces which ideally only contain a single class. Obviously, a single hyperplane is not sufficient for separating more than two classes. Approaches like one-against-all and one-against-one lead to ambiguous subspaces where either more than one class or no class is assigned to. We can avoid these difficulties by considering a single $k$-class discriminant comprising $k$ linear functions (with parameters $\mathbf{w}_{i}$ and $w_{i 0}$) of the form
         \[y_{i}(\mathbf{x})=\mathbf{w}_{i}^{\mathrm{T}} \mathbf{x}+w_{i 0}\]
         and then assigning a point $\mathbf{x}$ to class $i$ if $y_{i}(\mathbf{x})>y_{j}(\mathbf{x})$ for all $j\neq i$. The decision boundary between class $i$ and class $j$ is therefore given by $y_{i}(\mathbf{x})=y_{j}(\mathbf{x})$ and hence corresponds to a $(D-1)$-dimensional hyperplane defined by
         \[\left(\mathbf{w}_{i}-\mathbf{w}_{j}\right)^{\mathrm{T}} \mathbf{x}+\left(w_{i 0}-w_{j 0}\right)=0.\]
@@ -193,7 +203,7 @@
 
   \subsection{Ordinal Classification}
   \label{subsec:ordinal_classification}
-    Ordinal classification problems are a specialization of multiclass classification problems. They refer to an important category of real-world problems, in which the classes the class values exhibit a natural order. Thus, the class attribute is not nominal, but ordinal. However, the possibility of calculating the difference (essential for an interval class attribute) or even the quotient (essential for a ratio class attribute) is usually not given \autocite[Section~1]{Frank2001}. Ordinal classification may be viewed as a bridging problem between the two standard machine-learning tasks of classification and regression, because the set of classes has the property of a finite range given in classification problems as well as the property of a natural order given in regression problems \autocite[Section~1]{Kotsiantis2004}. \\\\
+    Ordinal classification problems are a specialization of multiclass classification problems. They refer to an important category of real-world problems, in which the classes exhibit a natural order. Thus, the class attribute is not nominal, but ordinal. However, the possibility of calculating the difference (essential for an interval class attribute) or even the quotient (essential for a ratio class attribute) is usually not given \autocite[Section~1]{Frank2001}. Ordinal classification may be viewed as a bridging problem between the two standard machine-learning tasks of classification and regression, because the set of classes has the property of a finite range given in classification problems as well as the property of a natural order given in regression problems \autocite[Section~1]{Kotsiantis2004}. \\\\
     As a specialization of a multiclass classification problem, ordinal classification problems can be approached with the same strategies as described above in subsection~\ref{subsec:multiclass_classification}. However, the additional information of the linear order of the classes is ignored. Two strategies tailored to ordinal classification problems taking this information into account are ordinal regression and an adapted transformation to binary classification problems.
     \begin{itemize}
       \item Ordinal Regression
@@ -456,7 +466,9 @@ Instead of using an absolute accuracy value it can make sense to use a relative 
   \section{Experimental Setup}
   \label{sec:experimental_setup}
   
-  \subsubsection{PGN-format}
+  \subsection{1}
+  
+  \subsubsection{PGN Format}
     PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure~\ref{fig:sample_pgn_game}.
 
 	\begin{figure}[H]
@@ -501,8 +513,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:sample_pgn_game}
 	\end{figure}
 	
-    A PGN game contains first a list of tuples with general information of the game (“tag pairs”). Seven of those tags are mandatory (Seven Tag Roster: Event, Site, Date, Round, White, Black, Result), the other tags are optional. \\\\
-    Afterwards the “movetext” section starts. The chess moves themselves are represented using SAN (Standard Algebraic Notation). A move pair (one move of white and one of black) starts with the move pair number followed by a dot and a blank, then the move of white, another blank and the move of black, e.g. 
+    A PGN game contains first a list of tuples with general information of the game (“tag pairs”). Seven of those tags are mandatory (Seven Tag Roster: Event, Site, Date, Round, White, Black, Result), the other tags are optional. Afterwards the “movetext” section starts. The chess moves themselves are represented using SAN (Standard Algebraic Notation). A move pair (one move of white and one of black) starts with the move pair number followed by a dot and a blank, then the move of white, another blank and the move of black, e.g. 
     \begin{quotation}
       7. Bg5 a6.
     \end{quotation}    
@@ -550,7 +561,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     
   	\footnotetext{\url{https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg}, (18.03.2019, 20:56)}
   	
-	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAGs (see below) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table~\ref{tab:comment_move_combinations}.
+	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAGs (see subsection~ref{subsec:nags}) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table~\ref{tab:comment_move_combinations}.
 	
 	\begin{table}[H]
       \centering
@@ -568,27 +579,47 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     
     Besides, by convention there should not be nested braces, however, sometimes nested braces are used to comment different move variants separately.	Those variants need not be part of a comment and are written down in parenthesis. The enumeration of the moves proceeds within a variant and is set back before a new variant starts or the game itself continues. 
    
-  \subsubsection{Chessbase-DB}
-  	Transformation to PGN, language detection using polyglot
-  
   \subsubsection{NAGs}
-	Symbols and corresponding NAGs
+  \label{subsec:nags}
+  
 	
 	\begin{table}[H]
-      \begin{tabular}{| l | l | l |}
+      \subfloat[move-annotating NAGs]{
+      \begin{tabular}{| c | c | l |}
     	\hline
     	NAG & Symbol & Meaning \\ \hline
-    	x & Capture & Rxa1 \\ \hline
-    	+ & Check & Nf6+ \\ \hline
-    	\# & Checkmate & Bb7\# \\ \hline
-    	0-0 & Castling kingside & \\ \hline
-    	0-0-0 & Castling queenside & \\ \hline
-    	= & Promotion & fxg1=Q+ \\ \hline
+    	\$1 & ! & good move \\ \hline
+    	\$2 & ? & poor move \\ \hline
+    	\$3 & !! & very good move \\ \hline
+    	\$4 & ?? & very poor move \\ \hline
+    	\$5 & !? & speculative move \\ \hline
+    	\$6 & ?! & questionable move \\ \hline
       \end{tabular}
+      }
+      \quad
+      \subfloat[position-annotating NAGs]{
+      \begin{tabular}{| c | c | l |}
+    	\hline
+    	NAG & Symbol & Meaning \\ \hline
+    	\$10 & $=$ & drawish position \\ \hline
+    	\$11 &  & equal chances, quiet position \\ \hline
+    	\$12 &  & equal chances, active position \\ \hline
+    	\$13 & $\infty$ & unclear position \\ \hline
+    	\$14 & $+=$ & White has a slight advantage \\ \hline
+    	\$15 & $=+$ & Black has a slight advantage \\ \hline
+    	\$16 & $\pm$ & White has a moderate advantage \\ \hline
+    	\$17 & $\mp$ & Black has a moderate advantage \\ \hline
+    	\$18 & $+-$ & White has a decisive advantage \\ \hline
+    	\$19 & $-+$ & Black has a decisive advantage \\ \hline
+      \end{tabular}
+      }
       \caption{Meaning of NAGs}
       \label{tab:meaning_of_nags}
 	\end{table}
 
+  \subsubsection{Problem Specification}
+  \label{subsec:problem_specification}
+  
   \subsubsection{Python NLTK}
 	RegExp parsing, tokenization, extraction of comment and class  
   
@@ -656,6 +687,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
   \clearpage  
   
   \section{Evaluation of Results}
+  \label{sec:evaluation_of_results}
     tables with number of attributes, tables with accuracies, comparison of confusion matrix\\
     each for simple approach, tf-idf, word embedding
   \clearpage  

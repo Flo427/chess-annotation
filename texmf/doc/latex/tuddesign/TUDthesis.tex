@@ -465,12 +465,17 @@ Instead of using an absolute accuracy value it can make sense to use a relative 
   
   \section{Experimental Setup}
   \label{sec:experimental_setup}
-  
-  \subsection{1}
-  
-  \subsubsection{PGN Format}
-    PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure~\ref{fig:sample_pgn_game}.
-
+    In this chapter we consider the general problem described in the previous chapter this time in the field of chess annotations. Therefore, in the beginning of this chapter, the basic chess game format PGN and the corresponding annotations NAGs are introduced. Afterwards we will follow the six steps on which the process is based on. In the following all necessary definitions and tools are presented and some statistics of the data are given. The results of the analysis and their evaluation are discussed in section~\ref{sec:evaluation_of_results}.
+    
+  \subsection{Problem Description}
+    Chess games can be recorded in plain-text-files with the aim of reviewing and analyzing the game later on. Especially in professionally chess tournaments it is common to note not only the player data and the moves, but also some additional information about the game dynamics like an interim position or decisive good or bad moves. There are two ways to describe these game dynamics and annotate the chess game; either by comments in any natural language or by standardized codes and symbols like NAGs. Combinations of both variants are also common. \\\\
+    For the evaluation of chess games and their machine processing the unified and structured form given by the standardized codes and symbols is preferable to the unstructured form of the comments in natural language. For chess games which only contain annotations in commentary form, it would therefore be helpful to also provide them with standard codes. This results in the problem of converting the comment into an appropriate code. Using the scheme of \citeauthor{Mitchell1997} presented in subsection~\ref{subsec:definition_of_the_problem_and_goals}, we have:
+    \begin{itemize}[noitemsep]
+      \item Task $T:$ determine the correct standard code for a given chess annotation comment
+      \item Performance measure $P:$ percentage of correctly assigned codes in all code assignments (accuracy)
+      \item Experience $E:$ database with tuples of comments and correct codes
+    \end{itemize}
+      
 	\begin{figure}[H]
 	  \centering
       \lstset{commentstyle=\color{blue},morecomment=[s]{\{}{\}},moredelim=[is][\bfseries]{\\textbf\{}{\}},moredelim=[is][\color{red}]{\\nag\{}{\}}}
@@ -513,6 +518,10 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:sample_pgn_game}
 	\end{figure}
 	
+    Before further specifying the input and output of the task $T$ in subsection~\ref{subsec:problem_specification}, we will first take a closer look at the structure of the chess data. The data sets used for the experience $E$ will be presented in subsection~\ref{subsec:data_set_extraction} and the performance measure $P$ will be adapted to the problem in subsection~\ref{subsec:cost_sensitive_evaluation_methods}.
+    
+  \subsubsection{PGN Format}
+    PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure~\ref{fig:sample_pgn_game}. \\\\
     A PGN game contains first a list of tuples with general information of the game (“tag pairs”). Seven of those tags are mandatory (Seven Tag Roster: Event, Site, Date, Round, White, Black, Result), the other tags are optional. Afterwards the “movetext” section starts. The chess moves themselves are represented using SAN (Standard Algebraic Notation). A move pair (one move of white and one of black) starts with the move pair number followed by a dot and a blank, then the move of white, another blank and the move of black, e.g. 
     \begin{quotation}
       7. Bg5 a6.
@@ -581,7 +590,14 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
    
   \subsubsection{NAGs}
   \label{subsec:nags}
-  
+    Numeric Annotation Glyphs (NAGs) are used to annotate chess games with assessments of moves or positions in a standard way. They are standard annotation symbols in PGN files, but can as well be used in other chess formats. A NAG is composed of a “\$” followed by one or more digits. There are 140 standard NAGs in total:
+    \begin{itemize}[noitemsep]
+      \item NAG zero is used as a placeholder
+      \item NAGs with values from 1 to 9 annotate the move just played.
+      \item NAGs with values from 10 to 135 annotate the current position.
+      \item NAGs with values from 136 to 139 describe time pressure.
+    \end{itemize}
+    The NAGs with values from 140 to 255 are partially defined and used unofficially. The most common NAGs are listed in table~\ref{tab:meaning_of_nags} (see \autocite[Section~10]{Edwards1994}).
 	
 	\begin{table}[H]
       \subfloat[move-annotating NAGs]{
@@ -616,22 +632,85 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \caption{Meaning of NAGs}
       \label{tab:meaning_of_nags}
 	\end{table}
+	
+	As shown in table~\ref{tab:meaning_of_nags}, the most common NAGs have a corresponding symbol, which has been used traditionally. Those symbols are composed of the signs “!”, “?”, “+”, “-“, “=” and special signs. It should be emphasized that the subjective symbols do not mix up with the objective move symbols for check and promotion because they are used in different combinations.
 
   \subsubsection{Problem Specification}
   \label{subsec:problem_specification}
-  
-  \subsubsection{Python NLTK}
-	RegExp parsing, tokenization, extraction of comment and class  
-  
-  \subsection{Prepare data for classification}
+    Now the structure of PGN chess files and the corresponding NAGs being clarified, we can identify use cases in which a sentiment analysis of chess annotations might be useful. In PGN files, comments are often assigned to the NAG that precedes this comment. If no NAG is given - which is the case for more than half of all comments (see table~\ref{tab:flie_statistics}) - we could assign the correct NAG automatically if we would have a reliable learned model. Thus, we will collect the data of already correctly mapped comments and NAGs and recognize contained patterns therein. Concretely, the following problems will be discussed:
+    \begin{itemize}
+      \item Classification into move and position annotations
 
-  \subsubsection{Feature extraction}
-    simple features: count(word), advanced features: tf-idf, bigrams, trigrams
+      As already seen in table~\ref{tab:meaning_of_nags}, the NAGs are subdivided into NAGs annotating moves and NAGs annotating positions (those describing time pressure are rarely used and therefore negligible). Both annotation types are used at the same place in the PGN file, in particular directly after a move. Therefore, we need to recognize and learn other patterns in order to distinguish these two types of annotations. For this learning problem, the input space $\mathbb{X}$ and output space $\mathbb{C}$ are defined as follows:
+      \begin{quotation}
+        $\mathbb{X}:=$ set of chess comments without annotation \quad $\mathbb{C}:=\{1,2\}$
+      \end{quotation}
+      The output class $1$ is used for move annotations and the class $2$ for position annotations. 
+      \item Classification of move annotations
 
-  \subsubsection{Generating training instances}
-    structure of arff-file
-	a brilliant counterattack of white
-	a big mistake of black	   
+      Among the move-annotating NAGs there are basically two groups of annotations; positive and negative ones. It should be noted that positivity and negativity does not refer generally to white or black, but from the viewpoint of the player with the move directly before the NAG. We can formulate the classification problem on the same input space in two degrees of difficulty:
+      \begin{quotation}
+        $\mathbb{X}:=$ set of move comments without annotation \quad $\mathbb{C}_{1}:=\{1,2\} \quad \mathbb{C}_{2}:=\{1,2,3,4,5,6\}$
+      \end{quotation}
+      In the first output set, the class $1$ is assigned to all positive move annotations (i.e. \$1, \$3, \$5) and the class $2$ to the negative ones (i.e. \$2, \$4, \$6). In the second output set, each of the six NAGs gets an own class ranked by their “positiveness”. This converts the binary classification problem to an ordinal classification problem with the following mapping of NAGs to classes (1 = most positive, 6 = most negative):
+      \begin{quotation}
+        $1: \$3$ \quad $2: \$1$ \quad $3: \$5$ \quad $4: \$6$ \quad $5: \$2$ \quad $6: \$4$
+      \end{quotation}
+      \item Classification of position annotations
+
+      With the position-annotated NAGs we have a similar situation, but with the decisive difference that a neutral class also exists. So even the simpler classification problem already contains three classes:
+      \begin{quotation}
+        $\mathbb{X}:=$ set of position comments without annotation \quad $\mathbb{C}_{1}:=\{1,2,3\} \quad \mathbb{C}_{2}:=\{1,2,3,4,5,6,7\}$
+      \end{quotation}
+      In the first output set, the class $1$ is assigned to all position annotations with an advantage of white (i.e. \$14, \$16, \$18), the class $2$ to the balanced position annotations (i.e. \$10, \$11, \$12, \$13) and the class $3$ to the annotations with an advantage of black (i.e. \$15, \$17, \$19). In the second output set, classes $1$ and $3$ are each divided into three subclasses, which makes a total of seven ordered classes (1 = best for white, 7 = best for black):
+      \begin{quotation}
+        $1: \$18$ \quad $2: \$16$ \quad $3: \$14$ \quad $4: \$10,\$11,\$12,\$13$ \quad $5: \$15$ \quad $6: \$17$ \quad $7: \$19$
+      \end{quotation}
+    \end{itemize}
+    Note that in all cases only one of the output values can be assigned, i.e. we only face single-label problems.
+  
+  \subsection{Data Set Extraction}
+  \label{subsec:data_set_extraction}
+  
+	\begin{table}[H]
+      \subfloat[move-annotating NAGs]{
+      \begin{tabular}{| c | c | l |}
+    	\hline
+    	NAG & Symbol & Meaning \\ \hline
+    	\$1 & ! & good move \\ \hline
+    	\$2 & ? & poor move \\ \hline
+    	\$3 & !! & very good move \\ \hline
+    	\$4 & ?? & very poor move \\ \hline
+    	\$5 & !? & speculative move \\ \hline
+    	\$6 & ?! & questionable move \\ \hline
+      \end{tabular}
+      }
+      \quad
+      \subfloat[position-annotating NAGs]{
+      \begin{tabular}{| c | c | l |}
+    	\hline
+    	NAG & Symbol & Meaning \\ \hline
+    	\$10 & $=$ & drawish position \\ \hline
+    	\$11 &  & equal chances, quiet position \\ \hline
+    	\$12 &  & equal chances, active position \\ \hline
+    	\$13 & $\infty$ & unclear position \\ \hline
+    	\$14 & $+=$ & White has a slight advantage \\ \hline
+    	\$15 & $=+$ & Black has a slight advantage \\ \hline
+    	\$16 & $\pm$ & White has a moderate advantage \\ \hline
+    	\$17 & $\mp$ & Black has a moderate advantage \\ \hline
+    	\$18 & $+-$ & White has a decisive advantage \\ \hline
+    	\$19 & $-+$ & Black has a decisive advantage \\ \hline
+      \end{tabular}
+      }
+      \caption{Meaning of NAGs}
+      \label{tab:file_statistics}
+	\end{table}
+	
+  \subsection{NLTK Processing}
+    
+   
+  \subsection{Attribute Selection}
+
     
     \newsavebox{\complete}
       \begin{lrbox}{\complete}
@@ -668,22 +747,14 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \caption{Sample arff files}
       \label{fig:sample_arff_files}
 	\end{figure}
-  \clearpage
-  
-  \section{Experiment setup}
-  
-  \subsection{Selecting classes}
-    distribution how many instances per class, splitting into several problems: 2 classes (!,?), 6 classes (!!,!,!?,?!,?,??), 2 classes (+,-), 7 classes --> introduction of dictionary
-    difference if even or odd number of classes ("neutral class")
     
-  \subsection{Tokenizer tuning}
-    punctuation, special chess notations (\#ce etc.)
     
-  \subsection{NLTK Parameters}
-    stopwords, stemming, threshold(hapax), lowercase, bigram, trigram
+  \subsection{Classification Algorithms}
+  
+    
+  \subsection{Cost-sensitive Evaluation Methods}    
+  \label{subsec:cost_sensitive_evaluation_methods}
 
-  \subsection{Classifiers}
-    which classifier to use? --> MCC (x3), OCC, RF, NBM
   \clearpage  
   
   \section{Evaluation of Results}

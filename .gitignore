@@ -7,3 +7,12 @@ texmf/doc/latex/tuddesign/TUDthesis.lof
 texmf/doc/latex/tuddesign/TUDthesis.run.xml
 texmf/doc/latex/tuddesign/TUDthesis.toc
 chess-annotations.arff
+*.out
+*.lot
+*.blg
+*.bbl
+*.pgi
+*.ini
+files/chessbasedb.pgn
+*.log
+texmf/doc/latex/tuddesign/TUDreport-fig.pdf

@@ -670,8 +670,10 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     Note that in all cases only one of the output values can be assigned, i.e. we only face single-label problems.
   
   \subsection{Data Set Extraction}
-  \label{subsec:data_set_extraction}
-  
+  \label{subsec:data_set_extraction}  
+    As data sources a set of files\footnote{\url{http://www.angelfire.com/games3/smartbridge/}} in standard PGN format is used as well as a bundle of commented games that have been extracted from Mega Database 2012\footnote{\url{https://shop.chessbase.com/en/products/mega_database_2012}} in ChessBase format. The related user interface offers the possibility to select the desired games and convert them into the standard PGN format. As a result, we obtain a set of files each containing several games in PGN format like seen in figure~\ref{fig:sample_pgn_game}. In total, we analyze 39 files with 68,606 games. In the next step those files have to be read and converted into data sets with comments that can be used within the classification problem. For this purpose, the natural language kit NLTK is used. \\\\
+    NLTK\footnote{\url{https://www.nltk.org/}} is a python library offering various technique for natural language processing (NLP). It can be used to extract information from web files in html or any other text file format. Besides, it offers access to big corpora and other lexical resources. The NLP process and its corresponding code in python using NLTK is shown in figure\ref{fig:nlp_pipeline}. Note that the pictured steps of tokenization and normalization are not considered in this section, but in subsection~\ref{subsec:nltk_processing}.
+
     \begin{figure}[H]
       \centering
       \includegraphics{images/nlp_pipeline}
@@ -679,24 +681,30 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:nlp_pipeline}
     \end{figure}
     
+    Applied to the chess annotation problem, the raw text of the PGN files can be extracted and decoded by the following two commands
+    
     \lstset{language=Python}
     \begin{lstlisting}
     raw = open(file, 'rb').read()
     str = raw.decode('iso-8859-1')
     \end{lstlisting}
   
-	\begin{table}[H]
-      \begin{tabular}{| l | r | r |}
-    	\hline
-    	 & Count & Percentage of processed data \\ \hline
-    	Classes \& Comments & $509,992$ & $100.00\%$ \\ \hline
-    	Comments & $1,123,538$ & $45.39\%$ \\ \hline
-    	Classes & $2,035,121$ & $25.06\%$ \\ \hline
-      \end{tabular}
-      \caption{PGN file statistics}
-      \label{tab:file_statistics}
-	\end{table}
-	
+    where the variable \textit{file} contains both the relative path and the filename. The process is repeated for each filename saved in a list. An ISO 8859-1-decoding is used instead of an ASCII-decoding to detect the Western European letters used in comments and player names correctly. \\\\
+    However, we are not interested in the complete raw text of the PGN files, but only in the comments. As we have already seen in table~\ref{tab:comment_move_combinations}, there are different comments in a PGN file. Since we want to be able to use supervised learning approaches, we need to know the correct class of a comment in the file. Therefore, the comments which are from importance are those connected to a traditional chess symbol or a NAG. To filter out such comments, we use regular expressions and distinguish between three cases:
+    \begin{itemize}
+      \item NAGs immediately followed by a comment:
+
+        $\backslash$\$(?P<class>[0-9]+)$\backslash$s*$\backslash$\{(?P<comment>[\^{}\{\}]*)$\backslash$\}
+      \item NAGs followed by another NAG and thereafter a comment:
+
+        $\backslash$\$(?P<class>[0-9]+)$\backslash$s*$\backslash$\$[0-9]+$\backslash$s*$\backslash$\{(?P<comment>[\^{}\{\}]*)$\backslash$\}
+      \item Standard symbols for move annotations (i.e. $!,?,!!,??,!?,?!$) immediately followed by a comment:
+
+        (?P<class>[!$\backslash$?]\{1,2\})$\backslash$s*$\backslash$\{(?P<comment>[\^{}\{\}]*)$\backslash$\}
+    \end{itemize}
+    The match results are saved as tuples of the class (NAGs without dollar sign, symbols unchanged) and the comment. The final class is set depending on the rules of the considered classification problem by using a python dictionary, e.g. for the binary move annotation problem all the classes $1, 3, 5, !, !!, !?$ are mapped to the final class $1$. \\\\
+    So far, we ensured the collected data to be complete (class is known), in a specific format (PGN, processed to tuple) and available in sufficient quantity. Before proceeding with the next step, we will perform some basic analysis on the extracted data to estimate the quantity of comments per class. This includes a comparison of the total count of all symbols and NAG types for every of the three tasks we specified in subsection~\ref{subsec:problem_specification}. If the counts would differ a lot, different weights should be assigned to the instances to avoid imbalances and thus difficulties in classification. The data shown in table~\ref{tab:class_distributions} has indeed some noticeable imbalances; instances with positive move annotations are more common than negative ones as well as surprisingly an advantage of white is more common than an advantage of black in the position annotations. However, these imbalances are in an uncritical range, which probably requires no weighting of instances.
+
 	\begin{table}[H]
       \subfloat[all annotations]{
       \begin{tabular}{| r | r | r | r |}
@@ -743,6 +751,23 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{tab:class_distributions}
 	\end{table}
 	
+    The last criterion quality will be discussed in subsection~\ref{subsec:nltk_processing}. Possible problems are that the comment is in a different language than English or that the comment is too short to make an informed classification decision. \\\\
+    Apart from the statistics on the file data to be further processed, some information about the discarded data are relevant for the usage of the results we obtain. By collecting the number of all comments not annotated with a NAG or standard symbol yet we obtain the potential of improvement regarding the comments. As shown in table~\ref{tab:file_statistics}, only $45.39\%$ of the comments are preceded by a NAG or symbol. For the remaining $54.61\%$ of the comments, which are still more than half a million, the comment could be completed with an appropriate NAG or symbol. The other way around, this approach delivers a ratio of $25.06\%$ NAGs and standard symbols that are followed by a comment. In contrast to the first case, adding a comment is not useful or necessary, while adding a NAG is usually possible for most comments except those describing general game information like opening variants or summaries.
+	
+	\begin{table}[H]
+      \begin{tabular}{| l | r | r |}
+    	\hline
+    	 & Count & Percentage of processed data \\ \hline
+    	Classes \& Comments & $509,992$ & $100.00\%$ \\ \hline
+    	Comments & $1,123,538$ & $45.39\%$ \\ \hline
+    	Classes & $2,035,121$ & $25.06\%$ \\ \hline
+      \end{tabular}
+      \caption{PGN file statistics}
+      \label{tab:file_statistics}
+	\end{table}
+	
+    To get the values of table~\ref{tab:file_statistics}, the number of comments is estimated by counting all occurrences of opening braces (\{), the number of NAGs by all occurrences of the dollar sign (\$) and the number of standard symbols by the number of matches of the regular expression $\backslash$d$\backslash$+*$\backslash$s*[!$\backslash$?]+ (an arbitrary combination of the symbols $!$ and $?$, preceded by the number of the move field square and optional a check(mate) symbol and whitespace. Due to this rudimental approach of counting, the expressions could also match false positives, if some of the symbols are used in a different sense. However, this number of false positives is small and therefore negligible.	
+
   \subsection{NLTK Processing}
   \label{subsec:nltk_processing}    
    

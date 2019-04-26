@@ -1,4 +1,3 @@
-import math
 import nltk
 import re
 
@@ -7,10 +6,6 @@ REMOVE_STOPWORDS = False
 MIN_FREQ_WORD = 99
 MIN_FREQ_BIGRAM = 999999
 MIN_FREQ_TRIGRAM = 999999
-
-"""
-Extract comments of .pgn-file
-"""
 
 files = [
 	'bali02.pgn',
@@ -51,7 +46,7 @@ files = [
 	'wijk_2003_annotated.pgn',
 	'wijk_2004_annotated.pgn',
 	'world_matches.pgn',
-	#'chessbasedb.pgn',
+	'chessbasedb.pgn',
 ]
 
 dict_total = {
@@ -270,61 +265,66 @@ dict_position_2 = {
 }
 
 from nltk.tokenize import RegexpTokenizer
-from polyglot.detect import Detector
+from nltk.stem.wordnet import WordNetLemmatizer
+from langid.langid import LanguageIdentifier, model
+
+tokenizer = RegexpTokenizer('#[\w\d]{2}|\$\d+|[!\?]+|[\-\+/=]+|1/2|(?:\w\.)+|\.+|[\w\d\-\']+|\S')
+lemmatizer = WordNetLemmatizer()
+identifier = LanguageIdentifier.from_modelstring(model, norm_probs=True)
+english_vocab = set(w.lower() for w in nltk.corpus.words.words())
+
+"""
+Extract comments of .pgn-file
+"""
 
 def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment_data_move_2, comment_data_position_1, comment_data_position_2):
 	raw = open(file, 'rb').read()
 	str = raw.decode('iso-8859-1')
-	tokenizer = RegexpTokenizer('#[\w\d]{2}|\$\d+|[!\?]+|[\-\+/=]+|1/2|(?:\w\.)+|\.+|[\w\d\-\']+|\S')
-    
-	comments = re.findall(r'\$(?P<class>[0-9]+)\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
-	comments += re.findall(r'\$(?P<class>[0-9]+)\s*\$[0-9]+\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
-	comments += re.findall(r'(?P<class>[!\?]{1,2})\s*\{(?P<comment>[^{}]*)\}', str)	#symbol
 	
-#	for pair in comments:
-#		print(pair[0])
-#		print(pair[1])
-#		print(Detector(pair[1], quiet=True).languages)
-		
-	comments_total = []
-	comments_move_1 = []
-	comments_move_2 = []
-	comments_position_1 = []
-	comments_position_2 = []
-	comments_total += [(tokenizer.tokenize(pair[1].lower()), dict_total[pair[0]]) for pair in comments if dict_total[pair[0]]]
-	comments_move_1 += [(tokenizer.tokenize(pair[1].lower()), dict_move_1[pair[0]]) for pair in comments if dict_move_1[pair[0]]]
-	comments_move_2 += [(tokenizer.tokenize(pair[1].lower()), dict_move_2[pair[0]]) for pair in comments if dict_move_2[pair[0]]]
-	comments_position_1 += [(tokenizer.tokenize(pair[1].lower()), dict_position_1[pair[0]]) for pair in comments if dict_position_1[pair[0]]]
-	comments_position_2 += [(tokenizer.tokenize(pair[1].lower()), dict_position_2[pair[0]]) for pair in comments if dict_position_2[pair[0]]]
-	comment_data_total += comments_total
-	comment_data_move_1 += comments_move_1
-	comment_data_move_2 += comments_move_2
-	comment_data_position_1 += comments_position_1
-	comment_data_position_2 += comments_position_2
-	if len(comments):
-		average_length = sum(len(comment[1]) for comment in comments) / len(comments)
-	else:
-		average_length = 0
-	if len(comments):
-		average_tokens = sum(len(comment[0]) for comment in comments) / len(comments)
-	else:
-		average_tokens = 0
-	#print(len(comments), average_length, average_tokens)
-
+	pairs = re.findall(r'\$(?P<class>[0-9]+)\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
+	pairs += re.findall(r'\$(?P<class>[0-9]+)\s*\$[0-9]+\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
+	pairs += re.findall(r'(?P<class>[!\?]{1,2})\s*\{(?P<comment>[^{}]*)\}', str)	#symbol
+	
+	for pair in pairs:
+		test = identifier.classify(pair[1])
+		if test[0] != "en" and test[1] > 0.99:
+			break
+		if dict_total[pair[0]]:
+			comment = tokenizer.tokenize(pair[1].lower())
+			count = 0
+			for token in comment[0]:
+				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count == 3:
+					break
+				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count < 3:
+					count += 1
+			if count == 3:
+				comment_data_total += [(comment, dict_total[pair[0]])]
+				if dict_move_1[pair[0]]:
+					comment_data_move_1 += [(comment, dict_move_1[pair[0]])]
+					comment_data_move_2 += [(comment, dict_move_2[pair[0]])]
+				if dict_position_1[pair[0]]:
+					comment_data_position_1 += [(comment, dict_position_1[pair[0]])]
+					comment_data_position_2 += [(comment, dict_position_2[pair[0]])]
+	
+	"""
 	fdist_complete = nltk.FreqDist()
 	fdist_move = nltk.FreqDist()
 	fdist_position = nltk.FreqDist()
-	for pair in comments:
+	for pair in pairs:
 		fdist_complete[pair[0]] += 1
 		fdist_move[dict_move_1[pair[0]]] += 1
 		fdist_position[dict_position_1[pair[0]]] += 1
 	cfd_complete[file] = fdist_complete
 	cfd_move[file] = fdist_move
 	cfd_position[file] = fdist_position
+	"""
 
-cfd_complete = nltk.ConditionalFreqDist()	
+"""
+cfd_total = nltk.ConditionalFreqDist()	
 cfd_move = nltk.ConditionalFreqDist()	
 cfd_position = nltk.ConditionalFreqDist()	
+"""
+
 comment_data_total = []
 comment_data_move_1 = []
 comment_data_move_2 = []
@@ -332,22 +332,25 @@ comment_data_position_1 = []
 comment_data_position_2 = []
 for file in files:
 	read_comments_of_file('files/' + file, comment_data_total, comment_data_move_1, comment_data_move_2, comment_data_position_1, comment_data_position_2)
-#cfd_total.tabulate()	
-#cfd_move.tabulate()	
-#cfd_position.tabulate()
+
+"""
+cfd_total.tabulate()	
+cfd_move.tabulate()	
+cfd_position.tabulate()
+"""
 
 print("\nComments by token count\n")
 fdist_token_count = nltk.FreqDist()
 for comment in comment_data_total:
 	fdist_token_count[len(comment[0])] += 1
-fdist_token_count.tabulate(10)
+fdist_token_count.tabulate()
 
 print("\nTokens by count\n")
 fdist_tokens = nltk.FreqDist()
 for comment in comment_data_total:
 	for token in comment[0]:
 		fdist_tokens[token] += 1
-fdist_tokens.tabulate(10)
+fdist_tokens.tabulate()
 
 """
 Ectract classification features
@@ -358,12 +361,15 @@ from nltk.stem.porter import PorterStemmer
 
 def rating_features(comment, top_words, top_bigrams, top_trigrams):
 	features = {}
-	for word in top_words:
-		features[word] = comment.count(word)
-	for bigram in top_bigrams:
-		features[bigram] = comment.count(bigram)
-	for trigram in top_trigrams:
-		features[trigram] = comment.count(trigram)
+	for word in comment:
+		if word in top_words:
+			features[word] += 1
+	for bigram in nltk.bigrams(comment):
+		if bigram in top_bigrams:
+			features[bigram] += 1
+	for trigram in nltk.trigrams(comment):
+		if trigram in top_trigrams:
+			features[trigram] += 1
 	return features
 
 def create_featuresets(comment_data, top_words, top_bigrams, top_trigrams):

@@ -285,10 +285,12 @@ def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment
 	pairs += re.findall(r'\$(?P<class>[0-9]+)\s*\$[0-9]+\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
 	pairs += re.findall(r'(?P<class>[!\?]{1,2})\s*\{(?P<comment>[^{}]*)\}', str)	#symbol
 	
+	#buff = ""
 	for pair in pairs:
 		test = identifier.classify(pair[1])
 		if test[0] != "en" and test[1] > 0.99:
-			break
+			#buff += ("N1 " + '{:>3}'.format(pair[0]) + " " + pair[1].replace("\n", " ").replace("\r", " ") + "\n")
+			continue
 		if dict_total[pair[0]]:
 			comment = tokenizer.tokenize(pair[1].lower())
 			count = 0
@@ -298,6 +300,7 @@ def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment
 				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count < 3:
 					count += 1
 			if count == 3:
+				#buff += ("Y  ")		    
 				comment_data_total += [(comment, dict_total[pair[0]])]
 				if dict_move_1[pair[0]]:
 					comment_data_move_1 += [(comment, dict_move_1[pair[0]])]
@@ -305,6 +308,14 @@ def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment
 				if dict_position_1[pair[0]]:
 					comment_data_position_1 += [(comment, dict_position_1[pair[0]])]
 					comment_data_position_2 += [(comment, dict_position_2[pair[0]])]
+	"""
+			if count < 3:
+				buff += ("N3 ")
+		else:
+			buff += ("N2 ")   
+		buff += ('{:>3}'.format(pair[0]) + " " + pair[1].replace("\n", " ").replace("\r", " ") + "\n")
+	instances.write(buff)
+	"""
 	
 	"""
 	fdist_complete = nltk.FreqDist()
@@ -325,6 +336,7 @@ cfd_move = nltk.ConditionalFreqDist()
 cfd_position = nltk.ConditionalFreqDist()	
 """
 
+#instances = open("instances.txt", "w")
 comment_data_total = []
 comment_data_move_1 = []
 comment_data_move_2 = []

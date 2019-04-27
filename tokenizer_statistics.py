@@ -3,9 +3,9 @@ import re
 
 STEMMING = False
 REMOVE_STOPWORDS = False
-MIN_FREQ_WORD = 99
-MIN_FREQ_BIGRAM = 999999
-MIN_FREQ_TRIGRAM = 999999
+MIN_FREQ_WORD = 1
+MIN_FREQ_BIGRAM = 1
+MIN_FREQ_TRIGRAM = 1
 
 files = [
 	'bali02.pgn',
@@ -292,7 +292,7 @@ def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment
 		if dict_total[pair[0]]:
 			comment = tokenizer.tokenize(pair[1].lower())
 			count = 0
-			for token in comment[0]:
+			for token in comment:
 				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count == 3:
 					break
 				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count < 3:
@@ -343,24 +343,26 @@ print("\nComments by token count\n")
 fdist_token_count = nltk.FreqDist()
 for comment in comment_data_total:
 	fdist_token_count[len(comment[0])] += 1
-fdist_token_count.tabulate()
+#fdist_token_count.tabulate()
 
 print("\nTokens by count\n")
 fdist_tokens = nltk.FreqDist()
 for comment in comment_data_total:
 	for token in comment[0]:
 		fdist_tokens[token] += 1
-fdist_tokens.tabulate()
+#fdist_tokens.tabulate()
 
 """
 Ectract classification features
 """
 
+from collections import Counter
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
 def rating_features(comment, top_words, top_bigrams, top_trigrams):
-	features = {}
+	features = Counter()
+	features['NUMBER_OF_TOKENS'] = len(comment)
 	for word in comment:
 		if word in top_words:
 			features[word] += 1
@@ -415,11 +417,11 @@ top_trigrams_position_1 = []
 top_words_position_2 = []
 top_bigrams_position_2 = []
 top_trigrams_position_2 = []
-#featuresets_total = create_featuresets(comment_data_total, top_words_total, top_bigrams_total, top_trigrams_total)
-#featuresets_move_1 = create_featuresets(comment_data_move_1, top_words_move_1, top_bigrams_move_1, top_trigrams_move_1)
-#featuresets_move_2 = create_featuresets(comment_data_move_2, top_words_move_2, top_bigrams_move_2, top_trigrams_move_2)
-#featuresets_position_1 = create_featuresets(comment_data_position_1, top_words_position_1, top_bigrams_position_1, top_trigrams_position_1)
-#featuresets_position_2 = create_featuresets(comment_data_position_2, top_words_position_2, top_bigrams_position_2, top_trigrams_position_2)
+featuresets_total = create_featuresets(comment_data_total, top_words_total, top_bigrams_total, top_trigrams_total)
+featuresets_move_1 = create_featuresets(comment_data_move_1, top_words_move_1, top_bigrams_move_1, top_trigrams_move_1)
+featuresets_move_2 = create_featuresets(comment_data_move_2, top_words_move_2, top_bigrams_move_2, top_trigrams_move_2)
+featuresets_position_1 = create_featuresets(comment_data_position_1, top_words_position_1, top_bigrams_position_1, top_trigrams_position_1)
+featuresets_position_2 = create_featuresets(comment_data_position_2, top_words_position_2, top_bigrams_position_2, top_trigrams_position_2)
 
 """
 Write arff file
@@ -428,22 +430,36 @@ Write arff file
 def write_arff(featuresets, problem_name, classes, top_words, top_bigrams, top_trigrams):
     arff = open("chess-annotations-" + problem_name + ".arff", "w")
     RELATION_NAME = "comment"									 
-    arff.write("@RELATION " + RELATION_NAME + "\n")
+    buff = ("@RELATION " + RELATION_NAME + "\n")
     for word in top_words:
-        arff.write("@ATTRIBUTE COUNT(" + str(word).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") INTEGER\n")
+        buff += ("@ATTRIBUTE COUNT(" + str(word).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") INTEGER\n")
     for bigram in top_bigrams:
-        arff.write("@ATTRIBUTE COUNT(" + str(bigram).replace("\"", "_quote_").replace(" ", "").replace("'", "").replace(",", "_").replace("%", "_percent_") + ") INTEGER\n")
+        buff += ("@ATTRIBUTE COUNT(" + str(bigram[0]).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_")
+		+ "_" + str(bigram[1]).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") INTEGER\n")
     for trigram in top_trigrams:
-        arff.write("@ATTRIBUTE COUNT(" + str(trigram).replace("\"", "_quote_").replace(" ", "").replace("'", "").replace(",", "_").replace("%", "_percent_") + ") INTEGER\n")
-    arff.write("@ATTRIBUTE CLASS {" + classes + "}\n") 
-    arff.write("@DATA\n")
+        buff += ("@ATTRIBUTE COUNT(" + str(trigram[0]).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_")
+		 + "_" + str(trigram[1]).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_")
+		  + "_" + str(trigram[2]).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") INTEGER\n")
+    buff += ("@ATTRIBUTE NUMBER_OF_TOKENS INTEGER\n") 
+    buff += ("@ATTRIBUTE CLASS {" + classes + "}\n") 
+    buff += ("@DATA\n")
     for (features, g) in featuresets:
-        buff = ""
-        buff += ("{" + ", ".join([str(idx) + " " + str(features[f]) for idx, f in enumerate(features) if features[f] > 0]) + ", " + str(len(features)) + " " + str(g) + "}\n")        
-        arff.write(buff)
+        buff += ("{")
+        for idx, f in enumerate(top_words):
+            if features[f] > 0:
+                buff += (str(idx) + " " + str(features[f]) + ", ")
+        for idx, f in enumerate(top_bigrams):
+            if features[f] > 0:
+                buff += (str(len(top_words) + idx) + " " + str(features[f]) + ", ")
+        for idx, f in enumerate(top_trigrams):
+            if features[f] > 0:
+                buff += (str(len(top_words) + len(top_bigrams) + idx) + " " + str(features[f]) + ", ")
+        buff += (str(len(top_words) + len(top_bigrams) + len(top_trigrams)) + " " + str(features['NUMBER_OF_TOKENS']) + ", ")        
+        buff += (str(len(top_words) + len(top_bigrams) + len(top_trigrams) + 1) + " " + str(g) + "}\n")        
+    arff.write(buff)
 
-#write_arff(featuresets_total, "total", "1, 2", top_words_total, top_bigrams_total, top_trigrams_total)  
-#write_arff(featuresets_move_1, "move-1", "1, 2", top_words_move_1, top_bigrams_move_1, top_trigrams_move_1)  
-#write_arff(featuresets_move_2, "move-2", "1, 2, 3, 4, 5, 6", top_words_move_2, top_bigrams_move_2, top_trigrams_move_2)  
-#write_arff(featuresets_position_1, "position-1", "1, 2, 3", top_words_position_1, top_bigrams_position_1, top_trigrams_position_1)  
-#write_arff(featuresets_position_2, "position-2", "1, 2, 3, 4, 5, 6, 7", top_words_position_2, top_bigrams_position_2, top_trigrams_position_2)  
+write_arff(featuresets_total, "total", "1, 2", top_words_total, top_bigrams_total, top_trigrams_total)  
+write_arff(featuresets_move_1, "move-1", "1, 2", top_words_move_1, top_bigrams_move_1, top_trigrams_move_1)  
+write_arff(featuresets_move_2, "move-2", "1, 2, 3, 4, 5, 6", top_words_move_2, top_bigrams_move_2, top_trigrams_move_2)  
+write_arff(featuresets_position_1, "position-1", "1, 2, 3", top_words_position_1, top_bigrams_position_1, top_trigrams_position_1)  
+write_arff(featuresets_position_2, "position-2", "1, 2, 3, 4, 5, 6, 7", top_words_position_2, top_bigrams_position_2, top_trigrams_position_2)  

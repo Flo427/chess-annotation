@@ -277,6 +277,10 @@ english_vocab = set(w.lower() for w in nltk.corpus.words.words())
 Extract comments of .pgn-file
 """
 
+import time
+
+start = time.time()
+
 def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment_data_move_2, comment_data_position_1, comment_data_position_2):
 	raw = open(file, 'rb').read()
 	str = raw.decode('iso-8859-1')
@@ -284,22 +288,32 @@ def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment
 	pairs = re.findall(r'\$(?P<class>[0-9]+)\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
 	pairs += re.findall(r'\$(?P<class>[0-9]+)\s*\$[0-9]+\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
 	pairs += re.findall(r'(?P<class>[!\?]{1,2})\s*\{(?P<comment>[^{}]*)\}', str)	#symbol
+	comment_data_total += [(tokenizer.tokenize(pair[1].lower()), dict_total[pair[0]]) for pair in pairs]
 	
-	#buff = ""
+	"""#buff = ""
+	global instances
+	global instances_total
 	for pair in pairs:
+		instances_total += 1
+		if not (instances_total % 1000):
+			end = time.time()
+			print(instances, instances_total, end - start)
+		comment = tokenizer.tokenize(pair[1].lower())
+		if len(comment) < 20 or len(comment) > 100:
+			continue
 		test = identifier.classify(pair[1])
 		if test[0] != "en" and test[1] > 0.99:
 			#buff += ("N1 " + '{:>3}'.format(pair[0]) + " " + pair[1].replace("\n", " ").replace("\r", " ") + "\n")
 			continue
 		if dict_total[pair[0]]:
-			comment = tokenizer.tokenize(pair[1].lower())
 			count = 0
 			for token in comment:
-				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count == 3:
+				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count == 10:
 					break
-				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count < 3:
+				if (lemmatizer.lemmatize(token, 'n') in english_vocab or lemmatizer.lemmatize(token, 'v') in english_vocab) and count < 10:
 					count += 1
-			if count == 3:
+			if count == 10:
+				instances += 1
 				#buff += ("Y  ")		    
 				comment_data_total += [(comment, dict_total[pair[0]])]
 				if dict_move_1[pair[0]]:
@@ -308,7 +322,7 @@ def read_comments_of_file(file, comment_data_total, comment_data_move_1, comment
 				if dict_position_1[pair[0]]:
 					comment_data_position_1 += [(comment, dict_position_1[pair[0]])]
 					comment_data_position_2 += [(comment, dict_position_2[pair[0]])]
-	"""
+	
 			if count < 3:
 				buff += ("N3 ")
 		else:
@@ -342,8 +356,12 @@ comment_data_move_1 = []
 comment_data_move_2 = []
 comment_data_position_1 = []
 comment_data_position_2 = []
+instances = 0
+instances_total = 0
 for file in files:
 	read_comments_of_file('files/' + file, comment_data_total, comment_data_move_1, comment_data_move_2, comment_data_position_1, comment_data_position_2)
+print(instances)
+print(instances_total)
 
 """
 cfd_total.tabulate()	
@@ -355,7 +373,7 @@ print("\nComments by token count\n")
 fdist_token_count = nltk.FreqDist()
 for comment in comment_data_total:
 	fdist_token_count[len(comment[0])] += 1
-#fdist_token_count.tabulate()
+fdist_token_count.tabulate()
 
 print("\nTokens by count\n")
 fdist_tokens = nltk.FreqDist()

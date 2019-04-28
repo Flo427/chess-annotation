@@ -16,3 +16,4 @@ chess-annotations.arff
 files/chessbasedb.pgn
 *.log
 texmf/doc/latex/tuddesign/TUDreport-fig.pdf
+tokenizer-tests/

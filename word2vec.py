@@ -1,6 +1,6 @@
 import re
 
-MIN_FREQ = 1
+MIN_FREQ = 5
 MAX_FEATURES = 100000
 
 """
@@ -113,7 +113,7 @@ def identity_tokenizer(text):
     return text
 
 comments = [c for (c,_) in comment_data]
-tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ, tokenizer=identity_tokenizer, lowercase=False)
+tfidf_vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, lowercase=False)
 tfidf_vectorizer.fit_transform(comments)
 
 model_own = Word2Vec(comments, size=300, min_count=MIN_FREQ)

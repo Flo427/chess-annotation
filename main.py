@@ -8,8 +8,8 @@ MAX_COMMENT_LENGTH = 49
 MIN_ENGLISH_WORDS = 3
 LOWERCASE = True
 LEMMATIZING = False
-MIN_FREQ = 1
-MAX_FEATURES = 100000
+MIN_FREQ = 5
+MAX_FEATURES = 1000
 
 files = [
 	'bali02.pgn',
@@ -288,11 +288,11 @@ print("\nEXTRACT COMMENTS OF PGN-FILE\n")
 
 def read_comments_of_file(file, comment_data):
 	raw = open(file, 'rb').read()
-	str = raw.decode('iso-8859-1')
+	string = raw.decode('iso-8859-1')
 	
-	pairs = re.findall(r'\$(?P<class>[0-9]+)\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
-	pairs += re.findall(r'\$(?P<class>[0-9]+)\s*\$[0-9]+\s*\{(?P<comment>[^{}]*)\}', str)		#NAG
-	pairs += re.findall(r'(?P<class>[!\?]{1,2})\s*\{(?P<comment>[^{}]*)\}', str)	#symbol
+	pairs = re.findall(r'\$(?P<class>[0-9]+)\s*\{(?P<comment>[^{}]*)\}', string)		#NAG
+	pairs += re.findall(r'\$(?P<class>[0-9]+)\s*\$[0-9]+\s*\{(?P<comment>[^{}]*)\}', string)		#NAG
+	pairs += re.findall(r'(?P<class>[!\?]{1,2})\s*\{(?P<comment>[^{}]*)\}', string)	#symbol
 	
 	global instances
 	global instances_total
@@ -337,19 +337,61 @@ Ectract classification features
 
 print("\nEXTRACT CLASSIFICATION FEATURES\n")
 
+import numpy as np
+from gensim.models import Word2Vec, KeyedVectors
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from scipy.sparse import coo_matrix
 
-comments = [" ".join(token) for (token,_) in comment_data]
-count_vectorizer = CountVectorizer(min_df=MIN_FREQ, max_df=1.0, max_features=MAX_FEATURES, ngram_range=(1,3))
+def identity_tokenizer(text):
+    return text
+
+comments = [comment for (comment,_) in comment_data]
+
+"""
+count
+"""
+
+count_vectorizer = CountVectorizer(min_df=MIN_FREQ, max_features=MAX_FEATURES, ngram_range=(1,3), tokenizer=identity_tokenizer, lowercase=False)
 count_matrix = count_vectorizer.fit_transform(comments)
 count_feature_names = count_vectorizer.get_feature_names()
-tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ, max_df=1.0, max_features=MAX_FEATURES, ngram_range=(1,3))
+
+end = time.time()
+print("count finished " + str(end - start))
+
+"""
+tf-idf
+"""
+
+tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ, max_features=MAX_FEATURES, ngram_range=(1,3), tokenizer=identity_tokenizer, lowercase=False)
 tfidf_matrix = tfidf_vectorizer.fit_transform(comments)
 tfidf_feature_names = tfidf_vectorizer.get_feature_names()
 
 end = time.time()
-print(end - start)
+print("tf-idf finished " + str(end - start))
+
+"""
+word embeddings
+"""
+
+tfidf_vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, lowercase=False)
+tfidf_vectorizer.fit_transform(comments)
+
+model_own = Word2Vec(comments, size=300, min_count=MIN_FREQ)
+model_own.train(comments, total_examples=len(comments), epochs=10)
+model_pretrained = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
+
+def train_model(model):
+	matrix = np.zeros(shape=(len(comments), model.wv.vector_size))
+	for idx, comment in enumerate(comments):
+		vectors = [model.wv[token] * tfidf_vectorizer.idf_[tfidf_vectorizer.vocabulary_[token]] for token in comment if token in model.wv.vocab.keys()]
+		matrix[idx] = np.mean(vectors, axis=0)
+	return matrix
+	
+w2v_own_matrix = train_model(model_own)
+w2v_pretrained_matrix = train_model(model_pretrained)
+
+end = time.time()
+print("word embeddings finished " + str(end - start))
 
 """
 Write arff files
@@ -363,7 +405,7 @@ def write_arff(feature_type, problem_name, classes, output_class, feature_names,
     buff = ("@RELATION " + RELATION_NAME + "\n")
     buff += ("@ATTRIBUTE number_of_tokens INTEGER\n") 
     for feature in feature_names:
-        buff += ("@ATTRIBUTE " + feature_type + "(" + str(feature).replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") REAL\n")
+        buff += ("@ATTRIBUTE " + feature_type + "(" + str(feature).replace(" ", "_").replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") REAL\n")
     buff += ("@ATTRIBUTE class {" + classes + "}\n") 
     buff += ("@DATA\n")    
     for comment in range(len(comment_data)):
@@ -377,7 +419,7 @@ def write_arff(feature_type, problem_name, classes, output_class, feature_names,
         buff += (str(len(feature_names) + 1) + " " + str(output_class[comment_data[comment][1]]) + "}\n")        
     arff.write(buff)
 
-for (feature_type, feature_names, matrix) in [("count", count_feature_names, count_matrix), ("tfidf", tfidf_feature_names, tfidf_matrix)]:
+for (feature_type, feature_names, matrix) in [("count", count_feature_names, count_matrix), ("tfidf", tfidf_feature_names, tfidf_matrix), ("w2v-own", range(1, w2v_own_matrix.shape[1] + 1), w2v_own_matrix), ("w2v-pretrained", range(1, w2v_pretrained_matrix.shape[1] + 1), w2v_pretrained_matrix)]:
 	write_arff(feature_type, "total", "1, 2", output_class_total, feature_names, matrix) 
 	write_arff(feature_type, "move-1", "1, 2", output_class_move_1, feature_names, matrix)  
 	write_arff(feature_type, "move-2", "1, 2, 3, 4, 5, 6", output_class_move_2, feature_names, matrix)  

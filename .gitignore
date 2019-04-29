@@ -17,3 +17,5 @@ files/chessbasedb.pgn
 *.log
 texmf/doc/latex/tuddesign/TUDreport-fig.pdf
 tokenizer-tests/
+*.gz
+*.arff

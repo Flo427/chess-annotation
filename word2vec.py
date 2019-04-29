@@ -48,7 +48,7 @@ files = [
 	'world_matches.pgn',
 """
 
-dict = {
+output_class_total = {
 	"1": 2,
 	"2": 5,
 	"3": 1,
@@ -95,7 +95,7 @@ def read_comments_of_file(file, comment_data):
 	comments = re.findall(r'\$(?P<class>[0-9]+)\s*{(?P<comment>[^{}]*)}', str)		#NAG
 	comments += re.findall(r'(?P<class>[!\?]{1,2})\s*{(?P<comment>[^{}]*)}', str)	#symbol
 
-	comment_data += [(tokenizer.tokenize(pair[1].lower()), dict[pair[0]]) for pair in comments if dict[pair[0]]]
+	comment_data += [(tokenizer.tokenize(pair[1].lower()), output_class_total[pair[0]]) for pair in comments if output_class_total[pair[0]]]
 
 comment_data = []
 for file in files:
@@ -109,29 +109,23 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from gensim.models import Word2Vec, KeyedVectors
 
-comments = [" ".join(token) for (token,_) in comment_data]
-tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ)
-tfidf_matrix = tfidf_vectorizer.fit_transform(comments)
+def identity_tokenizer(text):
+    return text
 
 comments = [c for (c,_) in comment_data]
-model_own = Word2Vec(comments, size=300, min_count=MIN_FREQ)
+tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ, tokenizer=identity_tokenizer, lowercase=False)
+tfidf_vectorizer.fit_transform(comments)
 
-#model_pretrained = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
+model_own = Word2Vec(comments, size=300, min_count=MIN_FREQ)
+model_own.train(comments, total_examples=len(comments), epochs=10)
+model_pretrained = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
 
 def train_model(model):
-	model.train(comments, total_examples=len(comments), epochs=10)
-	vocab = set(model.wv.vocab.keys())
-	featureVec = np.zeros(model.vector_size)
-	nwords = 0
-	words = np.concatenate(comments)
-	print(words)
-	for word in words:
-		if word in vocab:
-			featureVec = np.add(featureVec, model.wv[word])
-			nwords += 1
-	if nwords > 0:
-		featureVec = np.divide(featureVec, nwords)
-	print(featureVec.shape)
+	matrix = np.zeros(shape=(len(comments), model.wv.vector_size))
+	for idx, comment in enumerate(comments):
+		vectors = [model.wv[token] * tfidf_vectorizer.idf_[tfidf_vectorizer.vocabulary_[token]] for token in comment if token in model.wv.vocab.keys()]
+		matrix[idx] = np.mean(vectors, axis=0)
+	return matrix
 	
-train_model(model_own)
-
+w2v_own_matrix = train_model(model_own)
+w2v_pretrained_matrix = train_model(model_pretrained)

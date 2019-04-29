@@ -2,7 +2,9 @@
 
 %TODO: Markus Zopf
 
-\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage[a-1b]{pdfx}
+\usepackage[ngerman,english]{babel}
 \usepackage{amsmath}
 \usepackage{array}
 \usepackage{enumitem}
@@ -53,6 +55,7 @@
   \input{abstract_de}
   \clearpage
   
+  \selectlanguage{english}
   \setcounter{tocdepth}{6}
   \tableofcontents
   \setcounter{page}{6}
@@ -580,7 +583,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \end{floatrow}
     \end{figure}
     
-  	\footnotetext{\url{https://en.wikipedia.org/wiki/Algebraic_notation_(chess)#/media/File:SCD_algebraic_notation.svg}, (18.03.2019, 20:56)}
+  	\footnotetext{\url{https://en.wikipedia.org/wiki/Algebraic_notation_(chess)\#/media/File:SCD_algebraic_notation.svg}, (18.03.2019, 20:56)}
   	
 	Parts of the moves are annotated using comments in braces. A comment can contain information about the opening of the game, about a single move or about the current position. In the last two cases the comment is often prefaced by one or several NAGs (see subsection~ref{subsec:nags}) or the corresponding chess symbol. Since there is no restriction on the exact position of a comment, comments may refer to the move before or after itself. A comment can also connect two or more moves with each other. On the contrary, a comment can be interrupted by a move such that it is split into two parts, which may only make sense when seen together. All in all, there are four possibilities of comment-move combinations shown in the examples of table~\ref{tab:comment_move_combinations}.
 	
@@ -698,7 +701,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     \lstset{language=Python}
     \begin{lstlisting}
     raw = open(file, 'rb').read()
-    str = raw.decode('iso-8859-1')
+    string = raw.decode('iso-8859-1')
     \end{lstlisting}
   
     where the variable \textit{file} contains both the relative path and the filename. The process is repeated for each filename saved in a list. An ISO 8859-1-decoding is used instead of an ASCII-decoding to detect the Western European letters used in comments and player names correctly. \\\\

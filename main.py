@@ -7,9 +7,10 @@ MIN_COMMENT_LENGTH = 3
 MAX_COMMENT_LENGTH = 49
 MIN_ENGLISH_WORDS = 3
 LOWERCASE = True
-LEMMATIZING = False
+LEMMATIZING = True
 MIN_FREQ = 5
-MAX_FEATURES = 1000
+MAX_FEATURES = 2000
+SET_SIZE = 2000
 
 files = [
 	'bali02.pgn',
@@ -50,7 +51,7 @@ files = [
 	'wijk_2003_annotated.pgn',
 	'wijk_2004_annotated.pgn',
 	'world_matches.pgn',
-#	'chessbasedb.pgn',
+	'chessbasedb.pgn',
 ]
 
 output_class_total = {
@@ -328,6 +329,25 @@ instances = 0
 instances_total = 0
 for file in files:
 	read_comments_of_file('files/' + file, comment_data)
+
+random.shuffle(comment_data)
+comment_data_set_1 = comment_data[:]
+comment_data.reverse()
+comment_data_set_2 = [comment for comment in comment_data if len(comment[0]) < 10]
+comment_data_set_3 = [comment for comment in comment_data if len(comment[0]) > 9 and len(comment[0]) < 50]
+
+comment_data_set_1_move = [comment for comment in comment_data_set_1 if output_class_move_1[comment[1]]]
+comment_data_set_2_move = [comment for comment in comment_data_set_2 if output_class_move_1[comment[1]]]
+comment_data_set_3_move = [comment for comment in comment_data_set_3 if output_class_move_1[comment[1]]]
+
+comment_data_set_1_position = [comment for comment in comment_data_set_1 if output_class_position_1[comment[1]]]
+comment_data_set_2_position = [comment for comment in comment_data_set_2 if output_class_position_1[comment[1]]]
+comment_data_set_3_position = [comment for comment in comment_data_set_3 if output_class_position_1[comment[1]]]
+
+comment_data_set_1 = comment_data_set_1_move[:SET_SIZE] + comment_data_set_1_position[:SET_SIZE]
+comment_data_set_2 = comment_data_set_2_move[:SET_SIZE] + comment_data_set_2_position[:SET_SIZE]
+comment_data_set_3 = comment_data_set_3_move[:SET_SIZE] + comment_data_set_3_position[:SET_SIZE]
+
 end = time.time()
 print(instances, instances_total, end - start)
 
@@ -345,15 +365,20 @@ from scipy.sparse import coo_matrix
 def identity_tokenizer(text):
     return text
 
-comments = [comment for (comment,_) in comment_data]
+comments_set_1 = [comment for (comment,_) in comment_data_set_1]
+comments_set_2 = [comment for (comment,_) in comment_data_set_2]
+comments_set_3 = [comment for (comment,_) in comment_data_set_3]
 
 """
 count
 """
 
-count_vectorizer = CountVectorizer(min_df=MIN_FREQ, max_features=MAX_FEATURES, ngram_range=(1,3), tokenizer=identity_tokenizer, lowercase=False)
-count_matrix = count_vectorizer.fit_transform(comments)
-count_feature_names = count_vectorizer.get_feature_names()
+count_matrix = {}
+count_feature_names = {}
+for (data_set, comments) in [("set-1", comments_set_1), ("set-2", comments_set_2), ("set-3", comments_set_3)]:
+	count_vectorizer = CountVectorizer(min_df=MIN_FREQ, max_features=MAX_FEATURES, ngram_range=(1,3), tokenizer=identity_tokenizer, lowercase=False)
+	count_matrix[data_set] = count_vectorizer.fit_transform(comments)
+	count_feature_names[data_set] = count_vectorizer.get_feature_names()
 
 end = time.time()
 print("count finished " + str(end - start))
@@ -362,9 +387,12 @@ print("count finished " + str(end - start))
 tf-idf
 """
 
-tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ, max_features=MAX_FEATURES, ngram_range=(1,3), tokenizer=identity_tokenizer, lowercase=False)
-tfidf_matrix = tfidf_vectorizer.fit_transform(comments)
-tfidf_feature_names = tfidf_vectorizer.get_feature_names()
+tfidf_matrix = {}
+tfidf_feature_names = {}
+for (data_set, comments) in [("set-1", comments_set_1), ("set-2", comments_set_2), ("set-3", comments_set_3)]:
+	tfidf_vectorizer = TfidfVectorizer(min_df=MIN_FREQ, max_features=MAX_FEATURES, ngram_range=(1,3), tokenizer=identity_tokenizer, lowercase=False)
+	tfidf_matrix[data_set] = tfidf_vectorizer.fit_transform(comments)
+	tfidf_feature_names[data_set] = tfidf_vectorizer.get_feature_names()
 
 end = time.time()
 print("tf-idf finished " + str(end - start))
@@ -373,22 +401,28 @@ print("tf-idf finished " + str(end - start))
 word embeddings
 """
 
-tfidf_vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, lowercase=False)
-tfidf_vectorizer.fit_transform(comments)
-
-model_own = Word2Vec(comments, size=300, min_count=MIN_FREQ)
-model_own.train(comments, total_examples=len(comments), epochs=10)
-model_pretrained = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
-
-def train_model(model):
+def build_matrix(model, comments):
 	matrix = np.zeros(shape=(len(comments), model.wv.vector_size))
 	for idx, comment in enumerate(comments):
 		vectors = [model.wv[token] * tfidf_vectorizer.idf_[tfidf_vectorizer.vocabulary_[token]] for token in comment if token in model.wv.vocab.keys()]
 		matrix[idx] = np.mean(vectors, axis=0)
 	return matrix
 	
-w2v_own_matrix = train_model(model_own)
-w2v_pretrained_matrix = train_model(model_pretrained)
+w2v_own_matrix = {}
+w2v_own_feature_names = {}
+w2v_pretrained_matrix = {}
+w2v_pretrained_feature_names = {}
+model_pretrained = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
+
+for (data_set, comments) in [("set-1", comments_set_1), ("set-2", comments_set_2), ("set-3", comments_set_3)]:
+	tfidf_vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, lowercase=False)
+	tfidf_vectorizer.fit_transform(comments)
+	model_own = Word2Vec(comments, min_count=MIN_FREQ)
+	model_own.train(comments, total_examples=len(comments), epochs=10)
+	w2v_own_matrix[data_set] = build_matrix(model_own, comments)
+	w2v_own_feature_names[data_set] = range(1, w2v_own_matrix[data_set].shape[1] + 1)
+	w2v_pretrained_matrix[data_set] = build_matrix(model_pretrained, comments)
+	w2v_pretrained_feature_names[data_set] = range(1, w2v_pretrained_matrix[data_set].shape[1] + 1)
 
 end = time.time()
 print("word embeddings finished " + str(end - start))
@@ -399,8 +433,8 @@ Write arff files
 
 print("\nWRITE ARFF FILES\n")
 
-def write_arff(feature_type, problem_name, classes, output_class, feature_names, matrix):
-    arff = open("chess-annotations-" + feature_type + "-" + problem_name + ".arff", "w")
+def write_arff(comment_data, data_set, feature_type, problem_name, classes, output_class, feature_names, matrix):
+    arff = open("chess-annotations-" + data_set + "-" + feature_type + "-" + problem_name + ".arff", "w")
     RELATION_NAME = "comment-" + problem_name									 
     buff = ("@RELATION " + RELATION_NAME + "\n")
     buff += ("@ATTRIBUTE number_of_tokens INTEGER\n") 
@@ -419,12 +453,13 @@ def write_arff(feature_type, problem_name, classes, output_class, feature_names,
         buff += (str(len(feature_names) + 1) + " " + str(output_class[comment_data[comment][1]]) + "}\n")        
     arff.write(buff)
 
-for (feature_type, feature_names, matrix) in [("count", count_feature_names, count_matrix), ("tfidf", tfidf_feature_names, tfidf_matrix), ("w2v-own", range(1, w2v_own_matrix.shape[1] + 1), w2v_own_matrix), ("w2v-pretrained", range(1, w2v_pretrained_matrix.shape[1] + 1), w2v_pretrained_matrix)]:
-	write_arff(feature_type, "total", "1, 2", output_class_total, feature_names, matrix) 
-	write_arff(feature_type, "move-1", "1, 2", output_class_move_1, feature_names, matrix)  
-	write_arff(feature_type, "move-2", "1, 2, 3, 4, 5, 6", output_class_move_2, feature_names, matrix)  
-	write_arff(feature_type, "position-1", "1, 2, 3", output_class_position_1, feature_names, matrix)  
-	write_arff(feature_type, "position-2", "1, 2, 3, 4, 5, 6, 7", output_class_position_2, feature_names, matrix)  
+for (data_set, comment_data) in [("set-1", comment_data_set_1), ("set-2", comment_data_set_2), ("set-3", comment_data_set_3)]:
+	for (feature_type, feature_names, matrix) in [("count", count_feature_names, count_matrix), ("tfidf", tfidf_feature_names, tfidf_matrix), ("w2v-own", w2v_own_feature_names, w2v_own_matrix), ("w2v-pretrained", w2v_pretrained_feature_names, w2v_pretrained_matrix)]:
+		write_arff(comment_data, data_set, feature_type, "total", "1, 2", output_class_total, feature_names[data_set], matrix[data_set]) 
+		write_arff(comment_data, data_set, feature_type, "move-1", "1, 2", output_class_move_1, feature_names[data_set], matrix[data_set])  
+		write_arff(comment_data, data_set, feature_type, "move-2", "1, 2, 3, 4, 5, 6", output_class_move_2, feature_names[data_set], matrix[data_set])  
+		write_arff(comment_data, data_set, feature_type, "position-1", "1, 2, 3", output_class_position_1, feature_names[data_set], matrix[data_set])  
+		write_arff(comment_data, data_set, feature_type, "position-2", "1, 2, 3, 4, 5, 6, 7", output_class_position_2, feature_names[data_set], matrix[data_set])  
 
 end = time.time()
 print(end - start)

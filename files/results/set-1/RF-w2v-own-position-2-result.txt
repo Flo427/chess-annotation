@@ -1,0 +1,54 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-2
+Instances:    2000
+Attributes:   102
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Time taken to build model: 4.52 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         558               27.9    %
+Incorrectly Classified Instances      1442               72.1    %
+Kappa statistic                          0.0863
+Mean absolute error                      0.2236
+Root mean squared error                  0.341 
+Relative absolute error                 95.5887 %
+Root relative squared error             99.7301 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,209    0,065    0,294      0,209    0,244      0,168    0,666     0,229     1
+                 0,245    0,207    0,221      0,245    0,233      0,037    0,574     0,225     2
+                 0,398    0,322    0,287      0,398    0,334      0,068    0,580     0,327     3
+                 0,421    0,271    0,323      0,421    0,366      0,138    0,645     0,356     4
+                 0,039    0,012    0,207      0,039    0,065      0,059    0,534     0,117     5
+                 0,081    0,021    0,220      0,081    0,119      0,097    0,620     0,135     6
+                 0,031    0,016    0,118      0,031    0,049      0,028    0,630     0,102     7
+Weighted Avg.    0,279    0,194    0,262      0,279    0,258      0,089    0,606     0,259     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   g   <-- classified as
+  48  53  51  57   3   8  10 |   a = 1
+  31  95 146  92   4  10   9 |   b = 2
+  22  98 196 161   6   8   2 |   c = 3
+  20  75 161 198   6   5   5 |   d = 4
+  10  41  52  41   6   3   2 |   e = 5
+  12  29  49  29   3  11   2 |   f = 6
+  20  38  27  35   1   5   4 |   g = 7
+

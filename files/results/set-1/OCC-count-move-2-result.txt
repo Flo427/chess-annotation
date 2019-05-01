@@ -1,0 +1,95 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.OrdinalClassClassifier -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-move-2
+Instances:    2000
+Attributes:   2002
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+OrdinalClassClassifier
+
+Classifier 1, using indicator values: Strings: 2-last 
+Invert: false
+Cols: 2,3,4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 2, using indicator values: Strings: 3-last 
+Invert: false
+Cols: 3,4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 3, using indicator values: Strings: 4-last 
+Invert: false
+Cols: 4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 4, using indicator values: Strings: 5-last 
+Invert: false
+Cols: 5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 5, using indicator values: Strings: 6-last 
+Invert: false
+Cols: 6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+Time taken to build model: 294.78 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1095               54.75   %
+Incorrectly Classified Instances       905               45.25   %
+Kappa statistic                          0.2845
+Mean absolute error                      0.2049
+Root mean squared error                  0.3188
+Relative absolute error                 86.6764 %
+Root relative squared error             92.7481 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,000    0,000    ?          0,000    ?          ?        0,495     0,011     1
+                 0,901    0,566    0,558      0,901    0,689      0,368    0,770     0,711     2
+                 0,290    0,066    0,531      0,290    0,375      0,287    0,735     0,446     3
+                 0,161    0,044    0,398      0,161    0,230      0,176    0,690     0,298     4
+                 0,377    0,054    0,589      0,377    0,460      0,389    0,758     0,454     5
+                 0,000    0,003    0,000      0,000    0,000      -0,007   0,561     0,025     6
+Weighted Avg.    0,548    0,280    ?          0,548    ?          ?        0,742     0,530     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   <-- classified as
+   0  18   1   0   1   0 |   a = 1
+   0 798  49  21  18   0 |   b = 2
+   0 260 119  20  11   0 |   c = 3
+   0 180  35  49  39   1 |   d = 4
+   0 159  19  31 129   4 |   e = 5
+   0  14   1   2  21   0 |   f = 6
+

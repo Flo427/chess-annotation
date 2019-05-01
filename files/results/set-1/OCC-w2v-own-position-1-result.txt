@@ -1,0 +1,62 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.OrdinalClassClassifier -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-1
+Instances:    2000
+Attributes:   102
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+OrdinalClassClassifier
+
+Classifier 1, using indicator values: Strings: 2-last 
+Invert: false
+Cols: 2,3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 2, using indicator values: Strings: 3-last 
+Invert: false
+Cols: 3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+Time taken to build model: 10.19 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1079               53.95   %
+Incorrectly Classified Instances       921               46.05   %
+Kappa statistic                          0.0754
+Mean absolute error                      0.3768
+Root mean squared error                  0.4449
+Relative absolute error                 95.3584 %
+Root relative squared error            100.0887 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,864    0,806    0,572      0,864    0,688      0,079    0,575     0,618     1
+                 0,191    0,089    0,398      0,191    0,259      0,137    0,642     0,345     2
+                 0,071    0,043    0,306      0,071    0,116      0,054    0,579     0,275     3
+Weighted Avg.    0,540    0,477    0,475      0,540    0,467      0,087    0,591     0,482     
+
+=== Confusion Matrix ===
+
+   a   b   c   <-- classified as
+ 959  96  55 |   a = 1
+ 367  90  13 |   b = 2
+ 350  40  30 |   c = 3
+

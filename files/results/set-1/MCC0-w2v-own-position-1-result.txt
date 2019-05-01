@@ -1,0 +1,74 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.MultiClassClassifier -M 0 -R 2.0 -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-1
+Instances:    2000
+Attributes:   102
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+MultiClassClassifier
+
+Classifier 1, using indicator values: Strings: 1 
+Invert: false
+Cols: 1
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 2, using indicator values: Strings: 2 
+Invert: false
+Cols: 2
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 3, using indicator values: Strings: 3 
+Invert: false
+Cols: 3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+
+Time taken to build model: 12.66 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1082               54.1    %
+Incorrectly Classified Instances       918               45.9    %
+Kappa statistic                          0.0839
+Mean absolute error                      0.3784
+Root mean squared error                  0.4428
+Relative absolute error                 95.7528 %
+Root relative squared error             99.6237 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,857    0,794    0,574      0,857    0,687      0,082    0,576     0,621     1
+                 0,209    0,092    0,412      0,209    0,277      0,153    0,655     0,363     2
+                 0,079    0,045    0,317      0,079    0,126      0,062    0,578     0,277     3
+Weighted Avg.    0,541    0,472    0,482      0,541    0,473      0,095    0,595     0,488     
+
+=== Confusion Matrix ===
+
+   a   b   c   <-- classified as
+ 951 105  54 |   a = 1
+ 355  98  17 |   b = 2
+ 352  35  33 |   c = 3
+

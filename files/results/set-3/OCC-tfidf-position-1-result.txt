@@ -1,0 +1,62 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.OrdinalClassClassifier -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-1
+Instances:    2000
+Attributes:   2002
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+OrdinalClassClassifier
+
+Classifier 1, using indicator values: Strings: 2-last 
+Invert: false
+Cols: 2,3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 2, using indicator values: Strings: 3-last 
+Invert: false
+Cols: 3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+Time taken to build model: 65.78 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1160               58      %
+Incorrectly Classified Instances       840               42      %
+Kappa statistic                          0.1313
+Mean absolute error                      0.3506
+Root mean squared error                  0.4245
+Relative absolute error                 90.8931 %
+Root relative squared error             96.6774 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,892    0,751    0,615      0,892    0,728      0,187    0,675     0,724     1
+                 0,250    0,114    0,417      0,250    0,313      0,165    0,671     0,378     2
+                 0,041    0,016    0,357      0,041    0,074      0,067    0,656     0,289     3
+Weighted Avg.    0,580    0,461    0,519      0,580    0,507      0,160    0,671     0,560     
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1022  111   13 |    a = 1
+  355  123   14 |    b = 2
+  286   61   15 |    c = 3
+

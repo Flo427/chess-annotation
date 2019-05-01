@@ -20,3 +20,4 @@ tokenizer-tests/
 *.gz
 *.arff
 files/pgn/chessbasedb.pgn
+files/results/set-1/MCC1-count-move-2-result.txt

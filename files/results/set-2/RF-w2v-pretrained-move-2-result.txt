@@ -1,0 +1,52 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-move-2
+Instances:    2000
+Attributes:   302
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Time taken to build model: 7.25 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1063               53.15   %
+Incorrectly Classified Instances       937               46.85   %
+Kappa statistic                          0.2587
+Mean absolute error                      0.2161
+Root mean squared error                  0.3237
+Relative absolute error                 88.795  %
+Root relative squared error             92.8174 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,000    0,002    0,000      0,000    0,000      -0,004   0,847     0,084     1
+                 0,960    0,676    0,505      0,960    0,662      0,348    0,749     0,648     2
+                 0,209    0,018    0,726      0,209    0,325      0,331    0,760     0,484     3
+                 0,125    0,019    0,549      0,125    0,204      0,208    0,694     0,308     4
+                 0,365    0,049    0,638      0,365    0,464      0,398    0,770     0,511     5
+                 0,075    0,004    0,462      0,075    0,129      0,174    0,771     0,246     6
+Weighted Avg.    0,532    0,298    0,570      0,532    0,461      0,321    0,749     0,516     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   <-- classified as
+   0  24   0   0   1   0 |   a = 1
+   3 802  17   3  10   0 |   b = 2
+   0 285  77   3   3   0 |   c = 3
+   0 236   7  39  28   1 |   d = 4
+   0 207   5  24 139   6 |   e = 5
+   0  35   0   2  37   6 |   f = 6
+

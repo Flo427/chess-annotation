@@ -1,0 +1,199 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.MultiClassClassifier -M 3 -R 2.0 -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-2
+Instances:    2000
+Attributes:   2002
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+MultiClassClassifier
+
+Classifier 1, 1 vs 2
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 2, 1 vs 3
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 3, 1 vs 4
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 4, 1 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 5, 1 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 6, 1 vs 7
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 7, 2 vs 3
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 8, 2 vs 4
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 9, 2 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 10, 2 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 11, 2 vs 7
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 12, 3 vs 4
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 13, 3 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 14, 3 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 15, 3 vs 7
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 16, 4 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 17, 4 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 18, 4 vs 7
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 19, 5 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 20, 5 vs 7
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 21, 6 vs 7
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+
+Time taken to build model: 129.41 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         678               33.9    %
+Incorrectly Classified Instances      1322               66.1    %
+Kappa statistic                          0.1269
+Mean absolute error                      0.226 
+Root mean squared error                  0.3354
+Relative absolute error                 98.4302 %
+Root relative squared error             99.0018 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,147    0,021    0,448      0,147    0,221      0,213    0,713     0,222     1
+                 0,244    0,170    0,263      0,244    0,253      0,076    0,585     0,237     2
+                 0,546    0,380    0,349      0,546    0,426      0,149    0,596     0,323     3
+                 0,512    0,300    0,357      0,512    0,421      0,191    0,655     0,330     4
+                 0,000    0,002    0,000      0,000    0,000      -0,011   0,537     0,084     5
+                 0,013    0,002    0,400      0,013    0,025      0,061    0,574     0,096     6
+                 0,000    0,000    ?          0,000    ?          ?        0,547     0,039     7
+Weighted Avg.    0,339    0,214    ?          0,339    ?          ?        0,613     0,254     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   g   <-- classified as
+  30  62  56  55   0   1   0 |   a = 1
+   8  97 180 113   0   0   0 |   b = 2
+   2  88 297 155   1   1   0 |   c = 3
+   5  63 172 252   0   0   0 |   d = 4
+   1  14  73  59   0   1   0 |   e = 5
+  10  32  55  51   2   2   0 |   f = 6
+  11  13  18  20   0   0   0 |   g = 7
+

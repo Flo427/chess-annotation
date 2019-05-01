@@ -1,0 +1,122 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.MultiClassClassifier -M 0 -R 2.0 -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-2
+Instances:    2000
+Attributes:   2002
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+MultiClassClassifier
+
+Classifier 1, using indicator values: Strings: 1 
+Invert: false
+Cols: 1
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 2, using indicator values: Strings: 2 
+Invert: false
+Cols: 2
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 3, using indicator values: Strings: 3 
+Invert: false
+Cols: 3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 4, using indicator values: Strings: 4 
+Invert: false
+Cols: 4
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 5, using indicator values: Strings: 5 
+Invert: false
+Cols: 5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 6, using indicator values: Strings: 6 
+Invert: false
+Cols: 6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 7, using indicator values: Strings: 7 
+Invert: false
+Cols: 7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+
+Time taken to build model: 93.53 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         693               34.65   %
+Incorrectly Classified Instances      1307               65.35   %
+Kappa statistic                          0.149 
+Mean absolute error                      0.2151
+Root mean squared error                  0.3323
+Relative absolute error                 93.6804 %
+Root relative squared error             98.0984 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,250    0,052    0,352      0,250    0,292      0,231    0,743     0,280     1
+                 0,299    0,177    0,296      0,299    0,298      0,122    0,610     0,295     2
+                 0,509    0,346    0,355      0,509    0,418      0,149    0,645     0,388     3
+                 0,488    0,255    0,385      0,488    0,430      0,217    0,690     0,392     4
+                 0,014    0,009    0,111      0,014    0,024      0,014    0,550     0,086     5
+                 0,026    0,012    0,154      0,026    0,045      0,034    0,616     0,113     6
+                 0,000    0,002    0,000      0,000    0,000      -0,008   0,719     0,064     7
+Weighted Avg.    0,347    0,199    0,306      0,347    0,314      0,145    0,652     0,306     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   g   <-- classified as
+  51  56  47  45   2   3   0 |   a = 1
+  18 119 160  96   2   1   2 |   b = 2
+  11 106 277 143   2   5   0 |   c = 3
+  17  63 163 240   5   4   0 |   d = 4
+   7  16  72  47   2   3   1 |   e = 5
+  20  30  55  39   3   4   1 |   f = 6
+  21  12   7  14   2   6   0 |   g = 7
+

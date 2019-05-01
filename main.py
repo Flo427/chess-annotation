@@ -328,7 +328,7 @@ comment_data = []
 instances = 0
 instances_total = 0
 for file in files:
-	read_comments_of_file('files/' + file, comment_data)
+	read_comments_of_file('files/pgn/' + file, comment_data)
 
 random.shuffle(comment_data)
 comment_data_set_1 = comment_data[:]

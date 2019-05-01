@@ -328,7 +328,7 @@ comment_data = []
 instances = 0
 instances_total = 0
 for file in files:
-	read_comments_of_file('files/' + file, comment_data)
+	read_comments_of_file('files/pgn/' + file, comment_data)
 
 random.shuffle(comment_data)
 comment_data_set_1 = comment_data[:]
@@ -418,7 +418,7 @@ w2v_pretrained_feature_names = {}
 model_own = Word2Vec(comments_set, min_count=MIN_FREQ)
 model_own.train(comments_set, total_examples=len(comments_set), epochs=10)
 model_own.save("chess-annotations.model")
-model_pretrained = model_own#KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
+model_pretrained = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin.gz', binary=True)
 
 for (data_set, comments) in [("set-1", comments_set_1), ("set-2", comments_set_2), ("set-3", comments_set_3)]:
 	tfidf_vectorizer = TfidfVectorizer(tokenizer=identity_tokenizer, lowercase=False)

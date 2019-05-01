@@ -112,7 +112,7 @@ comment_data_move_2 = []
 comment_data_position_1 = []
 comment_data_position_2 = []
 for file in files:
-	read_comments_of_file('files/' + file, comment_data_total, comment_data_move_1, comment_data_move_2, comment_data_position_1, comment_data_position_2)
+	read_comments_of_file('files/pgn/' + file, comment_data_total, comment_data_move_1, comment_data_move_2, comment_data_position_1, comment_data_position_2)
 
 from nltk.corpus import stopwords
 

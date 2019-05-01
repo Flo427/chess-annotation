@@ -1,0 +1,62 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.OrdinalClassClassifier -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-1
+Instances:    2000
+Attributes:   302
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+OrdinalClassClassifier
+
+Classifier 1, using indicator values: Strings: 2-last 
+Invert: false
+Cols: 2,3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 2, using indicator values: Strings: 3-last 
+Invert: false
+Cols: 3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+Time taken to build model: 15.23 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1172               58.6    %
+Incorrectly Classified Instances       828               41.4    %
+Kappa statistic                          0.1759
+Mean absolute error                      0.3621
+Root mean squared error                  0.4273
+Relative absolute error                 89.8065 %
+Root relative squared error             95.1785 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,937    0,795    0,576      0,937    0,714      0,210    0,663     0,669     1
+                 0,295    0,030    0,759      0,295    0,425      0,388    0,764     0,593     2
+                 0,053    0,028    0,343      0,053    0,091      0,056    0,599     0,290     3
+Weighted Avg.    0,586    0,440    0,570      0,586    0,507      0,220    0,674     0,568     
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1004   31   37 |    a = 1
+  339  145    7 |    b = 2
+  399   15   23 |    c = 3
+

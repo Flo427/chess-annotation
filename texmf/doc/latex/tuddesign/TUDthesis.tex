@@ -1,7 +1,5 @@
 \documentclass[article,type=msc,colorback,accentcolor=tud7b]{tudthesis}
 
-%TODO: Markus Zopf
-
 \usepackage{hyperref}
 \usepackage[a-1b]{pdfx}
 \usepackage[ngerman,english]{babel}
@@ -40,9 +38,9 @@
 }
 
 \begin{document}
-  \thesistitle{Sentiment classification of chess annotations}{}
+  \thesistitle{Sentiment Classification of Chess Annotations}{}
   \author{Florian Beck}
-  \referee{Prof. Dr. Johannes Fürnkranz}{}
+  \referee{Prof. Dr. Johannes Fürnkranz}{Dr. Markus Zopf}
   \department{Fachbereich Informatik}
   \group{Knowledge Engineering Group}
   \dateofexam{\today}{\today}
@@ -126,19 +124,20 @@
         \begin{figure}[H]
           \subfloat[One-against-all]{
             \includegraphics{images/one_against_all}
+            \label{fig:one_against_all}
           }
           \quad
           \subfloat[One-against-one]{
             \includegraphics{images/one_against_one}
+            \label{fig:one_against_one}
           }
           \caption[One-against-all vs. one-against-one approach]{One-against-all vs. one-against-one approach\protect\footnotemark}
-          \label{fig:one_against_one}
         \end{figure}
     
         \footnotetext{J. Fürnkranz, Machine Learning and Data Mining | Learning Rule Sets, V3.0, p.45\&47}
 
-        The second option called one-against-one splits the multiclass classification problem into even more binary classification subproblems, in fact $\frac{k(k-1)}{2}$. This number results from the fact that now in each subproblem two classes are pairwise distinguished from each other. Since in the binary classifier between the classes $i$ and $j$ all instances of the classes except $i$ and $j$ can be discarded (see figure~\ref{fig:one_against_one}), there are smaller subproblems than in one-against-all, which usually also create simpler models. However, the number of subproblems is $\frac{k}{2}$-times as high, which usually results in significantly more training time \autocite[Subsection~7.1.3]{Bishop2006}. \\
-        The final decision is made by voting. All pairwise comparisons are summed up and the winner with the most partial victories is the output class. However, using the binary outputs of the subproblems, i.e. only the preferred class, often leads to several winners. There are different ways to handle these ambiguities. The first idea is weighting the subproblems differently, for example by modifying the output from $1$ to the accuracy and from $0$ to $1-$accuracy. Another idea called pairwise coupling can be used which includes probabilities for every subproblem in the calculation. \citeauthor{Wu2004} present a few pairwise coupling techniques that are more stable than using the simple voting approach \autocite{Wu2004}. \\\\
+        The second option called one-against-one splits the multiclass classification problem into even more binary classification subproblems, in fact $k(k-1)/2$. This number results from the fact that now in each subproblem two classes are pairwise distinguished from each other. Since in the binary classifier between the classes $i$ and $j$ all instances of the classes except $i$ and $j$ can be discarded (see figure~\ref{fig:one_against_one}), there are smaller subproblems than in one-against-all, which usually also create simpler models. However, the number of subproblems is $\frac{k}{2}$-times as high, which usually results in significantly more training time \autocite[Subsection~7.1.3]{Bishop2006}. \\
+        The final decision is made by voting. All pairwise comparisons are summed up and the winner with the most partial victories is the output class. However, using the binary outputs of the subproblems, i.e. only the preferred class, often leads to several winners. There are different ways to handle these ambiguities. The first idea is weighting the subproblems differently, for example by modifying the output from $1$ to the accuracy and from $0$ to $1-$accuracy. Another idea called pairwise coupling, which includes probabilities for every subproblem in the calculation, can be used to extend the one-against-one approach. \citeauthor{Wu2004} present a few pairwise coupling techniques that are more stable than using the simple voting approach \autocite{Wu2004}. \\\\
 
         The third option is the usage of error-correcting output codes. Each class is assigned to a unique binary string of length $n$; we will refer to these strings as “codewords”. During training for an example from class $i$, the desired outputs of these $n$ binary functions are specified by the codeword for class $i$. With artificial neural networks, these $n$ functions can be implemented by the $n$ output units of a single network \autocite[Section~1]{Dietterich1994}. Though, it is also possible to train all $n$ binary classifiers individually with an arbitrary algorithm. A test instance is assigned to the class that is closest to the code determined by the $n$ functions. \\
         Now the question arises, how the codewords respectively the binary functions are chosen most effectively. Out of all $2^{k}$ binary combinations for a $k$-class problem, after removing $2^{k-1}$ complements (e.g. all starting with $1$) and the uniform classifier there are $2^{k-1}-1$ possible classifiers, from which to be selected. A good error-correcting output code for a $k$-class problem should satisfy two properties \autocite[Subsection~2.3]{Dietterich1994}:
@@ -206,7 +205,7 @@
           \label{fig:nested_dichotomies}
         \end{figure}
 
-        The probability of a class can be calculated by multiplying all probability estimates of the classifier along the path from the root to the class. This value differs for disparate nested dichotomies, wherefore usually various trees are computed and their probabilities are averaged. Though, for high $k$ there are too many different possibilities to build a nested dichotomy. Balanced nested dichotomies prove to be particularly suitable, since they require the shortest running time without affecting the accuracy negatively \autocite{Dong2005}. \citeauthor{Dong2005} developed methods to balance the nested dichotomies either by class or by data amount.
+        The probability of a class can be calculated by multiplying all probability estimates of the classifier along the path from the root to the class. This value differs for disparate nested dichotomies, wherefore usually various trees are computed and their probabilities are averaged. Though, for high $k$ there are too many different possibilities to build a nested dichotomy. Balanced nested dichotomies prove to be particularly suitable, since they require the shortest running time without affecting the accuracy negatively \autocite{Dong2005}. \citeauthor{Dong2005} developed methods to balance the nested dichotomies either by class or by data amount, i.e. the subsets are created in a way that either their difference of classes or their difference of data is minimal. The left dichotomy shown in figure~\ref{fig:nested_dichotomies} is class-balanced, because the difference of classes between all subsets is either zero or one. It is as well data-balanced, if all classes have nearly the same number of instances. The right dichotomy is not class-balanced, because the first two splits have class ratios of $4:1$ and $3:1$. However, this dichotomy is data-balanced if class $1$ contains nearly as much instances as all other classes, class $2$ nearly as much as $3$, $4$ and $5$ together and class $3$ as much as $4$ and $5$ together.
       \item Extension of Algorithms
 
         The third idea is the inversion of the first two approaches. Instead of modifying the problem and using the same classifier as for the binary classification, we now modify the classifier such that we can leave the classifier unchanged. Typical algorithms in machine learning are decision trees, pattern- or rule-based classifiers, probabilistic classifiers, SVM classifiers, neural network classifiers and proximity-based classifiers. A short description for every algorithm can be found in subsection~\ref{subsec:analysis}. Decision trees, pattern- or rule-based classifiers, probabilistic classifiers as Naïve Bayes and proximity-based classifiers as $k$-nearest-neighbor can be easily adapted to multiclass problems. For the other two algorithms some preliminary considerations are necessary. \\\\
@@ -232,14 +231,14 @@
         where $\mathbf{x}$ is the test instance and $\mathbf{w}$ and $w_{i 0}$ the parameters of the linear function. There are many possible extensions to this ordinal model, among others replacing the cumulative probabilities with conditional probabilities or using a hazards model \autocite[Chapter~13]{Harrell2015}. 
       \item Transformation to Binary Classification Problems
       
-        A simpler approach using a transformation to binary classification problems is presented by \citeauthor{Frank2001}. In contrast to the binary classification approaches in multiclass classification it takes advantage of the order of the classes. The ordinal class attribute with ordered values $v_{1}<v_{2}<\dots< v_{k}$ is converted into $k-1$ binary attributes. The $i$-th binary attribute represents the test if the class attribute exceeds the value of the $i$-th class: $x>v_{i}$. This construction of binary attributes requires exactly two classifiers and their probabilities to determine whether a test instance $x$ belongs to a class $i$:
-        \[\operatorname{P}\left(v_{i}\right)=\operatorname{P}\left(x>v_{i-1}\right)-\operatorname{P}\left(x>v_{i}\right)\]
-        For the highest class, the first probability is $1$ and for the lowest, the second is $0$, which further simplifies the calculation. Finally, the class with the highest probability is predicted. \citeauthor{Frank2001} showed that for ordinal classification problems this approach outperforms the “naïve” one-against-all algorithm, which treats the class values as an unordered set \autocite{Frank2001}.
+        A simpler approach using a transformation to binary classification problems is presented by \citeauthor{Frank2001}. In contrast to the binary classification approaches in multiclass classification it takes advantage of the order of the classes. The ordinal class attribute with ordered values $v_{1}<v_{2}<\ldots< v_{k}$ is converted into $k-1$ binary attributes. The $i$-th binary attribute represents the test if the class attribute $y$ exceeds the value of the $i$-th class: $y>v_{i}$. This construction of binary attributes requires exactly two classifiers and their probabilities to determine whether a test instance $\mathbf{x}$ belongs to a class $i$:
+        \[\operatorname{P}\left(y=v_{i}\mid\mathbf{x}\right)=\operatorname{P}\left(y>v_{i-1}\mid\mathbf{x}\right)-\operatorname{P}\left(y>v_{i}\mid\mathbf{x}\right)\]
+        For the lowest class, the first probability is $1$ and for the highest, the second is $0$, which further simplifies the calculation. Finally, the class with the highest probability is predicted. \citeauthor{Frank2001} showed that for ordinal classification problems this approach outperforms the “naïve” one-against-all algorithm, which treats the class values as an unordered set \autocite{Frank2001}.
     \end{itemize}
   
   \subsection{Cost-sensitive Learning}
   \label{subsec:cost_sensitive_learning}
-    In many classification problems the goal is the optimization of some performance measurement, most often the accuracy. However, the best solution in respect to the accuracy does not have to be the one with minimized costs, which is also often a goal to be achieved. Costs can not only arise from misclassifications, but also from additional tests or time for the creation of a better model. \citeauthor{Turney2002} divides the reasons for costs that a machine learning problem can entail into nine groups \autocite{Turney2002}:
+    In many classification problems the goal is the optimization of some performance measurement, most often the accuracy. However, the best solution in respect to the accuracy does not have to be the one with minimized costs, which is also often a goal to be achieved. Costs cannot only arise from misclassifications, but also from additional tests or time for the creation of a better model. \citeauthor{Turney2002} divides the reasons for costs that a machine learning problem can entail into nine groups \autocite{Turney2002}:
     \begin{itemize}[noitemsep]
       \item misclassification errors
       \item tests
@@ -251,16 +250,16 @@
       \item human-computer interaction
       \item instability
     \end{itemize}
-    In each of the nine groups, we can distinguish between constant and conditional costs. In the case of test costs, we speak of constant costs if a certain test has a fixed cost value for its execution. Note that different test may have different costs if they still remain constant for all instances in all circumstances. On the contrary, conditional test costs depend on a criterion. For a medical test this criterion might be the test result, the age of a patient or the result of prior tests. In the remaining subsection, of all cost types only the misclassification costs are discussed and therefore abbreviated to costs. \\\\
+    In each of the nine groups, a distinction can be made between constant and conditional costs. In the case of test costs, we speak of constant costs if a certain test has a fixed cost value for its execution. Note that different test may have different costs if they still remain constant for all instances in all circumstances. On the contrary, conditional test costs depend on a criterion. For a medical test this criterion might be the test result, the age of a patient or the result of prior tests. In the remaining subsection, of all cost types only the misclassification costs are discussed and therefore abbreviated to costs. \\\\
     The standard approach to evaluate the performance of a classifier is the calculation of the accuracy, i.e. the number of correct classified instances in relation to the total number of instances. The error costs result directly from the number of misclassified instances, which only has to be multiplied by a constant cost factor. Thus, \citeauthor{Turney2002} calls this value constant misclassification error cost. However, there are various problems in machine learning where such a simplification would lead to a miscalculation of the total costs because the conditional error costs are ignored. \\\\
-    In many cases, the equal treatment of all error types is the cause of the incorrect cost estimate. For this we first consider the binary classification with only two classes and therefore only two possible error types. A false positive (FP) occurs when the outcome is incorrectly predicted as yes (or positive) when it is actually no (or negative). The reverse case is called false negative (FN). False positives and false negatives have rarely equal costs in real-world applications. In spam-classification, a no-spam e-mail classified as spam is worse than a spam e-mail which have not been detected correctly. An accepted customer which is not capable of paying back a loan has bigger costs than a customer wrongly classified as insolvent. A sick patient who is classified as healthy is more problematic than a healthy patient who is classified as sick. In order to map this, a cost value is determined for each of the two errors FP and FN or the cost ratio is determined. \\\\
+    In many cases, the equal treatment of all error types is the cause of the incorrect cost estimate. For this we first consider the binary classification with only two classes and therefore only two possible error types. A false positive (FP) occurs when the outcome is incorrectly predicted as yes or positive when it is actually no or negative. The reverse case is called false negative (FN). False positives and false negatives have rarely equal costs in real-world applications. In spam-classification, a no-spam e-mail classified as spam is worse than a spam e-mail which have not been detected correctly. An accepted customer which is not capable of paying back a loan has bigger costs than a customer wrongly classified as insolvent. A sick patient who is classified as healthy is more problematic than a healthy patient who is classified as sick. In order to map this, a cost value is determined for each of the two errors FP and FN or the cost ratio is determined. \\\\
     If we transfer the cost calculation to the multiclass classification, there are more error types and therefore more cost factors to be defined: Each instance of class $i$, misclassified as class $j$ will be multiplied with the correspondent cost factor $c_{ij}$. For a multiclass classification problem with $n$ classes we get a $n\times n$ cost matrix similar to the confusion matrix, which has $n(n-1)$ possibly different cost factors and whose main diagonal contains zeros. \\\\
     A special case arises for classification problems with ordinal classes. The value of $c_{ij}$ should reflect the extent of the difference between $i$ and $j$. Thus, it is common to assume that $c_{ij}=0$ when $i=j$. In addition, the cost $c_{ij}$ is assumed to be larger when $i$ is further away from $j$. Two common functions satisfy the requirements and have been widely used in practice \autocite[Section~3.1]{Ruan2014}:
     \begin{itemize}
       \item \makebox[4cm][l]{Absolute cost vectors} $c_{ij}=\left|i-j\right|$
       \item \makebox[4cm][l]{Squared cost vectors} $c_{ij}=\left(i-j\right)^{2}$
     \end{itemize}
-    Note that the squared cost charges more than the absolute cost when $i$ is further away from $j$. The cost matrix of a multiclass classification problem with $n$ classes using absolute cost vectors looks like this \autocite[Section~3]{Kotsiantis2004}:
+    Note that the squared cost charges more than the absolute cost when $i$ is further away from $j$ since $\left|i-j\right|\geq1\forall i,j\in\mathbb{Z}$. The cost matrix of a multiclass classification problem with $n$ classes using absolute cost vectors looks like this \autocite[Section~3]{Kotsiantis2004}:
     \[\left[ \begin{array}{ccccc}
     {0} & {1} & {2} & {\dots} & {n-1} \\
     {1} & {0} & {1} & {\dots} & {n-2} \\
@@ -269,7 +268,7 @@
     {n-1} & {\dots} & {2} & {1} & {0}
     \end{array}\right]\]
     By squaring each element of the matrix, one obtains the matrix of squared cost vectors. In both cases it is a symmetrical matrix, i.e. $c_{ij}=c_{ji}\forall i,j\in\{1, \dots, m\}$. In some cases, it may be useful to weight the over- and underestimation of classes differently. If the overestimation of a class is to be penalized more severely than the underestimation, all elements to the right of the main diagonal are multiplied by a constant value $\lambda>1,\lambda\in\mathbb{R}$. In a comparable way all values of the matrix can be adjusted as required to the problem which has to be solved. \\\\
-    Given such a cost matrix, you can calculate the cost of a particular learned model on a given test set just by summing the relevant elements of the cost matrix for the model’s prediction for each test instance. Here, the costs are ignored when making predictions, but taken into account when evaluating them \autocite[Chapter~5.7]{Witten2005}. In this way the classifier obviously does not have to deliver the cost-optimal result. However, there are different possibilities to include costs in advance \autocite[Chapter~2.3]{Qin2010}:
+    Given such a cost matrix, the cost of a particular learned model on a given test set can be calculated just by summing the relevant elements of the cost matrix for the model’s prediction for each test instance. Here, the costs are ignored when making predictions, but taken into account when evaluating them \autocite[Chapter~5.7]{Witten2005}. In this way the classifier obviously does not have to deliver the cost-optimal result. However, there are different possibilities to include costs in advance \autocite[Chapter~2.3]{Qin2010}:
     \begin{itemize}
       \item Change of the class distribution of the training data
         
@@ -279,7 +278,7 @@
         This approach modifies the error-based classifiers directly to handle misclassification cost, but each classifier needs to be modified separately.
       \item Boosting approach
         
-        This approach generates a set of different weak classifiers in sequential trial and then constructs a composite classifier by voting them. The advantage of this approach is that it is applicable to any kind of error-based classifiers.
+        This approach generates a set of different weak classifiers in sequential trial and then constructs a composite classifier by voting them. This approach is that it is applicable to any kind of error-based classifiers.
       \item Conditional probability estimates / Direct cost-sensitive learning
         
         This approach incorporates the misclassification cost into the data post-processing step by using the probability estimation generated by error-based classifiers and the cost function to directly compute the optimal class for each test example. This approach is easy to implement, but needs good calibration methods to generate accurate probability estimation.
@@ -302,16 +301,16 @@ Note that the use of the costs as in one of the approaches presented here does n
   
   \subsection{Definition of the Problem and Goals}
   \label{subsec:definition_of_the_problem_and_goals}
-    In the first step we have to define the problem we want to solve. According to \citeauthor{Mitchell1997} a learning problem generally reads as follows: Improve over task $T$, with respect to performance measure $P$, based on experience $E$. The goal is therefore to generalize the experience in a way that allows to improve your performance on the task \autocite[Chapter~1]{Mitchell1997}.
+    In the first step we have to define the problem we want to solve. According to \citeauthor{Mitchell1997} a learning problem generally reads as follows: Improve over task $T$, with respect to performance measure $P$, based on experience $E$. The goal is therefore to generalize the experience in a way that allows to improve your performance on the task \autocite[Chapter~1]{Mitchell1997}. The three parameters $T$, $P$ and $E$ are described in more detail in the following.
     \begin{itemize}
       \item Task $T$
       
-        The task can be formulated by a simple verbal description, e.g. “play the game Connect Four” or “sort the e-mail into the categories spam and no-spam”. A more formally approach requires the exact definition of the input and the output of the task. \\
-        The input could be a set of attribute-value pairs, e.g. in relational data, where each input would have the same set of attributes. But since there is no restriction to the input data to be homogeneous the input can be plain text as well. A possible input of natural language could be represented by a whole book, by a (web) page, by a paragraph or just by one sentence. In certain cases, even a single letter is an appropriate input, e.g. for the detection of handwritten letters. \\
-        As well as for the input we need to determine the type of output we want to receive. But not only the type, also the precision in the range of values is important for the difficulty of the task. In the case of product reviews the easiest output “good review vs. bad review” could be complicated by using the ten values of a five-star rating or by distinguishing between different ratings for the quality, the price-performance ratio, the delivery etc. The aforementioned examples have in common that the number of possible output values is fixed which means a classification problem is concerned, not a regression problem. In the following the focus will be set on classification tasks.
+        The task can be formulated by a simple verbal description, e.g. “play the game backgammon” or “sort the e-mail into the categories spam and no-spam”. A more formally approach requires the exact definition of the input and the output of the task. \\
+        The input could be a map or a dictionary, i.e. a set of attribute-value pairs. In relational data, each input would have the same set of attributes and therefore the same structure and length. But since there is no restriction to the input data to be homogeneous the input can be plain text as well. A possible input of natural language could be represented by a whole book, by a (web) page, by a paragraph or just by one sentence. In certain cases, even a single letter is an appropriate input, e.g. for the detection of handwritten letters. \\
+        As well as for the input we need to determine the type of output we want to receive. But not only the type, also the precision in the range of values is important for the difficulty of the task. In the case of product reviews, the easiest output “good review vs. bad review” could be complicated by using the ten values of a five-star rating allowing half stars or by distinguishing between different ratings for the quality, the price-performance ratio, the delivery etc. The aforementioned examples have in common that the number of possible output values is fixed which means a classification problem is concerned, not a regression problem. In this work the focus will be set on classification tasks.
       \item Performance measure $P$
       
-        The straightforward approach for classification tasks would be to count the instances with the correct output and divide this number by the total number of instances. This value is called accuracy. Just as well the complementary probability for misclassified instances, called error rate, can be observed. However, there are also possibilities to weight the classifications. If there are instances that are more important than others these instances can be multiplied or associated with a weight greater than one. Furthermore, the misclassifications can be considered separately dependent on the correct and predicted class. In spam classification, it is usually significantly worse to classify a no-spam e-mail as spam than the other way around. To map this idea, we can assign to each pair of correct and predicted class a weight value. \\
+        The straightforward approach to create a performance measure for classification tasks would be to count the instances with the correct output and divide this number by the total number of instances. This value is called accuracy. Just as well the complementary probability for misclassified instances, called error rate, can be observed. However, there are also possibilities to weight the classifications. If there are instances that are more important than others, these instances can be multiplied or associated with a weight greater than one. Furthermore, the misclassifications can be considered separately dependent on the correct and predicted class. In spam classification, it is usually significantly worse to classify a no-spam e-mail as spam than the other way around. To map this idea, we can assign to each pair of correct and predicted class a weight value. \\
         This type of measurement is not appropriate for regression tasks. Dependent on the exactitude of the values the probability that the predicted value is exact the correct one is low. Instead of demanding an exact prediction, we can also use the difference between correct and predicted value as the performance (MAE) or the squared difference (MSE) \autocite[Chapter~5.8]{Witten2005}. \\
         In the case of an unsupervised problem only subjective estimates can be used. The learned model and its output are evaluated by an expert, which might entail a high expenditure of time and money. \\
         The validation and evaluation techniques will be dealt with in detail in subsection~\ref{subsec:validation_and_evaluation}.
@@ -319,14 +318,14 @@ Note that the use of the costs as in one of the approaches presented here does n
       
         The experience of a learning problem is the knowledge the learner already possesses before solving the task. For example, a student solves exercises to gain experience before writing an exam. In machine learning, the experience is achieved through the acquisition of knowledge from databases. In both cases the learner tries to improve the performance in the task by the usage of the knowledge of similar data. If no similar data is already known, the learner can just guess the correct output. For this reason, a sufficiently large amount of data should be available to the learner in order to increase the experience and therefore also the chance to solve the task in the desired manner.
     \end{itemize}
-    The following describes the procedure as generally as possible; we only assume that we face a classification problem in the field of text mining. Furthermore, the output value should be known for all instances, such that tasks of supervised learning can be applied automatically. As the input we use a document $d\in\mathbb{X}$, where $\mathbb{X}$ is the document space; and as the output a fixed set of classes $\mathbb{C}=\left\{c_{1},c_{2},\dots,c_{J}\right\}$. Using a learning method or learning algorithm, we then wish to learn a classifier or classification function $\gamma$ that maps documents to classes, i.e. $\gamma:\mathbb{X}\rightarrow\mathbb{C}$ \autocite[Chapter~13.1]{Manning2008}.
+    The following subsections describe the procedure as generally as possible; we only assume that we face a classification problem in the field of text mining. Furthermore, the output value should be known for all instances, such that tasks of supervised learning can be applied automatically. As the input we use a document $d\in\mathbb{X}$, where $\mathbb{X}$ is the document space; and as the output a fixed set of classes $\mathbb{C}=\left\{c_{1},c_{2},\dots,c_{J}\right\}$. Using a learning method or learning algorithm, we then wish to learn a classifier or classification function $\gamma$ that maps documents to classes, i.e. $\gamma:\mathbb{X}\rightarrow\mathbb{C}$ \autocite[Chapter~13.1]{Manning2008}.
   
   \subsection{Identification of Data}
     In the second step we need to find one or several data sources that offer an adequate number of instances, i.e. data sets of the previously defined input and output type. There are four characteristics to be aware of:
     \begin{itemize}
       \item Completeness
       
-        Each instance of the data should be complete, i.e. we know the input and the output of the instance. All attributes of the input should be filled with a value. If they are not filled, a default value can be used or another way how to manage missing values needs to be defined. Of course, there is also a need of the completeness of the output value. Otherwise, the instance can not be used for training nor for the evaluation.
+        Each instance of the data should be complete, i.e. we know the input and the output of the instance. All attributes of the input should be filled with a value. If they are not filled, a default value can be used or another way how to manage missing values needs to be defined. Of course, there is also a need of the completeness of the output value. Otherwise, the instance cannot be used for training nor for the evaluation.
       \item Format
       
         In addition to the completeness, the data needs to be in the same format. Using data from data sources with different syntactical structure requires a pre-processing, such that the data can be compared and processed in a similar way in further steps. This involves the order and the atomicity or distribution of the data.
@@ -356,7 +355,7 @@ Note that the use of the costs as in one of the approaches presented here does n
     After finishing the chosen approaches of those three steps, we obtain the unstructured text data in a structured collection of tokens, possibly extended or replaced by their category or meaning. By splitting the string into tokens in the beginning, the tokens in the collection will be sorted in the same order as they occur in the input. The collection is in list form and the order is maintained. If the order and the count of tokens is irrelevant for further evaluation, a set can be used instead of a list. However, in most cases just the order is irrelevant but not the count of tokens, such that a multiset is the suitable form of collection. This multiset is known as “bag of words”.
   
   \subsection{Feature Extraction}
-    Based on the created output from step three, now the characteristics of the input data are to be figured out by feature extraction. The idea is to calculate various scores, such that we can compare the input data instances with each other, especially concerning the sentiment and polarity. At the end of this step we want to obtain a representation that can be passed as a training set to learning algorithms. \\\\
+    Based on the created output from the text organization step, now the characteristics of the input data are to be figured out by feature extraction. The idea is to calculate various scores, such that we can compare the input data instances with each other, especially concerning the sentiment and polarity. At the end of this step we want to obtain a representation that can be passed as a training set to learning algorithms. \\\\
     The default feature extraction approach is typically used in web search engines during the indexing step in information retrieval. The input is a list of documents in bag of words-representation or something similar. This results in a document-term-matrix, where each row describes a document and each column the count of a specific term. This concept can be generalized and transferred to our question. The column remains the description of the document as a vector whereas each column is the value of a specific feature. The model is called Vector Space Model (VSM) as it represents each document as a vector of features which simplifies the comparison of two documents by cosine similarity. Possible features with direct relation to the token are:
     \begin{itemize}
       \item binary indication
@@ -389,7 +388,7 @@ Note that the use of the costs as in one of the approaches presented here does n
     \footnotetext{\url{https://www.researchgate.net/figure/Sentiment-Analysis-Source-4-Fig-1_fig1_324360275}, (11.04.2019, 23:43)}
     
     Machine learning approaches use mathematical models built by an artificial intelligence to solve the task given to them. They are split into unsupervised and supervised learning. In unsupervised learning no label of a class is provided, so there is no possibility to compare the calculated solution with the correct one. In this case a common learning approach is clustering. The input data is segmented into a (fixed) number of groups, where instances within a group should have similarities and thus form a category. In contrast, there are procedures that are to determine an output value for a given input. These are in the area of supervised learning. While regression methods can handle the assignment of continuous values, classification methods can only be applied if there is a limited and fixed number of possible output values, known as classes. \\\\
-    We already defined the domain and codomain of a classification function: $\gamma:\mathbb{X}\rightarrow\mathbb{C}$. Irrespective of the choice of classification algorithm, it is recommended to split the evaluation of the procedure into a training set and a test set. Based on the training set, a model can be created that learns the characteristics of a class. Partly the training set is further subdivided, whereby a model is created on the first part of the training set and fine-tuning is performed by the second part of the set (validation set). During the evaluation the correct classes of the test instances are removed. Without prior viewing, now new classes are assigned to these instances by the learned model, which are then compared with the correct classes. If, as in the case described, only one class is assigned to each instance, it is the hard version of classifying. On the contrary, the soft version assigns to an instance a probabilistic value for each class \autocite{Aggarwal2012}. In the following some such classification learning approaches are introduced, which can be used in the area of text mining:
+    We already defined the domain and codomain of a classification function $\gamma:\mathbb{X}\rightarrow\mathbb{C}$ where $\mathbb{X}$ is the set of documents and $\mathbb{C}$ the set of classes. Irrespective of the choice of classification algorithm, it is recommended to split the evaluation of the procedure into a training set and a test set. Based on the training set, a model can be created that learns the characteristics of a class. Partly the training set is further subdivided, whereby a model is created on the first part of the training set and fine-tuning is performed by the second part of the set (validation set). During the evaluation the correct classes of the test instances are removed. Without prior viewing, now new classes are assigned to these instances by the learned model, which are then compared with the correct classes. If, as in the case described, only one class is assigned to each instance, it is the hard version of classifying. On the contrary, the soft version assigns to an instance a probabilistic value for each class \autocite{Aggarwal2012}. In the following some such classification learning approaches are introduced, which can be used in the area of text mining:
     \begin{itemize}
       \item Decision Trees
       
@@ -402,13 +401,13 @@ Note that the use of the costs as in one of the approaches presented here does n
         Probabilistic classifiers like Bayesian classifiers calculate for each class a probability, whereby the class with the highest value is chosen for the test instance. Naïve Bayes classifiers use therefore the product of all conditional probabilities, e.g. term occurrences in different classes of texts. In comparison to other classifiers, Naïve Bayes classifiers are highly scalable because of its linear complexity. Suitable probabilistic classifiers for text mining are the Bernoulli variate model and multinomial distributions.
       \item SVM Classifiers
       
-        Support-vector machines (SVM) are a subgroup of linear classifiers. A linear classifier calculates for a binary classification problem a linear predictor $p=\bar{A}\cdot\bar{X}+b$, where $\bar{X}=(x_{1}...x_{n})$ is the feature vector, $\bar{A}=(a_{1}...a_{n})$ is a vector of linear coefficients with the same dimensionality as the feature space. A natural interpretation of the linear predictor in the discrete scenario would be as a separating hyperplane between the different classes. The hyperplane with the maximum distance value to any instance, i.e. the one with the maximum margin of separation, is chosen. The SVM approach is quite robust to high dimensionality and ideally suited for text data because of the sparse high-dimensional nature of text \autocite{Joachims1997}.
+        Support-vector machines (SVM) are a subgroup of linear classifiers. A linear classifier calculates for a binary classification problem a linear predictor $p= \mathbf{a}\cdot\mathbf{x}+b$, where $\mathbf{x}=(x_{1}...x_{n})$ is the feature vector of the input, $\mathbf{a}=(a_{1}...a_{n})$ is a vector of linear coefficients with the same dimensionality as the feature space and $b$ is a displacement constant. A natural interpretation of the linear predictor in the discrete scenario would be as a separating hyperplane between the different classes. The hyperplane with the maximum distance value to any instance, i.e. the one with the maximum margin of separation, is chosen. The SVM approach is quite robust to high dimensionality and ideally suited for text data because of the sparse high-dimensional nature of text \autocite{Joachims1997}.
       \item Neural Network Classifiers
       
         Simple neural networks are also a form of linear classifiers, since the function computed by a set of neurons is essentially linear. The simplest form of neural network, known as the perceptron (or single layer network) are essentially designed for linear separation, and work well for text. However, by using multiple layers of neurons, it is also possible to generalize the approach for non-linear separation. In such a network, the outputs of the neurons in the earlier layers feed into the neurons in the later layers. The training process of such networks is more complex, as the errors need to be back-propagated over different layers.
       \item Proximity-based Classifiers
       
-        Those classifiers use proximity measures for classification. All training instances are placed in a (high-dimensional) space, proximities of two documents can be calculated by Euclidian, Manhattan or other distance measurements. Then, the most common $k$-nearest-neighbor classifier identifies for a given test instance the $k$ training instances with the smallest distance values. The most common (or highest-weighted) class among them becomes the class of the test instance.
+        Those classifiers use proximity measures for classification. Given $n$ input attributes, all training instances are placed in a $n$-dimensional space. The proximity of two documents can be calculated by distance measurements like Euclidian or Manhattan distances. Then, the most common $k$-nearest-neighbor classifier identifies for a given test instance the $k$ training instances with the smallest distance values. The most common or highest-weighted class among them becomes the class of the test instance.
     \end{itemize}
     In the simplest version all of the six classifier types are applied to binary classification problems. If there are three or more classes, the classifier possibly has to be extended to handle this multiclass problem, e.g. for SVM Classifiers. Another possibility is to split the multiclass problem into several binary problems as seen in subsection~\ref{subsec:multiclass_classification}. The classification is made by several classifiers that are trained to differentiate either between one class and the rest (one-against-all) or pairwise between each two classes (one-against-one). Further concepts for the customization of classifiers are boosting and bagging, the formation of ensembles or the handling of ordinal classes \autocite{Aggarwal2012}. \\\\
     For sentiment analysis problems, apart from machine learning approaches also lexicon-based approaches are suitable. Lexicon-based approaches mainly rely on a sentiment lexicon, i.e., a collection of known and precompiled sentiment terms, phrases and even idioms, developed for traditional genres of communication. To determine the polarity score of a text, the polarity scores of the terms are combined in a certain way, e.g. by addition. There are two subtypes of lexicon-based approaches. The dictionary-based approach uses a list of terms called dictionary, where the collection and scores are both created manually. Manual creation may be time-consuming, but it is usually possible to create optimally customized dictionaries with good results. The corpus-based approach uses already existent dictionaries of a specific domain, which have been constructed based on a big corpus. There are statistic techniques like latent semantic analysis (LSA) as well as semantic techniques using synonyms, antonyms or other relationships from thesaurus like WordNet \autocite{Kharde2016}.
@@ -430,7 +429,7 @@ Note that the use of the costs as in one of the approaches presented here does n
     \end{itemize}
     Of course, it could be also possible not to distinguish between training and test data, i.e. the model is built and evaluated based on all data. However, this approach can lead to overfitted and therefore overestimated performance values that generally cannot be sustained in real application cases when predictions have to be made for unseen data. \\\\
     The accuracy has already been presented as a simple yet meaningful measurement value. Before it is calculated, a confusion matrix $M$ is usually created, where a value $M_{ij}$ specifies how many instances of the class $i$ were classified as class $j$. The accuracy is the sum of all values in the main diagonal of the confusion matrix (i.e. $i=j$) divided by the total number of instances. \\\\
-Instead of using an absolute accuracy value it can make sense to use a relative one. In classification problems a baseline can be used as a comparison value for the accuracy. \citeauthor{Witten2005} use an expected value calculated by a default classifier as shown in table~\ref{tab:actual_and_expected_outcomes_of_three_class_classification}. They assume that the comparison classifier predicts each individual class with the same frequency as the original one. This classifier predicts for $60+18+4=82$ instances the correct class (right side), while the original does for $88+40+12=140$ (left side). This results in $140-82=58$ additional correct classifications out of $200-82=118$ and a kappa statistic of $58\div118=49.2\%$. Another meaningful value to compare is the baseline accuracy, which is achieved by a classifier always selecting the most frequently occurring class. In the example above the baseline classifier achieves $100$ correct classification which would decrease the kappa statistic to $40\%$. Obviously, a kappa statistic of $100\%$ would indicate a perfect classifier, a value of $0\%$ no improvement and a negative value even a deterioration.
+Instead of using an absolute accuracy value it can make sense to use a relative one. In classification problems a baseline can be used as a comparison value for the accuracy. \citeauthor{Witten2005} use an expected value calculated by a default classifier as shown in table~\ref{tab:actual_and_expected_outcomes_of_three_class_classification}. They assume that the comparison classifier predicts each individual class with the same frequency as the original one. This classifier predicts for $60+18+4=82$ instances the correct class, while the original does for $88+40+12=140$. This results in $140-82=58$ additional correct classifications out of $200-82=118$ and a kappa statistic of $58\div118=49.2\%$. Another meaningful value to compare is the baseline accuracy, which is achieved by a classifier always selecting the most frequently occurring class. In the example above the baseline classifier achieves $100$ correct classification which would decrease the kappa statistic to $40\%$. Obviously, a kappa statistic of $100\%$ would indicate a perfect classifier, a value of $0\%$ no improvement and a negative value even a deterioration.
   
     \begin{table}[H]
       \subfloat[actual]{
@@ -475,11 +474,11 @@ Instead of using an absolute accuracy value it can make sense to use a relative 
     \[precision=\frac{tp}{tp+fp} \quad \textrm{and} \quad recall=\frac{tp}{tp+fn}\]
     where $tp$ is true positives, $fp$ false positives and $fn$ false negatives. Precision and recall generally have a negative correlation and cannot be optimized at the same time. As a compromise the F-measure can be used which forms the harmonic mean of precision and recall:
     \[F=2\cdot\frac{\text{precision}\cdot\text{recall}}{\text{precision}+\text{recall}}\]
-    The Receiver Operating Characteristic (ROC) is an alternative to the precision and recall measurement which visualizes the ratio of true and false positives. The confusion matrix provides only one single point for a classifier, which is generally the better the closer it is to the optimal point (0|1) indicating $0\%$ false positives (and therefore $100\%$ true negatives and optimal precision) and $100\%$ true positives (and therefore $0\%$ false negatives and optimal recall). Because false positives and false negatives can be weighted differently, the Euclidian distance has to be adjusted by different weights for the $x$- and $y$-direction. If the output values of a classifier are ranked (e.g. by probability or relevance), a whole ROC curve can be created
+    The Receiver Operating Characteristic (ROC) is an alternative to the precision and recall measurement which visualizes the ratio of true and false positives. The confusion matrix provides only one single point for a classifier, which is generally the better the closer it is to the optimal point $(0|1)$. This point indicates $0\%$ false positives and therefore $100\%$ true negatives and optimal precision as well as $100\%$ true positives and therefore $0\%$ false negatives and optimal recall. Because false positives and false negatives can be weighted differently, the Euclidian distance has to be adjusted by different weights for the $x$- and $y$-direction. If the output values of a classifier are ranked (e.g. by probability or relevance), a whole ROC curve can be created
     \begin{itemize}[noitemsep]
       \item starting at the point (0|0),
-      \item moving $\frac{1}{P}$ units to the top in case of a true positive (where $P$ is the total number of positives),
-      \item moving $\frac{1}{N}$ units to the right in case of a false positive (where $N$ is the total number of negatives)
+      \item moving $\frac{1}{P}$ unit to the top in case of a true positive (where $P$ is the total number of positives),
+      \item moving $\frac{1}{N}$ unit to the right in case of a false positive (where $N$ is the total number of negatives)
       \item and ending at the point (1|1).
     \end{itemize}
     In this case, the Area Under ROC Curve (AUC) is another possible indicator for a good classification. It also has a nice interpretation as the probability that the classifier ranks a randomly chosen positive instance above a randomly chosen negative one. Although those definitions and interpretations only work for binary classification problems, there are customized variants for multiclass classification, see \autocite{Hand2001}.
@@ -535,8 +534,8 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 	  \end{lstlisting}	  
 
       \caption{Sample PGN game}
-      \begin{tabular}{r@{: }l r@{: }l}
-        blue & comments & red & NAGs
+      \begin{tabular}{r@{: }l r@{: }l r@{: }l}
+        blue & comments & red & NAGs & bold & game moves
       \end{tabular}
       \label{fig:sample_pgn_game}
 	\end{figure}
@@ -704,26 +703,23 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:nlp_pipeline}
     \end{figure}
     
-    Applied to the chess annotation problem, the raw text of the PGN files can be extracted and decoded by the following two commands
-    
-    \lstset{language=Python}
+    Applied to the chess annotation problem, the raw text of the PGN files can be extracted and decoded by the following two commands    
     \begin{lstlisting}
     raw = open(file, 'rb').read()
     string = raw.decode('iso-8859-1')
-    \end{lstlisting}
-  
+    \end{lstlisting}  
     where the variable \textit{file} contains both the relative path and the filename. The process is repeated for each filename saved in a list. An ISO 8859-1-decoding is used instead of an ASCII-decoding to detect the Western European letters used in comments and player names correctly. \\\\
     However, we are not interested in the complete raw text of the PGN files, but only in the comments. As we have already seen in table~\ref{tab:comment_move_combinations}, there are different comments in a PGN file. Since we want to be able to use supervised learning approaches, we need to know the correct class of a comment in the file. Therefore, the comments which are from importance are those connected to a traditional chess symbol or a NAG. To filter out such comments, we use regular expressions and distinguish between three cases:
     \begin{itemize}
       \item NAGs immediately followed by a comment:
 
-        \textbackslash\$(?P<class>[0-9]+)\textbackslash s*\textbackslash\{(?P<comment>[\^{}\{\}]*)\textbackslash\}
+        \textbackslash\$(?P<class>[0-9]+)\textbackslash s*\textbackslash\{(?P<comment>[$\hat{}$\{\}]*)\textbackslash\}
       \item NAGs followed by another NAG and thereafter a comment:
 
-        \textbackslash\$(?P<class>[0-9]+)\textbackslash s*\textbackslash\$[0-9]+\textbackslash s*\textbackslash\{(?P<comment>[\^{}\{\}]*)\textbackslash\}
+        \textbackslash\$(?P<class>[0-9]+)\textbackslash s*\textbackslash\$[0-9]+\textbackslash s*\textbackslash\{(?P<comment>[$\hat{}$\{\}]*)\textbackslash\}
       \item Standard symbols for move annotations (i.e. $!,?,!!,??,!?,?!$) immediately followed by a comment:
 
-        (?P<class>[!\textbackslash?]\{1,2\})\textbackslash s*\textbackslash\{(?P<comment>[\^{}\{\}]*)\textbackslash\}
+        (?P<class>[!\textbackslash?]\{1,2\})\textbackslash s*\textbackslash\{(?P<comment>[$\hat{}$\{\}]*)\textbackslash\}
     \end{itemize}
     The match results are saved as tuples of the class (NAGs without dollar sign, symbols unchanged) and the comment. The final class is set depending on the rules of the considered classification problem by using a python dictionary, e.g. for the binary move annotation problem all the classes $1, 3, 5, !, !!, !?$ are mapped to the final class $1$. \\\\
     So far, we ensured the collected data to be complete (class is known), in a specific format (PGN, processed to tuple) and available in sufficient quantity. Before proceeding with the next step, we will perform some basic analysis on the extracted data to estimate the quantity of comments per class. This includes a comparison of the total count of all symbols and NAG types for every of the three tasks we specified in subsection~\ref{subsec:problem_specification}. If the counts would differ a lot, different weights should be assigned to the instances to avoid imbalances and thus difficulties in classification. The data shown in table~\ref{tab:class_distributions} has indeed some noticeable imbalances; instances with positive move annotations are more common than negative ones as well as surprisingly an advantage of white is more common than an advantage of black in the position annotations. However, these imbalances are in an uncritical range, which probably requires no weighting of instances.
@@ -799,28 +795,28 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
     
     \newsavebox{\complete}
       \begin{lrbox}{\complete}
-        \lstset{keywordstyle=\color{blue},morekeywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
+        \lstset{keywordstyle=\color{blue},keywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
         \begin{lstlisting}
-@RELATION comment
-@ATTRIBUTE COUNT(brilliant) NUMERIC
-@ATTRIBUTE TFIDF(mistake) REAL
-@ATTRIBUTE CLASS {good,bad}
+@RELATION comment-move-1
+@ATTRIBUTE count("brilliant") NUMERIC
+@ATTRIBUTE tfidf("mistake") REAL
+@ATTRIBUTE class {1,2}
 @DATA
-1, 0.0, good
-0, 0.06, bad	  
+1, 0.0, 1
+0, 0.06, 2	  
         \end{lstlisting}
       \end{lrbox}
     \newsavebox{\sparse}
       \begin{lrbox}{\sparse}
-        \lstset{keywordstyle=\color{blue},morekeywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
+        \lstset{keywordstyle=\color{blue},keywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
         \begin{lstlisting}
-@RELATION comment
-@ATTRIBUTE COUNT(brilliant) NUMERIC
-@ATTRIBUTE TFIDF(mistake) REAL
-@ATTRIBUTE CLASS {good,bad}
+@RELATION comment-move-1
+@ATTRIBUTE count("brilliant") NUMERIC
+@ATTRIBUTE tfidf("mistake") REAL
+@ATTRIBUTE class {1,2}
 @DATA
-{1 2, 3 good}
-{2 0.06, 3 bad}	  
+{0 1, 2 1}
+{1 0.06, 2 2}	  
         \end{lstlisting}
       \end{lrbox}    
     

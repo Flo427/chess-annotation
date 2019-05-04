@@ -540,7 +540,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:sample_pgn_game}
 	\end{figure}
 	
-    Before further specifying the input and output of the task $T$ in subsection~\ref{subsec:problem_specification}, we will first take a closer look at the structure of the chess data. The data sets used for the experience $E$ will be presented in subsection~\ref{subsec:data_set_extraction} and the performance measure $P$ will be adapted to the problem in subsection~\ref{subsec:cost_sensitive_evaluation_methods}.
+    Before further specifying the input and output of the task $T$ in subsection~\ref{subsec:problem_specification}, we will first take a closer look at the structure of the chess data. The data sets used for the experience $E$ will be presented in subsection~\ref{subsec:data_set_extraction} and the performance measure $P$ will be adapted to the problem in subsection~\ref{subsec:evaluation_methods}.
     
   \subsubsection{PGN Format}
     PGN is "Portable Game Notation", a standard designed for the representation of chess game data using ASCII text files. PGN is structured for easy reading and writing by human users and for easy parsing and generation by computer programs \autocite[Chapter~1]{Edwards1994}. A sample game in PGN notation is shown in figure~\ref{fig:sample_pgn_game}. \\\\
@@ -693,8 +693,8 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
   
   \subsection{Data Set Extraction}
   \label{subsec:data_set_extraction}  
-    As data sources a set of files\footnote{\url{http://www.angelfire.com/games3/smartbridge/}} in standard PGN format is used as well as a bundle of commented games that have been extracted from Mega Database 2012\footnote{\url{https://shop.chessbase.com/en/products/mega_database_2012}} in ChessBase format. The related user interface offers the possibility to select the desired games and convert them into the standard PGN format. As a result, we obtain a set of files each containing several games in PGN format like seen in figure~\ref{fig:sample_pgn_game}. In total, we analyze 39 files with 68,606 games. In the next step those files have to be read and converted into data sets with comments that can be used within the classification problem. For this purpose, the natural language kit NLTK is used. \\\\
-    NLTK\footnote{\url{https://www.nltk.org/}} is a python library offering various technique for natural language processing (NLP). It can be used to extract information from web files in html or any other text file format. Besides, it offers access to big corpora and other lexical resources. The NLP process and its corresponding code in python using NLTK is shown in figure\ref{fig:nlp_pipeline}. Note that the pictured steps of tokenization and normalization are not considered in this section, but in subsection~\ref{subsec:nltk_processing}.
+    As data sources a set of files\footnote{\url{http://www.angelfire.com/games3/smartbridge/}} in standard PGN format is used as well as a bundle of commented games that have been extracted from Mega Database 2012\footnote{\url{https://shop.chessbase.com/en/products/mega_database_2012}} in ChessBase format. The related user interface ChessBase Reader offers the possibility to select the desired games and convert them into the standard PGN format. As a result, we obtain a set of files each containing several games in PGN format like seen in figure~\ref{fig:sample_pgn_game}. In total, we analyze 39 files with 68,606 games. In the next step those files have to be read and converted into data sets with comments that can be used within the classification problem. For this purpose, the natural language kit NLTK is used. \\\\
+    NLTK\footnote{\url{https://www.nltk.org/}} is a python library offering various technique for natural language processing (NLP). It can be used to extract information from web files in html or any other text file format. Besides, it offers access to big corpora and other lexical resources. The NLP process and its corresponding code in python using NLTK is shown in figure\ref{fig:nlp_pipeline}. Note that the pictured steps of tokenization and normalization are not considered in this section, but in subsection~\ref{subsec:nltk_preprocessing}.
 
     \begin{figure}[H]
       \centering
@@ -770,7 +770,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{tab:class_distributions}
 	\end{table}
 	
-    The last criterion quality will be discussed in subsection~\ref{subsec:nltk_processing}. Possible problems are that the comment is in a different language than English or that the comment is too short to make an informed classification decision. \\\\
+    The last criterion quality will be discussed in subsection~\ref{subsec:nltk_preprocessing}. Possible problems are that the comment is in a different language than English or that the comment is too short to make an informed classification decision. \\\\
     Apart from the statistics on the file data to be further processed, some information about the discarded data are relevant for the usage of the results we obtain. By collecting the number of all comments not annotated with a NAG or standard symbol yet we obtain the potential of improvement regarding the comments. As shown in table~\ref{tab:file_statistics}, only $45.39\%$ of the comments are preceded by a NAG or symbol. For the remaining $54.61\%$ of the comments, which are still more than half a million, the comment could be completed with an appropriate NAG or symbol. The other way around, this approach delivers a ratio of $25.06\%$ NAGs and standard symbols that are followed by a comment. In contrast to the first case, adding a comment is not useful or necessary, while adding a NAG is usually possible for most comments except those describing general game information like opening variants or summaries.
 	
 	\begin{table}[H]
@@ -787,11 +787,62 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 	
     To get the values of table~\ref{tab:file_statistics}, the number of comments is estimated by counting all occurrences of opening braces (\{), the number of NAGs by all occurrences of the dollar sign (\$) and the number of standard symbols by the number of matches of the regular expression \textbackslash d\textbackslash+*\textbackslash s*[!\textbackslash?]+ (an arbitrary combination of the symbols $!$ and $?$, preceded by the number of the move field square and optional a check(mate) symbol and whitespace. Due to this rudimental approach of counting, the expressions could also match false positives, if some of the symbols are used in a different sense. However, this number of false positives is small and therefore negligible.	
 
-  \subsection{NLTK Processing}
-  \label{subsec:nltk_processing}    
-   
-  \subsection{Attribute Selection}
+  \subsection{NLTK Preprocessing}
+  \label{subsec:nltk_preprocessing}    
+   The output of the previous step is a set of tuples containing the comment and the class. Since a direct evaluation of the comments is only limited possible, there is a need to split the comments into substrings with an identified meaning by tokenization. NLTK offers the method "word\textunderscore tokenize" adjusted to natural language text data in addition to the straightforward method of splitting the comment by the whitespaces. However, the use of "word\textunderscore tokenize" for punctuation symbols is not appropriate for all cases. If move variants are presented in a comment or additional NAGs are used, "word\textunderscore tokenize" may not separate them as desired. A separate handling of such tokens is possible with a regular expression tokenizer. \\\\
+    The RegexpTokenizer of NLTK has a regular expression as its only parameter and splits the text into tokens using this expression. Several regular expressions can be combined by the conjunction symbol $|$. The tokenizer then takes the first of the expressions the part of the text matches, wherefore in the case of ambiguities the most specific or important expressions must be at the beginning. The parts of the text not matching any case of the regular expression are discarded. \\\\
+    For the creation of a suitable regular expression tokenizer for comments in PGN files, the token definition according to PGN file specification was taken into account \autocite[Section~7]{Edwards1994} and some comments were examined manually for their structure. This leads to a regular expression based on the following cases:
+    \begin{itemize}
+      \setlength\itemsep{0.4em}
+      \item \makebox[7cm][l]{PGN non-standard codes} \#[\textbackslash w\textbackslash d]{2}
+      \item \makebox[7cm][l]{NAG non-standard codes} \textbackslash\$\textbackslash d+
+      \item \makebox[7cm][l]{Move-annotating symbols} [!\textbackslash?]+
+      \item \makebox[7cm][l]{Position-annotating symbols } [\textbackslash-\textbackslash+/=]+
+      \item \makebox[7cm][l]{Remis symbol} 1/2
+      \item \makebox[7cm][l]{Abbreviations} (?:\textbackslash w\textbackslash.)+
+      \item \makebox[7cm][l]{Multiple dots} \textbackslash.+
+      \item \makebox[7cm][l]{Words (including hyphens or apostrophes)} [\textbackslash w\textbackslash d\textbackslash-\textbackslash']+
+      \item \makebox[7cm][l]{Remaining non-whitespace characters} \textbackslash S
+    \end{itemize}
+    The first two cases match non-standardized, but nevertheless frequently used abbreviations for common chess phrases. For example, the non-standard PGN code \#C4 and the non-standard NAG $\$142$ mean “Better is…” and could indicate a suboptimal move of class $4$ or $5$. The next three cases match symbols annotating moves and positions of follow-up variants. The regular expressions for abbreviations and multiple dots should reduce the number of tokens and avoid to mix this kind of expressions with other dots. Most tokens match the regular expression for words, that does not only include words of natural language, but also numbers, chess moves and the remaining position expressions $1-0$ and $0-1$. Finally, with the last expression the remaining non-whitespace characters like punctuation symbols are fetched. Different configurations of the tokenizer will be evaluated in subsection~\ref{subsec:tokenizer_evaluation}. \\\\
+    The normalization step is already involved in the tokenization process. Before splitting the comment into its tokens, it is already converted in lowercase, because this conversion does not influence the tokenization process. Immediately after the tokenization follows the lemmatization of the words. In this case lemmatization is preferred to stemming, because the language of lemmatized tokens can be better detected than for stemmed tokens. Besides, lemmatized tokens are easier to read than stemmed tokens. Categorization is waived, but it is implicitly used in the word embedding models, which receive the tokenized data as input later on. The normalization of the output, i.e. the conversion of the NAGs and symbols to the classes of the problem, is moved to after feature extraction and selection, because until then all comments can be processed uniformly for all problems. \\\\
+    The tokenizer produces an ordered list of tokens as output. Before proceeding with the feature extraction and selection, we first perform the missing checks on the language and the length of the comment. Comments in different languages lead to different rules and are therefore difficult to process at the same time. Long comments often contain descriptions about openings, other variants or similar chess games and are therefore unsuitable. Comments that are too short, on the other hand, generally provide little information and are not very meaningful. Besides, comments with just one or two tokens often just contain the name of the commentator. In order to be able to make reliable classification decisions, we require at least three tokens that are part of the English vocabulary to be included in each further processed comment. Thus, a minimum length of three tokens is guaranteed as well. The maximum length should be set to 49 tokens. \\\\
+    Unfortunately, it is not possible to filter the games directly in the ChessBase Reader by the used comment language. For this reason, the additional language detection library langid is used to filter out comments already before the tokenization process if with $99\%$ confidence the detected language is not English. Through this, over $70,000$ comments will be discarded. The second language detection step starts after the tokenization and normalization. For each comment the tokens are iterated and checked if the lemmatized token is part of the English vocabulary provided by the NLTK corpus. If there are at least three such words, the comment will be forwarded to the feature extraction and selection process. Although false positives cannot be completely avoided with this approach, the proportion of long comments in non-English should be low due to the first filter. Not filterable are however some comments of the ChessBase database, which contain the same statements united in several different languages. For this reason, some tokens will be in a different language than English. The complete NLTK preprocess is shown in figure~\ref{fig:nltk_preprocessing}.
 
+    \begin{figure}[H]
+      \centering
+      \includegraphics[scale=0.9]{images/nltk_preprocessing}
+      \caption{NLTK Preprocessing}
+      \label{fig:nltk_preprocessing}
+	\end{figure}  
+    
+    All in all, 70\% of the comments are filtered due to the above-mentioned quality requirements. 156,970 out of 511,273 comments remain, which is still sufficient data to learn on. In order to keep the computing capacities and times within reasonable limits such that different configurations can also be tested, 4,000 instances are selected, including 2,000 move annotations and 2,000 position annotations. Two more datasets of the same size are created for short comments with a token length of 3 to 9 and for long comments with a token length of 10 to 49, without overlapping with the first dataset. These three datasets are passed as a list of tuples of tokenized comments and NAGs or symbols to the feature extraction and selection step. The order of the tokens remains unchanged by selecting a list as collection type. \\\\
+
+  \subsection{Attribute Creation and Selection}
+    In this step the text instances should be converted to a vector of numbers, whereby each number represents an attribute of the comments. All these vectors are strung together in a matrix, that is passed in an appropriate format to the analysis step. First different models for the generation of attributes are introduced, before the second step describes the transformation of the model data into an ARFF file.
+      
+  \subsubsection{Model Generation}
+In the following four different models are built in order to offer an appropriate attribute set for the analysis. The models have no attributes in common except of two; the number of tokens and the class attribute. For all models the attributes are all numeric except of the class attribute.
+    \begin{itemize}
+      \item Count-based Model
+
+        The count-based model uses the CountVectorizer class of the machine learning library scikit-learn\footnote{\url{https://scikit-learn.org/stable/index.html}}. It converts the comments to a matrix of features, where each row represents a comment and each column a term of the vocabulary. The vocabulary is made up of all unigrams, bigrams or trigrams that occur at least in five comments in the data set. The vectorizer counts the occurrences of each term in the vocabulary in each comment and stores the count in the corresponding cell of the matrix. As the comments are already lowercase and tokenized, these options do not have to be configured.
+      \item TF-IDF-based Model
+
+        The TF-IDF based model is similar to the count-based model, but uses the TfidfVectorizer class. The vectorizer is configured as in the first model, i.e. it builds a vocabulary of unigrams, bigrams and trigrams with minimal one occurrence in five different comments. However, the matrix this time contains the relative values for the occurrences of the term. Two terms that have the same value in the count-based model now have different values if the number of documents in which the term appears varies. The more documents contain the term, the lower the value.
+      \item Own Word2Vec-Model
+
+        This model uses the word2vec module of the machine learning library gensim\footnote{\url{https://radimrehurek.com/gensim/models/word2vec.html}} to create a word embedding for chess annotations. A CBOW-word2vec-model is built and trained for all words in the chess comments. This time there is no need to include bigrams and trigrams in the model, because the context of a word is already taken into account by the window size of five. Similar to the first two models, all words with less than five occurrences are ignored and no part of the vocabulary. However, this time five is the limit for the total number of occurrences, i.e. a word only occurring in a single comment, but therein at least five times, will nevertheless be processed. As a result, the matrix contains a dense vector with 100 attributes for each word. To obtain the vector $\mathbf{v_{c}}$ for a comment $c$, the product of all vectors $\mathbf{v_{w}}$ and IDF-scores $idf_{w}$ of words $w$ in the comment that are also in the vocabulary are averaged:
+        \[\mathbf{v_{c}}=\sum_{\substack{w\in c\\w\in vocab}}\mathbf{v_{w}}\cdot idf_{w}\]
+        Note that the weighted vectors have to be averaged and not summed up to handle different comment lengths. The term frequency is automatically included if the comment is treated as a list.
+      \item Pretrained Word2Vec-Model
+
+        This model is as well based on word embeddings, but instead of creating a new model, an existing model is imported. It learned word vectors for all terms appearing in a huge Google News data set. It offers 300 attributes for around 3,000,000 words. Terms that are not part of the vocabulary are usually nevertheless matched by a pattern and a corresponding vector. Like in the previous case, the output matrix contains the vector of the comments in the data set, where each vector is calculated as the average of the weighted word vectors.
+    \end{itemize}
+    The first two models offer a large number of attributes. Even if this number is already limited by the minimal number of five occurrences in the whole data set, an upper limit of 2,000 attributes is defined to limit the computing time of the algorithms. Both for the count-based and the TF-IDF-based model, the attributes are therefore ordered by their total term frequency and the top 2,000 remain in the model. For the short comment data set there is even no attribute selection required, because the vocabulary only 1,631 attributes. At this point it should be noted that usually it is not recommended to apply attribute selection to all data, but only to the training data, because otherwise the test data has been seen by the attribute selection process and the accuracies are too optimistic. Due to the fact, that for the attribute selection process the class attribute is not considered, this falsification should be minimal, if any.
+  
+  \subsubsection{Conversion to ARFF}
+    Weka\footnote{\url{https://www.cs.waikato.ac.nz/ml/weka/}}, short for Waikato Environment for Knowledge Analysis, is an open source software offering a collection of machine learning algorithms for data mining tasks that will be addressed to in subsection~\ref{subsec:classification_algorithms}. The algorithms are applied to data represented in Attribute-Relation File Format (ARFF)\footnote{\url{https://www.cs.waikato.ac.nz/ml/weka/arff.html}}. Weka offers standard ARFF files to experiment with and to get to know the functionality of the machine learning methods. As well own ARFF files can be imported and used. For this purpose, an ASCII text file needs to be structured like as shown in figure~\ref{fig:sample_arff_files}. It shows a possible output ARFF file for the two-class move annotations problem with two comment-value-pairs (“a brilliant counterattack of white”, 1) and (“a big mistake of black”, 2). The file consists of two blocks, the header information and the data information. Before the header information there might be comment lines with information about the author and version or further descriptions.
     
     \newsavebox{\complete}
       \begin{lrbox}{\complete}
@@ -805,6 +856,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 1, 0.0, 1
 0, 0.06, 2	  
         \end{lstlisting}
+        \label{fig:sample_arff_file_complete}
       \end{lrbox}
     \newsavebox{\sparse}
       \begin{lrbox}{\sparse}
@@ -818,6 +870,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
 {0 1, 2 1}
 {1 0.06, 2 2}	  
         \end{lstlisting}
+        \label{fig:sample_arff_file_sparse}
       \end{lrbox}    
     
     \begin{figure}[H]
@@ -829,18 +882,76 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:sample_arff_files}
 	\end{figure}
     
+    The first block of the header information contains the keyword “@RELATION” and an arbitrarily name for the relation in the first line. After that for each attribute the relation contains a triple of the keyword “@ATTRIBUTE”, a unique name of the attribute and the data type of the attribute. The data type can be numeric (integer, real), string, date or nominal. For the first three data types, only the type needs to be indicated, whereas nominal attributes require a list of all possible values comma-separated in braces. The output value of an instance is an attribute as well and need to be specified, conventionally as the last attribute. In classification problems the class attribute has a fixed number of values and is represented as nominal in the form of a set, in regression problems it is numeric. \\\\
+    The second block begins with the keyword “@DATA” in the first line. After that for each instance the values of the attributes are listed comma-separated, in the same order as they were declared before, see figure~\ref{fig:sample_arff_file_complete}. Missing values are indicated by a “?”. Data sets can consist for the most part of zero values, in particular those with attributes used in Information Retrieval like TF or TF-IDF. In order to reduce the creation time and the size of the file, in sparse ARFF files (see figure~\ref{fig:sample_arff_file_sparse}) numeric values are zero by default and can be omitted. However, now the instances can consist of a different number of values. For this reason, each instance is represented as a comma-separated list of pairs, surrounded by braces. The first number of a pair is the attribute id (starting from zero), the second one the value. Missing values are not equal to zero and need to be indicated by a “?” further on. \\\\
+    For the matrix output of the count and TF-IDF based model, choosing the sparse representation form significantly reduces the size of the ARFF file. Since it only requires a small additional effort for the two Word2Vec models, a uniform transformation into sparse ARFF files is executed. Such a file is thus generated for each combination of the five problems, the four models and the three data sets, so that a total of 60 files are passed on for analysis. Note that now the NAGs and symbols are converted to the corresponding class depending on the problem.
     
   \subsection{Classification Algorithms}
-  
-    
-  \subsection{Cost-sensitive Evaluation Methods}    
-  \label{subsec:cost_sensitive_evaluation_methods}
+  \label{subsec:classification_algorithms}
+    For the analysis of the data sets in the generated ARFF files the already mentioned software Weka will be used. It offers many tools to prepare, process and evaluate data by different machine learning techniques. For the purposes of this work mainly the configurations of the “Classify” tab in the Weka explorer are used as shown in figure~\ref{fig:weka_classify}.
+        
+    \begin{figure}[H]
+      \centering
+      \includegraphics[scale=0.3]{images/weka_classify}
+      \caption{Classification in Weka}
+      \label{fig:weka_classify}
+	\end{figure}
+	
+    Before the classification can be started, the data record must first be loaded from the ARFF file in the "Preprocess" tab. Finally, a suitable classifier for the problem can be selected via the "Choose" button and applied via "Start". The following classifiers - among others based on the algorithms described in subsections~\ref{subsec:multiclass_classification}~and~\ref{subsec:multiclass_classification} - are used for the analysis:
+    \begin{itemize}
+      \item NaiveBayes (NB)
 
+        The Naïve Bayes classifier uses a simple probabilistic model to predict the class of an instance. Since it calculates a probability value for each class, the classifier is also capable to handle multiclass problems. The classifier provides rather poor evaluation values, but is very fast and serves as a basic assessment of the problem and the models.
+      \item RandomForest (RF)
+
+        Random forests belong to the decision tree algorithms and use the ensemble learning method of bagging. The name random forest comes from the fact that a decision tree is created based on random subsets of the attributes. Thus, a forest of decision trees is formed, whereby the final prediction is made by equal weighting of all predictions of the trees. The training of the trees is fast and can be parallelized easily. Furthermore, the independence of the trained trees provides a robust model and good accuracy values. Random forests with 100 trees are used for testing. \\
+For the following algorithms of the multiclass, ordinal class and nested dichotomy classifier, the random forest classifier will be used to solve the binary classification problems into which the multiclass problem is broken down.
+      \item MultiClassClassifier, method 0 (MCC0)
+
+        The multiclass classifier of Weka offers four different methods to break the multiclass classification problem down to multiple binary classification problems. The standard method with the ID 0 is the one-against-all approach.
+      \item MultiClassClassifier, method 1 (MCC1)
+
+        The algorithms using error-correcting output codes are as well included in the multiclass classifier. The method with ID 1 provides the ensemble learning with a random error-correcting output code.
+      \item MultiClassClassifier, method 2 (MCC2)
+
+        The method with ID 2 provides the ensemble learning with the exhaustive error-correcting output code. The code is therefore longer than the random code and needs more computing time.
+      \item MultiClassClassifier, method 3 (MCC3)
+
+        The last method with ID 3 is the one-against-one approach.
+      \item MultiClassClassifier, method 3 with pairwise coupling (MCC3P)
+
+        For the one-against-one approach, Weka additional offers the possibility to execute this algorithm with pairwise coupling.
+      \item OrdinalClassClassifier (OCC)
+
+        The ordinal class classifier can be installed separately and is based on the already introduced method of \citeauthor{Frank2001}, which divides a multiclass classification problem into binary classification problems considering the ordinal order of the class attribute. Of the classifiers tested, it is the only one to include this order in the classification process.
+      \item ClassBalancedND (NDC)
+
+        As for the ordinal class classifier, a package with nested dichotomy classifiers can be included as well. The class balanced nested dichotomy ensures a class equilibrium between the two subsets for each dichotomy.
+      \item DataNearBalancedND (NDD)
+
+        The other variant is the data near balanced nested dichotomy, where a data equilibrium between the two subsets for each dichotomy is ensured.
+      \item ZeroR
+
+        Finally, the zero-rule classifier is executed to provide a baseline that serves as comparison value for kappa statistics. The accuracy equals the percentage of the most frequent class and is therefore the same for all four models if the same data set is used.
+    \end{itemize}
+    Independent of the classifier, due to the higher number of attributes, the time required for the classification of the pre-trained word embedding model is about twice as long as for the own trained word embedding model and even five times as long for the count-based and TF-IDF-based models. Another factor for the computing time is the number of classes. However, additional classes also increase the required computing capacity. \\\\
+    For the three multiclass classification problems, i.e. the move annotation problem with six classes and both position annotation problems, all classifiers can be applied to and provide different classification models and results. The two binary classification problems do not require any additional decomposition of the problem, so all multiclass classifiers and the ordinal class classifier output the same result as the underlying binary classification algorithm, in this case random forest. do not require any additional decomposition of the problem, so all multiclass classifiers and the ordinal class classifier output the same result as the underlying binary classification algorithm, in this case random forest. Thus, only Naïve Bayes, random forest and nested dichotomy remain for the binary classification problems as methods to be compared. \\\\
+    The output of a classifier is the computed classification model, the correct and predicted classes for all instances if desired, and a set of evaluation metrics that will be discussed in the following chapter.
+
+  \subsection{Evaluation Methods}    
+  \label{subsec:evaluation_methods}
+    The examined data sets have a size of 4,000 instances for the move vs. position annotation problem and a size of 2,000 instances for the other problems. The validation of the classification models is performed by 10-fold-cross-validation, i.e. 400 or 200 instances are hold out in each of the ten runs. All evaluation measurements will be averaged over the ten folds of the cross-validation. \\\\
+    The main evaluation metric will be the accuracy. The higher the accuracy of a classification model, the better the classifier and the underlying feature model are evaluated. In order to be able to compare the accuracy across the different problems, the kappa statistic is used. The baseline determined by the zero-rule classifier is used as reference value for the calculation. \\\\
+    In the configurations with the best accuracy, the confusion matrix is also analyzed. For all defined problems, the general occurrence probability of a class can influence the frequency of different misclassification types, i.e. the values $M_{ij}$ of the cells in the confusion matrix. However, this preference for frequent classes is not punished, since in all problems it is the same if $n$ instances of class $i$ are classified correctly or $n$ instances of class $j$. Besides, it does not matter if a class $i$ is misclassified as class $j$ or the misclassification happens the other way around. Under these circumstances, evaluation methods such as precision, recall and ROC are unsuitable. \\\\
+However, the two above-mentioned conditions can be represented by a cost-sensitive evaluation matrix in which the entries of the main diagonal have the same cost, namely zero, and which is symmetrical, i.e. $c_{ij}=c_{ji}$. By this definition, the additional analysis by cost matrices for the two binary classification problems move vs. position annotations and good vs. poor moves is superfluous, the costs result automatically from the product of the misclassified instances with the only cost value different from zero. For the remaining three problems, both the total costs based on absolute and on squared cost vectors as presented in subsection~\ref{subsec:cost_sensitive_learning} are considered. An inclusion of these cost matrices in the classification process via cost-sensitive learning is not carried out.
   \clearpage  
   
   \section{Evaluation of Results}
   \label{sec:evaluation_of_results}
   
+  \subsection{Tokenizer Evaluation}    
+  \label{subsec:tokenizer_evaluation}
+
 	\begin{table}[H]
       \begin{tabular}{| l | r | r | r | r | r |}
     	\hline

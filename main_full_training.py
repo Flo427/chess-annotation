@@ -439,8 +439,9 @@ print("\nWRITE ARFF FILES\n")
 
 def write_arff(comment_data, data_set, feature_type, problem_name, classes, output_class, feature_names, matrix):
     arff = open("chess-annotations-" + data_set + "-" + feature_type + "-" + problem_name + ".arff", "w")
-    RELATION_NAME = "comment-" + problem_name									 
+    RELATION_NAME = "comment-" + data_set + "-" + feature_type + "-" + problem_name									 
     buff = ("@RELATION " + RELATION_NAME + "\n")
+    buff += ("@ATTRIBUTE comment STRING\n") 
     buff += ("@ATTRIBUTE number_of_tokens INTEGER\n") 
     for feature in feature_names:
         buff += ("@ATTRIBUTE " + feature_type + "(" + str(feature).replace(" ", "_").replace("\"", "_quote_").replace("'", "_apostrophe_").replace(",", "_comma_").replace("%", "_percent_") + ") REAL\n")
@@ -451,10 +452,11 @@ def write_arff(comment_data, data_set, feature_type, problem_name, classes, outp
             continue
         row = coo_matrix(matrix[comment,:])
         row = sorted(zip(row.col, row.data), key=lambda x: (x[0]))
-        buff += ("{0 " + str(len(comment_data[comment][0])) + ", ")
+        buff += ("{0 \"" + " ".join(comment_data[comment][0]).replace("\"", "\\\"") + "\", ")        
+        buff += ("1 " + str(len(comment_data[comment][0])) + ", ")
         for feature, value in row:            
-            buff += (str(feature + 1) + " " + str(value) + ", ")
-        buff += (str(len(feature_names) + 1) + " " + str(output_class[comment_data[comment][1]]) + "}\n")        
+            buff += (str(feature + 2) + " " + str(value) + ", ")
+        buff += (str(len(feature_names) + 2) + " " + str(output_class[comment_data[comment][1]]) + "}\n")        
     arff.write(buff)
 
 for (data_set, comment_data) in [("set-1", comment_data_set_1), ("set-2", comment_data_set_2), ("set-3", comment_data_set_3)]:

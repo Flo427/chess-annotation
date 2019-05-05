@@ -1,10 +1,7 @@
-% INFO
-% abstract.tex
-% Für den Abstract der Abschlussarbeit oder Dissertation
-
 \selectlanguage{ngerman}
 \begin{abstract}
-  Dies ist der Abstract der Arbeit.
-  Er gibt wertungsfrei, kurz und prägnant den Inhalt der wissenschaftlichen Arbeit wieder.
-\end{abstract}  
-
+  In dieser Arbeit wird untersucht, inwiefern für Kommentare aus Schachpartien das zugehörige Annotationssymbol gefunden werden kann. Mithilfe einer solchen Zuweisung könnten zu bisher nur mit Kommentaren versehenen Schachspielen zusätzliche Informationen generiert werden, sodass die Spiele besser auswertbar sind und beispielsweise für darauf aufbauende Lernverfahren genutzt werden können. \\\\
+  Zur Analyse werden überwachte Klassifikationsprobleme sowohl für Kommentare zu Zügen als auch zu Stellungen formuliert. Es werden geeignete Kommentardaten aus Schachdatenbanken extrahiert, mittels Natural Language Processing vorverarbeitet und schließlich in einem für die Klassifikation geeigneten Modell aufbereitet. Hierfür werden vier unterschiedliche Modelle untersucht: eines basierend auf den absoluten Häufigkeiten der Wörter (Count), eines auf den relativen Häufigkeiten der Wörter (TF-IDF), ein auf den Schachkommentaren trainiertes Word Embedding und ein auf Google News vortrainiertes Word Embedding. Für drei verschiedene Datensätze mit gemischt-langen, kurzen und langen Kommentaren werden mehrere Multiklassen-Klassifizierer getestet. \\\\
+  Während bei den Klassifizierern keine eindeutige Rangfolge erkennbar war, erzielte das Count-basierte Modell die besten Genauigkeitswerte, gefolgt vom TF-IDF-basierten Modell. Bei den beiden Word Embeddings schnitt das auf Google News vortrainierte besser ab als das auf den Schachkommentaren trainierte. Außerdem konnten für die kürzeren Kommentare bessere Genauigkeiten erreicht werden als für gemischt-lange oder lange Kommentare. \\\\
+  Die erzielten Genauigkeiten sind jedoch insgesamt zu niedrig, um die Modelle für eine Umwandlung von Kommentaren zu Annotationssymbolen nutzen zu können. Eine Verbesserung könnte durch eine Entfernung bestimmter Stoppwörter erreicht werden, die vermutlich besonders bei langen Kommentaren einen negativen Einfluss haben. Ebenso könnte eine Weiterentwicklung des selbst trainierten Word Embeddings zu einer Verbesserung der Genauigkeiten führen, da dieses trotz der niedrigsten Genauigkeitswerte ein vielversprechendes Modell mit sinnvollen semantischen Ähnlichkeiten im Schachvokabular berechnet.
+\end{abstract}

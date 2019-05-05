@@ -1,9 +1,6 @@
-% INFO
-% abstract.tex
-% Für den Abstract der Abschlussarbeit oder Dissertation
-
 \begin{abstract}
-  Dies ist der Abstract der Arbeit.
-  Er gibt wertungsfrei, kurz und prägnant den Inhalt der wissenschaftlichen Arbeit wieder.
-\end{abstract}  
-
+  This paper examines how the corresponding annotation symbol can be found for comments in chess games. With the help of such an assignment, additional information could be generated for chess games that have so far only been provided with comments. As a result, these games can be better evaluated and used for learning procedures based on them. \\\\
+  For analysis, supervised classification problems are set up for both comments on moves and positions. Appropriate comment data are extracted from chess databases, preprocessed by natural language processing and finally transformed into a suitable model for classification. For this purpose, four different models are examined: one based on the absolute frequencies of the words (count), one based on the relative frequencies of the words (TF-IDF), a word embedding trained on the chess comments and a word embedding pre-trained on Google News. For three different data sets with mixed-length, short and long comments, several multiclass classifiers are tested. \\\\
+  While the classifiers did not show a clear ranking, the count-based model achieved the best accuracy values, followed by the TF-IDF-based model. Of the two word embeddings, the one pre-trained on Google News performed better than the one trained on the chess commentaries. In addition, for the shorter comments better accuracies could be achieved than for mixed-long or long comments. \\\\
+  However, all the achieved accuracies are too low to use the models for transforming comments into annotation symbols. An improvement could be achieved by removing certain stopwords, which are likely to have a negative effect especially on long comments. Likewise, a further development of the self-trained word embedding could lead to an improvement of the accuracies, since despite the lowest accuracy values it calculates a promising model with meaningful semantic similarities in the chess vocabulary.
+\end{abstract}

@@ -64,16 +64,14 @@
   \clearpage
   
   \section{Introduction}
-
-  \subsection{Motivation}
-    For the analysis and evaluation of chess games these are noted in a uniform form like the PGN format. These data usually contain information about the players and the event as well as the exact move sequence of the chess game. In addition, especially in large chess databases, decisive moves and positions are provided with comments after the game has been analyzed by grandmasters. For a better arrangement of these comments there are standardized symbols and NAGs, which for example directly indicate whether a move was good or bad. These have the advantage that they are easier to evaluate due to their clear categorization and are also generally understandable, which is not the case with comments in natural language. \\\\
+    Chess games are noted in a uniform form like the PGN format in order to be able to perform analyses and evaluations at a later date. These data usually contain information about the players and the event as well as the exact move sequence of the chess game. In addition, especially in large chess databases, decisive moves and positions are provided with comments after the game has been analyzed by grandmasters. For a better arrangement of these comments there are standardized symbols and NAGs, which for example directly indicate whether a move was good or bad. These have the advantage that they are easier to evaluate due to their clear categorization and are also generally understandable, which is not the case with comments in natural language. \\\\
     In many cases the comments were therefore replaced by the annotation symbols if a comment did not seem necessary. For more detailed explanations, which can not only be expressed with an annotation symbol, both annotation symbols and comments are used. Finally, there are comments without a corresponding annotation symbol. This may be intentional if the commentary only names the commentator, summarizes a game or refers to similar chess games. However, some comments refer specifically to moves and positions and could therefore be provided with an annotation symbol. \\\\
     For the evaluation of annotation symbols in chess there are already approaches as described in \autocite{Wirth2014} and \autocite{Wirth2015}, where the annotations are used to learn preferences. In order to be able to use pure comment data for such evaluations, annotation symbols must have been assigned to the comments beforehand.
 
   \subsection{Problem Definition}
     In this thesis, a suitable approach for the correct assignment of annotation symbols to given chess annotations is to be found. It is a specialization of a supervised sentiment classification problem since the used data for the learning process contains only comments that are already labeled with the correct annotation symbol. This problem is split up into five separate questions:
     \begin{itemize}
-      \item the correct categorization into move- and chess-annotating comments for given chess comments
+      \item the correct categorization into move- and position-annotating comments for given chess comments
       \item the correct assignment of two annotation symbols $(!, ?)$ to given chess move comments
       \item the correct assignment of six annotation symbols $(!!, !, !?, ?!, ?, ??)$ to given chess move comments
       \item the correct assignment of three annotation symbols $(+-, =, -+)$ to given chess position comments
@@ -85,7 +83,7 @@
     
   \subsection{Structure of the Thesis}
     The thesis is split into five more sections: \\\\
-    The second section initially provides background knowledge in the topics dealt with in this thesis. It starts with the presentation of sentiment analysis as part of text mining. Afterwards the concept of Word Embeddings is discussed, which can serve as a data model in such text mining problems. This is followed by a description of multiclass classification problems and several appropriate approaches to solving such problems. A separate look is taken at the subgroup of ordinal classification problems.  Finally, cost-sensitive methods are presented that take into account different weightings of misclassifications. \\\\
+    The second section initially provides background knowledge in the topics dealt with in this thesis. It starts with the presentation of sentiment analysis as part of text mining. Afterwards the concept of word embeddings is discussed, which can serve as a data model in such text mining problems. This is followed by a description of multiclass classification problems and several suitable approaches to solve such problems. A separate look is taken at the subgroup of ordinal classification problems.  Finally, cost-sensitive methods are presented that take into account different weightings of misclassifications. \\\\
     The third section describes the general concept with which a text mining process can be created. It first deals with the requirements of problem and goal definition and the criteria for a suitable data selection. For the preparation of the data and their transformation into a model suitable for analysis, methods of natural language processing are presented. Finally, possible analysis methods and evaluation methods are presented from which suitable techniques for the problem can be selected. \\\\
     In the fourth section, the procedure presented in the third section is applied to the text mining process in chess annotations. First the format PGN and the annotation symbols NAG are explained and the five problems are specified. In the following the used tools like NLTK, Weka and further libraries are listed. Finally, the classifiers and evaluation methods used are mentioned. \\\\
     The fifth section contains all results and their evaluations. After the analysis of different tokenizer configurations, statistics about the comments are generated, which can be used to gain basic knowledge about the analyzed data set. In addition, the attributes and models used for the data set are evaluated. The majority of the results are finally taken up by the comparisons of the achieved accuracies for all configurations and problems. In the end, the best results achieved are checked for optimality in a cost-sensitive evaluation. \\\\
@@ -93,8 +91,6 @@
   \clearpage
   
   \section{Fundamentals}
-  
-  \subsection{Text Mining}
   
   \subsection{Sentiment Analysis}
 
@@ -710,8 +706,8 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
   
   \subsection{Data Set Extraction}
   \label{subsec:data_set_extraction}  
-    As data sources a set of files\footnote{\url{http://www.angelfire.com/games3/smartbridge/}} in standard PGN format is used as well as a bundle of commented games that have been extracted from Mega Database 2012\footnote{\url{https://shop.chessbase.com/en/products/mega_database_2012}} in ChessBase format. The related user interface ChessBase Reader offers the possibility to select the desired games and convert them into the standard PGN format. As a result, we obtain a set of files each containing several games in PGN format like seen in figure~\ref{fig:sample_pgn_game}. In total, we analyze 39 files with 68,606 games. In the next step those files have to be read and converted into data sets with comments that can be used within the classification problem. For this purpose, the natural language kit NLTK is used. \\\\
-    NLTK\footnote{\url{https://www.nltk.org/}} is a python library offering various technique for natural language processing (NLP). It can be used to extract information from web files in html or any other text file format. Besides, it offers access to big corpora and other lexical resources. The NLP process and its corresponding code in python using NLTK is shown in figure\ref{fig:nlp_pipeline}. Note that the pictured steps of tokenization and normalization are not considered in this section, but in subsection~\ref{subsec:nltk_preprocessing}.
+    As data sources a set of files\footnote{\url{http://www.angelfire.com/games3/smartbridge/}} in standard PGN format is used as well as a bundle of commented games that have been extracted from Mega Database 2012\footnote{\url{https://shop.chessbase.com/en/products/mega_database_2012}} in ChessBase format. The related user interface ChessBase Reader offers the possibility to select the desired games and convert them into the standard PGN format. As a result, we obtain a set of files each containing several games in PGN format like seen in figure~\ref{fig:sample_pgn_game}. In total, we analyze 39 files with 68,606 games. In the next step those files have to be read and converted into data sets with comments that can be used within the classification problem. For this purpose, the natural language toolkit NLTK is used. \\\\
+    NLTK\footnote{\url{https://www.nltk.org/}} is a python library offering various technique for natural language processing (NLP). It can be used to extract information from web files in html or any other text file format. Besides, it offers access to big corpora and other lexical resources. The NLP process and its corresponding code in python using NLTK is shown in figure~\ref{fig:nlp_pipeline}. Note that the pictured steps of tokenization and normalization are not considered in this section, but in subsection~\ref{subsec:nltk_preprocessing}.
 
     \begin{figure}[H]
       \centering
@@ -856,10 +852,10 @@ In the following four different models are built in order to offer an appropriat
 
         This model is as well based on word embeddings, but instead of creating a new model, an existing model is imported. It learned word vectors for all terms appearing in a huge Google News data set. It offers 300 attributes for around 3,000,000 words. Terms that are not part of the vocabulary are usually nevertheless matched by a pattern and a corresponding vector. Like in the previous case, the output matrix contains the vector of the comments in the data set, where each vector is calculated as the average of the weighted word vectors.
     \end{itemize}
-    The first two models offer a large number of attributes. Even if this number is already limited by the minimal number of five occurrences in the whole data set, an upper limit of 2,000 attributes is defined to limit the computing time of the algorithms. Both for the count-based and the TF-IDF-based model, the attributes are therefore ordered by their total term frequency and the top 2,000 remain in the model. For the short comment data set there is even no attribute selection required, because the vocabulary only 1,631 attributes. At this point it should be noted that usually it is not recommended to apply attribute selection to all data, but only to the training data, because otherwise the test data has been seen by the attribute selection process and the accuracies are too optimistic. Due to the fact, that for the attribute selection process the class attribute is not considered, this falsification should be minimal, if any.
+    The first two models offer a large number of attributes. Even if this number is already limited by the minimal number of five occurrences in the whole data set, an upper limit of 2,000 attributes is defined to limit the computing time of the algorithms. Both for the count-based and the TF-IDF-based model, the attributes are therefore ordered by their total term frequency and the top 2,000 remain in the model. For the short comment data set there is even no attribute selection required, because the vocabulary contains only 1,631 attributes. At this point it should be noted that usually it is not recommended to apply attribute selection to all data, but only to the training data, because otherwise the test data has been seen by the attribute selection process and the accuracies are too optimistic. Due to the fact, that for the attribute selection process the class attribute is not considered, this falsification should be minimal, if any.
   
   \subsubsection{Conversion to ARFF}
-    Weka\footnote{\url{https://www.cs.waikato.ac.nz/ml/weka/}}, short for Waikato Environment for Knowledge Analysis, is an open source software offering a collection of machine learning algorithms for data mining tasks that will be addressed to in subsection~\ref{subsec:classification_algorithms}. The algorithms are applied to data represented in Attribute-Relation File Format (ARFF)\footnote{\url{https://www.cs.waikato.ac.nz/ml/weka/arff.html}}. Weka offers standard ARFF files to experiment with and to get to know the functionality of the machine learning methods. As well own ARFF files can be imported and used. For this purpose, an ASCII text file needs to be structured like as shown in figure~\ref{fig:sample_arff_files}. It shows a possible output ARFF file for the two-class move annotations problem with two comment-value-pairs (“a brilliant counterattack of white”, 1) and (“a big mistake of black”, 2). The file consists of two blocks, the header information and the data information. Before the header information there might be comment lines with information about the author and version or further descriptions.
+    Weka\footnote{\url{https://www.cs.waikato.ac.nz/ml/weka/}}, short for Waikato Environment for Knowledge Analysis, is an open source software offering a collection of machine learning algorithms for data mining tasks that will be addressed to in subsection~\ref{subsec:classification_algorithms}. The algorithms are applied to data represented in Attribute-Relation File Format (ARFF)\footnote{\url{https://www.cs.waikato.ac.nz/ml/weka/arff.html}}. Weka offers standard ARFF files to experiment with and to get to know the functionality of the machine learning methods. As well own ARFF files can be imported and used. For this purpose, an ASCII text file needs to be structured as shown in figure~\ref{fig:sample_arff_files}. It shows a possible output ARFF file for the two-class move annotations problem with two comment-value-pairs (“a brilliant counterattack of white”, 1) and (“a big mistake of black”, 2). The file consists of two blocks, the header information and the data information. Before the header information there might be comment lines with information about the author and version or further descriptions.
     
     \newsavebox{\complete}
       \begin{lrbox}{\complete}
@@ -872,8 +868,7 @@ In the following four different models are built in order to offer an appropriat
 @DATA
 1, 0.0, 1
 0, 0.06, 2	  
-        \end{lstlisting}
-        \label{fig:sample_arff_file_complete}
+        \end{lstlisting}      
       \end{lrbox}
     \newsavebox{\sparse}
       \begin{lrbox}{\sparse}
@@ -886,15 +881,14 @@ In the following four different models are built in order to offer an appropriat
 @DATA
 {0 1, 2 1}
 {1 0.06, 2 2}	  
-        \end{lstlisting}
-        \label{fig:sample_arff_file_sparse}
+        \end{lstlisting}        
       \end{lrbox}    
     
     \begin{figure}[H]
 	  \centering      
-	  \subfloat[complete]{\usebox{\complete}}
+	  \subfloat[complete]{\usebox{\complete}\label{fig:sample_arff_file_complete}}
 	  \quad
-	  \subfloat[sparse]{\usebox{\sparse}}
+	  \subfloat[sparse]{\usebox{\sparse}\label{fig:sample_arff_file_sparse}}
       \caption{Sample arff files}
       \label{fig:sample_arff_files}
 	\end{figure}
@@ -952,7 +946,7 @@ For the following algorithms of the multiclass, ordinal class and nested dichoto
         Finally, the zero-rule classifier is executed to provide a baseline that serves as comparison value for kappa statistics. The accuracy equals the percentage of the most frequent class and is therefore the same for all four models if the same data set is used.
     \end{itemize}
     Independent of the classifier, due to the higher number of attributes, the time required for the classification of the pre-trained word embedding model is about twice as long as for the own trained word embedding model and even five times as long for the count-based and TF-IDF-based models. Another factor for the computing time is the number of classes. However, additional classes also increase the required computing capacity. \\\\
-    For the three multiclass classification problems, i.e. the move annotation problem with six classes and both position annotation problems, all classifiers can be applied to and provide different classification models and results. The two binary classification problems do not require any additional decomposition of the problem, so all multiclass classifiers and the ordinal class classifier output the same result as the underlying binary classification algorithm, in this case random forest. do not require any additional decomposition of the problem, so all multiclass classifiers and the ordinal class classifier output the same result as the underlying binary classification algorithm, in this case random forest. Thus, only Naïve Bayes, random forest and nested dichotomy remain for the binary classification problems as methods to be compared. \\\\
+    For the three multiclass classification problems, i.e. the move annotation problem with six classes and both position annotation problems, all classifiers can be applied to and provide different classification models and results. The two binary classification problems do not require any additional decomposition of the problem, so all multiclass classifiers and the ordinal class classifier output the same result as the underlying binary classification algorithm, in this case random forest. Thus, only Naïve Bayes, random forest and nested dichotomy remain for the binary classification problems as methods to be compared. \\\\
     The output of a classifier is the computed classification model, the correct and predicted classes for all instances if desired, and a set of evaluation metrics that will be discussed in the following chapter.
 
   \subsection{Evaluation Methods}    
@@ -1380,11 +1374,8 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
 
   \clearpage  
   
-  \section{Conclusion}
+  \section{Summary and Outlook}
 
-  \subsection{Summary}
-  
-  \subsection{Outlook}
   \clearpage
   
   \printbibliography

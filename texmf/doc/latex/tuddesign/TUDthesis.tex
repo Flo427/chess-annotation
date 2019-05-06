@@ -818,9 +818,7 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \item \makebox[7cm][l]{Remaining non-whitespace characters} \textbackslash S
     \end{itemize}
     The first two cases match non-standardized, but nevertheless frequently used abbreviations for common chess phrases. For example, the non-standard PGN code \#C4 and the non-standard NAG $\$142$ mean “Better is…” and could indicate a suboptimal move of class $4$ or $5$. The next three cases match symbols annotating moves and positions of follow-up variants. The regular expressions for abbreviations and multiple dots should reduce the number of tokens and avoid to mix this kind of expressions with other dots. Most tokens match the regular expression for words, that does not only include words of natural language, but also numbers, chess moves and the remaining position expressions $1-0$ and $0-1$. Finally, with the last expression the remaining non-whitespace characters like punctuation symbols are fetched. Different configurations of the tokenizer will be evaluated in subsection~\ref{subsec:tokenizer_evaluation}. \\\\
-    The normalization step is already involved in the tokenization process. Before splitting the comment into its tokens, it is already converted in lowercase, because this conversion does not influence the tokenization process. Immediately after the tokenization follows the lemmatization of the words. In this case lemmatization is preferred to stemming, because the language of lemmatized tokens can be better detected than for stemmed tokens. Besides, lemmatized tokens are easier to read than stemmed tokens. Categorization is waived, but it is implicitly used in the word embedding models, which receive the tokenized data as input later on. The normalization of the output, i.e. the conversion of the NAGs and symbols to the classes of the problem, is moved to after feature extraction and selection, because until then all comments can be processed uniformly for all problems. \\\\
-    The tokenizer produces an ordered list of tokens as output. Before proceeding with the feature extraction and selection, we first perform the missing checks on the language and the length of the comment. Comments in different languages lead to different rules and are therefore difficult to process at the same time. Long comments often contain descriptions about openings, other variants or similar chess games and are therefore unsuitable. Comments that are too short, on the other hand, generally provide little information and are not very meaningful. Besides, comments with just one or two tokens often just contain the name of the commentator. In order to be able to make reliable classification decisions, we require at least three tokens that are part of the English vocabulary to be included in each further processed comment. Thus, a minimum length of three tokens is guaranteed as well. The maximum length should be set to 49 tokens. \\\\
-    Unfortunately, it is not possible to filter the games directly in the ChessBase Reader by the used comment language. For this reason, the additional language detection library langid is used to filter out comments already before the tokenization process if with $99\%$ confidence the detected language is not English. Through this, over $70,000$ comments will be discarded. The second language detection step starts after the tokenization and normalization. For each comment the tokens are iterated and checked if the lemmatized token is part of the English vocabulary provided by the NLTK corpus. If there are at least three such words, the comment will be forwarded to the feature extraction and selection process. Although false positives cannot be completely avoided with this approach, the proportion of long comments in non-English should be low due to the first filter. Not filterable are however some comments of the ChessBase database, which contain the same statements united in several different languages. For this reason, some tokens will be in a different language than English. The complete NLTK preprocess is shown in figure~\ref{fig:nltk_preprocessing}.
+    The normalization step is already involved in the tokenization process. Before splitting the comment into its tokens, it is already converted in lowercase, because this conversion does not influence the tokenization process. Immediately after the tokenization follows the lemmatization of the words. In this case lemmatization is preferred to stemming, because the language of lemmatized tokens can be better detected than for stemmed tokens. Besides, lemmatized tokens are easier to read than stemmed tokens. Categorization is waived, but it is implicitly used in the word embedding models, which receive the tokenized data as input later on. The normalization of the output, i.e. the conversion of the NAGs and symbols to the classes of the problem, is moved to after feature extraction and selection, because until then all comments can be processed uniformly for all problems.
 
     \begin{figure}[H]
       \centering
@@ -829,6 +827,8 @@ is clearly weaker} 37. Nxc3 Bxf2+ 38. Kxf2 \nag{$19}) (36... Rxf3 \nag{$2} 37. N
       \label{fig:nltk_preprocessing}
 	\end{figure}  
     
+    The tokenizer produces an ordered list of tokens as output. Before proceeding with the feature extraction and selection, we first perform the missing checks on the language and the length of the comment. Comments in different languages lead to different rules and are therefore difficult to process at the same time. Long comments often contain descriptions about openings, other variants or similar chess games and are therefore unsuitable. Comments that are too short, on the other hand, generally provide little information and are not very meaningful. Besides, comments with just one or two tokens often just contain the name of the commentator. In order to be able to make reliable classification decisions, we require at least three tokens that are part of the English vocabulary to be included in each further processed comment. Thus, a minimum length of three tokens is guaranteed as well. The maximum length should be set to 49 tokens. \\\\
+    Unfortunately, it is not possible to filter the games directly in the ChessBase Reader by the used comment language. For this reason, the additional language detection library langid is used to filter out comments already before the tokenization process if with $99\%$ confidence the detected language is not English. Through this, over $70,000$ comments will be discarded. The second language detection step starts after the tokenization and normalization. For each comment the tokens are iterated and checked if the lemmatized token is part of the English vocabulary provided by the NLTK corpus. If there are at least three such words, the comment will be forwarded to the feature extraction and selection process. Although false positives cannot be completely avoided with this approach, the proportion of long comments in non-English should be low due to the first filter. Not filterable are however some comments of the ChessBase database, which contain the same statements united in several different languages. For this reason, some tokens will be in a different language than English. The complete NLTK preprocess is shown in figure~\ref{fig:nltk_preprocessing}. \\\\
     All in all, 70\% of the comments are filtered due to the above-mentioned quality requirements. 156,970 out of 511,273 comments remain, which is still sufficient data to learn on. In order to keep the computing capacities and times within reasonable limits such that different configurations can also be tested, 4,000 instances are selected, including 2,000 move annotations and 2,000 position annotations. Two more datasets of the same size are created for short comments with a token length of 3 to 9 and for long comments with a token length of 10 to 49, without overlapping with the first dataset. These three datasets are passed as a list of tuples of tokenized comments and NAGs or symbols to the feature extraction and selection step. The order of the tokens remains unchanged by selecting a list as collection type. \\\\
 
   \subsection{Attribute Creation and Selection}
@@ -839,10 +839,10 @@ In the following four different models are built in order to offer an appropriat
     \begin{itemize}
       \item Count-based Model
 
-        The count-based model uses the CountVectorizer class of the machine learning library scikit-learn\footnote{\url{https://scikit-learn.org/stable/index.html}}. It converts the comments to a matrix of features, where each row represents a comment and each column a term of the vocabulary. The vocabulary is made up of all unigrams, bigrams or trigrams that occur at least in five comments in the data set. The vectorizer counts the occurrences of each term in the vocabulary in each comment and stores the count in the corresponding cell of the matrix. As the comments are already lowercase and tokenized, these options do not have to be configured.
+        The count-based model uses the CountVectorizer class of the machine learning library scikit-learn\footnote{\url{https://scikit-learn.org/stable/index.html}}. It converts the comments to a matrix of features, where each row represents a comment and each column a term of the vocabulary. The vocabulary is made up of all tokens, bigrams or trigrams that occur at least in five comments in the data set. The vectorizer counts the occurrences of each term in the vocabulary in each comment and stores the count in the corresponding cell of the matrix. As the comments are already lowercase and tokenized, these options do not have to be configured.
       \item TF-IDF-based Model
 
-        The TF-IDF based model is similar to the count-based model, but uses the TfidfVectorizer class. The vectorizer is configured as in the first model, i.e. it builds a vocabulary of unigrams, bigrams and trigrams with minimal one occurrence in five different comments. However, the matrix this time contains the relative values for the occurrences of the term. Two terms that have the same value in the count-based model now have different values if the number of documents in which the term appears varies. The more documents contain the term, the lower the value.
+        The TF-IDF based model is similar to the count-based model, but uses the TfidfVectorizer class. The vectorizer is configured as in the first model, i.e. it builds a vocabulary of tokens, bigrams and trigrams with minimal one occurrence in five different comments. However, the matrix this time contains the relative values for the occurrences of the term. Two terms that have the same value in the count-based model now have different values if the number of documents in which the term appears varies. The more documents contain the term, the lower the value.
       \item Own Word2Vec-Model
 
         This model uses the word2vec module of the machine learning library gensim\footnote{\url{https://radimrehurek.com/gensim/models/word2vec.html}} to create a word embedding for chess annotations. A CBOW-word2vec-model is built and trained for all words in the chess comments. This time there is no need to include bigrams and trigrams in the model, because the context of a word is already taken into account by the window size of five. Similar to the first two models, all words with less than five occurrences are ignored and no part of the vocabulary. However, this time five is the limit for the total number of occurrences, i.e. a word only occurring in a single comment, but therein at least five times, will nevertheless be processed. As a result, the matrix contains a dense vector with 100 attributes for each word. To obtain the vector $\mathbf{v_{c}}$ for a comment $c$, the product of all vectors $\mathbf{v_{w}}$ and IDF-scores $idf_{w}$ of words $w$ in the comment that are also in the vocabulary are averaged:
@@ -959,10 +959,12 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
   
   \section{Evaluation of Results}
   \label{sec:evaluation_of_results}
-  
+    In this section the results of the whole text mining process are presented and evaluated. The section starts with the test results of different tokenizer configurations. Then, based on the best tokenizer configuration, evaluations of the tokens in the chess annotation data are presented. Before applying the classifiers on the data sets, the feature models are evaluated separately by checking the most informative attributes and by applying basic queries on the word embeddings. Afterwards, the achieved accuracies for all combinations of problem, data set, model and classifier are compared and analyzed. Finally, the misclassifications are viewed using examples, confusion matrices and different cost weights.
+      
   \subsection{Tokenizer Evaluation}    
   \label{subsec:tokenizer_evaluation}
-
+    For the evaluation of the Tokenizer configurations, a small test set with a total of slightly more than 2,000 instances is used, which, however, includes all tokens, bigrams and trigrams that occur at least two times in the data set. Thus, the model contains nearly 13,000 attributes and is based on the counts of the terms. The Naïve Bayes classifier was used for the classification, which can consider all attributes without much additional calculation effort. As a further comparison value, the one-against-all classifier (MCC0) with random forest was used. In addition to the move annotation problems (too high computational effort), an attribute selection based on the gain ratio has been applied beforehand. In table~\ref{tab:tokenizer_statistics} the different tokenizer configurations and the percentage variance of their achieved accuracy in comparison to the one of the standard configuration are listed. Hence, improvements compared to the standard configuration are indicated by a "+".
+    
 	\begin{table}[H]
       \begin{tabular}{| l | r | r | r | r | r |}
     	\hline
@@ -993,7 +995,64 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \caption{Accuracies for different RegexTokenizer}
       \label{tab:tokenizer_statistics}
 	\end{table}
+
+    The removal of the regular expressions for PGN or NAG non-standard codes as well as the removal of those for move- or position-annotating symbols had a slight deterioration of the accuracy as a consequence while the removal of the remis symbol as a token had no effect at all. The removal of the regular expression for abbreviations which also matches move counts, had a negative influence on the accuracy in eight of ten cases. For the regular expression for multiple dots, there were three improvements and three deteriorations, with the deteriorations weighing heavier. In the last three regular expressions for merged words, words and remaining non-whitespace characters, more than half of the accuracy values deteriorated. There are noticeable improvements for the position annotation problem with seven classes by the exclusion of words, i.e. the positions could be determined better by the counts of the letters than by the counts of the words. At the same time, however, this adaptation also led to significant deteriorations in the other problems. Overall, for all comparison configurations, the sum of the degradations is at least as large as the sum of the improvements, which is why the initial configuration of the tokenizer is retained. \\\\
+    The tokenizer tests were executed before the additional chess files of the Mega Database 2012 were available. For this reason, the ChessBase data sets were not included, which results in a different class distribution, especially in the move vs. position annotations problem. The high values of over 85\% accuracy in the first column can be explained by the fact that in this first test data set about seven eighths of the comments were move annotations. Thus, the baseline is even above the best accuracy. In order to have absolute certainty that the best tokenizer configuration in the tests will also perform best for the new datasets, the datasets would have to be recreated and re-tested.
  
+  \subsection{Data Set Evaluation}    
+    After the discretion of the tokenizer, the used comment data can be processed uniformly into tokens. For a better understanding of the data, some statistics regarding those tokens are created. In the evaluations in this subsection, the tokens were converted to lowercase, but not lemmatized. Filtering by language or minimum comment length was also not performed. \\\\
+    In the first step, the number of comments is analyzed depending on their length in tokens. The statistics are shown in table~\ref{tab:comment_length} and figure~\ref{fig:comment_length}. It can be seen that about half of the comments have a maximum token count of nine. 99 of these comments do not even contain a single token, since they consist only of whitespace characters. Of the remaining comments, only a small portion has a length of at least 50 tokens. Due to these circumstances, a length of three to nine tokens was defined for short comments and a length of ten to 49 tokens for long comments.
+
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[7cm]{%
+	  \begin{tabular}{ | c | r | }
+		\hline
+		Length & Count \\ \hline
+		0-4 & 92,519 \\ \hline
+		5-9 & 154,412 \\ \hline
+		10-14 & 105,778 \\ \hline
+		15-19 & 77,983 \\ \hline
+		20-29 & 52,802 \\ \hline
+		30-49 & 21,480 \\ \hline
+		50-99 & 5,653 \\ \hline
+		100-199 & 586 \\ \hline
+		200+ & 60 \\ \hline
+	  \end{tabular}
+      }{%
+        \caption{Comment length in tokens}
+        \label{tab:comment_length}
+      }
+      \ffigbox[10cm]{%
+	    \includegraphics[scale=0.75]{images/comment_length}
+      }{%
+	    \caption{Count and cumulative count of comment length}
+        \label{fig:comment_length}
+      }
+      \end{floatrow}
+    \end{figure}
+
+    Likewise, statistics about the tokens themselves can be created. An evaluation of how many tokens, bigrams and trigrams exist with a certain number of minimum occurrences is relevant because it determines the maximum number of attributes for the count- and TF-IDF-based model. This number is given for different numbers of at minimum occurrences in table~\ref{tab:frequency_tokens_bigrams_trigrams}. It should be noted that this number will be smaller if a lemmatization is applied beforehand.
+    
+	\begin{table}[H]
+	  \begin{tabular}{ | r | r | r | r | }
+		\hline
+		Min. occurrences & Count tokens & Count bigrams & Count trigrams \\ \hline
+		1,000 & 654 & 458 & 130 \\ \hline
+		300 & 1,719 & 1,948 & 706 \\ \hline
+		100 & 3,913 & 6,382 & 3,013 \\ \hline
+		30 & 9,280 & 21,730 & 15,314 \\ \hline
+		10 & 20,881 & 63,250 & 60,923 \\ \hline
+		3 & 51,693 & 204,975 & 286,032 \\ \hline
+		1 & 158,652 & 798,608 & 1,869,193 \\ \hline
+	  \end{tabular}
+      \caption{Frequency of tokens, bigrams and trigrams}
+      \label{tab:frequency_tokens_bigrams_trigrams}
+	\end{table}
+	
+    Due to the many possible combinations, there is a very large total number of trigrams, which, however, decreases rapidly when the threshold is increased. In the case of bigrams, this tendency is not so pronounced. Even for a threshold value of 300 there are more bigrams than single tokens. Altogether it can be stated that a threshold of three already reduces the number of possible attributes to about 20\% and a threshold of ten even to 5\% of the original number. From the top row we can conclude that there are only slightly more than 1,000 terms which occur in at least 0.2\% of the comments. This indicates a strong variance in the comments. \\\\
+    Besides, additional analyses were performed to determine the most common words, bigrams and trigrams. The values can be seen in the tables~\ref{tab:frequent_tokens},~\ref{tab:frequent_bigrams}~and~\ref{tab:frequent_trigrams}. It is not sure whether such frequently occurring terms are meaningful at all, i.e. whether they offer an information gain. If this is the case, however, they can be used very well as learning and decision criteria, because they can be applied to a large number of comments.
+          
 	\begin{table}[H]
       \subfloat[all tokens]{
       \begin{tabular}{| l | r |}
@@ -1053,6 +1112,8 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \label{tab:frequent_tokens}
 	\end{table}
 	
+    Among the most common tokens, bigrams and trigrams are mainly punctuation marks and combinations of those that do not allow intuitive conclusions to be made about certain annotation types. The only exceptions are the bigrams "1/2 -" and "- 1/2" respectively the trigram "1/2 - 1/2", which could indicate a balanced position. If the list is limited to English words, there are numerous stopwords and combinations of these, but also the two tokens "white" and "black" and the phrases "this move", "the game" or "week in chess". If you consider only non-stopwords for the tokens, then with the words "move" and "position" two further interesting tokens are among the top ten, which should be relevant at least for the classification according to move and position annotations.
+    
     \begin{figure}[H]
       \begin{floatrow}
       \capbtabbox[8.5cm]{%
@@ -1134,63 +1195,10 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \end{floatrow}
 	\end{figure}
 
-	\begin{figure}[H]
-	  \centering
-	  \begin{lstlisting}	  
-(count(/) >= 1) and (count(/_\) <= 0) => class=2 (699.0/49.0)
-(count(and) >= 1) and (number_of_tokens <= 19) and (count(white) >= 1) 
-	=> class=2 (153.0/35.0)
-(count(to) <= 0) and (count(and) >= 1) and (count(ha) >= 1) => class=2 (71.0/12.0)
-(count(this) <= 0) and (count(to) <= 0) and (count(.) >= 1) and (count(the) <= 0) and 
-	(count(with) >= 1) => class=2 (97.0/16.0)
-(count(move) <= 0) and (count(be) >= 1) and (count(the) <= 1) and (count(.) >= 1) and 
-	(count(this) <= 0) => class=2 (504.0/194.0)
-(count(move) <= 0) and (count(_comma_) >= 2) and (count(to) <= 0) 
-	=> class=2 (117.0/45.0)
-(count(move) <= 0) and (count(ha) >= 1) and (count(to) <= 0) => class=2 (85.0/32.0)
-
- => class=1 (2274.0/657.0)
-	  \end{lstlisting}
-      \caption{Rules for the move vs. position annotation problem}
-      \label{fig:move_vs_position_rules}
-	\end{figure}
-	
-	\begin{figure}[H]
-	  \centering
-	  \begin{lstlisting}	  
-(count(mistake) >= 1) => class=2 (65.0/2.0)
-(number_of_tokens <= 5) and (count(.) <= 0) and (count(of) >= 1) => class=2 (17.0/2.0)
-(count(but) >= 1) and (count(this) >= 1) and (count(of) <= 0) => class=2 (49.0/16.0)
-(count(lose) >= 1) and (number_of_tokens <= 13) => class=2 (37.0/7.0)
-(number_of_tokens <= 5) and (count(by) >= 1) => class=2 (17.0/1.0)
-(count(miss) >= 1) and (count(miss_this) <= 0) => class=2 (30.0/4.0)
-(count(wa) >= 1) and (number_of_tokens >= 10) and (count(_comma_) <= 0) 
-	=> class=2 (48.0/15.0)
-(count(blunder) >= 1) => class=2 (21.0/0.0)
-(number_of_tokens <= 6) and (count(too) >= 1) => class=2 (9.0/0.0)
-(count(allow) >= 1) => class=2 (35.0/10.0)
-
- => class=1 (1672.0/413.0)
-	  \end{lstlisting}
-      \caption{Rules for the 2-class move annotation problem}
-      \label{fig:move_rules}
-	\end{figure}
-	
-	\begin{figure}[H]
-	  \centering
-	  \begin{lstlisting}	  
-(count(0-1) >= 1) and (number_of_tokens >= 18) => class=3 (58.0/26.0)
-(count(/) <= 0) and (count(win) >= 1) and (count(white) <= 0) and 
-	(number_of_tokens >= 9) => class=3 (34.0/11.0)
-	
-(count(1/2) >= 1) and (count(ext) <= 0) => class=2 (136.0/65.0)
-
- => class=1 (1772.0/733.0)
-	  \end{lstlisting}
-      \caption{Rules for the 3-class position annotation problem}
-      \label{fig:position_rules}
-	\end{figure}
-	
+  \subsection{Model Evaluation}    
+    Before the classification is performed, some analyses can already be done on the underlying models. In the two models, where each attribute correlates with a certain term, namely the count-based model and the TF-IDF-based model, meaningful attributes and thus terms that are relevant for classification decisions can be determined by calculating values such as the gain ratio. Table~\ref{tab:most_informative_attributes} shows the ten best attributes by gain ratio for the move vs. position annotation problem, the move annotation problem with two classes and the position annotation problem with three classes. In the following, no distinction is made between the count-based model and the TF-IDF-based model, since the values are very similar in both models. \\\\
+    The best attributes for the move annotation problem all indicate a poor move and are intuitive or at least comprehensible like count("be too"). The position annotation problem also includes three intuitively useful attributes: count(white loose), count(balance) and count(equalize). For the rest, it is not obvious at first glance to what extent the classes are differentiated by the attribute. Even less obvious are the statements of the best rated attributes (except the last one) of the move vs. position annotation problems. Though, here the gain ratio values are generally lower.
+    
 	\begin{table}[H]
       \subfloat[Move vs. position]{
       \begin{tabular}{| l | r |}
@@ -1244,56 +1252,72 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \label{tab:most_informative_attributes}
 	\end{table}
 	
+    The attributes shown in table~\ref{tab:most_informative_attributes}, however, show partly strong dependencies to each other. If the attribute count("mistake") is already selected in the case of the move annotation problem, the attributes count("mistake .") and count("mistake ,") are redundant and no longer provide any additional information gain. For this reason, the rule-based classifier J48 was used to create a classification model with rules for the three problems mentioned in order to investigate suitable attribute combinations. The learned rules are structured according to the scheme "(condition A) and (condition B) => prediction (true positive count, false positive count) and can be seen in figure~\ref{fig:move_rules},~\ref{fig:position_rules}~and~\ref{fig:move_vs_position_rules}. Note that in each case the last rule has no condition and predicts the most frequent class.
+        
+	\begin{figure}[H]
+	  \centering
+	  \begin{lstlisting}	  
+(count(mistake) >= 1) => class=2 (65.0/2.0)
+(number_of_tokens <= 5) and (count(.) <= 0) and (count(of) >= 1) => class=2 (17.0/2.0)
+(count(but) >= 1) and (count(this) >= 1) and (count(of) <= 0) => class=2 (49.0/16.0)
+(count(lose) >= 1) and (number_of_tokens <= 13) => class=2 (37.0/7.0)
+(number_of_tokens <= 5) and (count(by) >= 1) => class=2 (17.0/1.0)
+(count(miss) >= 1) and (count(miss_this) <= 0) => class=2 (30.0/4.0)
+(count(wa) >= 1) and (number_of_tokens >= 10) and (count(_comma_) <= 0) 
+	=> class=2 (48.0/15.0)
+(count(blunder) >= 1) => class=2 (21.0/0.0)
+(number_of_tokens <= 6) and (count(too) >= 1) => class=2 (9.0/0.0)
+(count(allow) >= 1) => class=2 (35.0/10.0)
+
+ => class=1 (1672.0/413.0)
+	  \end{lstlisting}
+      \caption{Rules for the 2-class move annotation problem}
+      \label{fig:move_rules}
+	\end{figure}
 	
+	\begin{figure}[H]
+	  \centering
+	  \begin{lstlisting}	  
+(count(0-1) >= 1) and (number_of_tokens >= 18) => class=3 (58.0/26.0)
+(count(/) <= 0) and (count(win) >= 1) and (count(white) <= 0) and 
+	(number_of_tokens >= 9) => class=3 (34.0/11.0)
+	
+(count(1/2) >= 1) and (count(ext) <= 0) => class=2 (136.0/65.0)
 
-	\begin{table}[H]
-	  \begin{tabular}{ | r | r | r | r | }
-		\hline
-		Min. occurrences & Count tokens & Count bigrams & Count trigrams \\ \hline
-		1,000 & 654 & 458 & 130 \\ \hline
-		300 & 1,719 & 1,948 & 706 \\ \hline
-		100 & 3,913 & 6,382 & 3,013 \\ \hline
-		30 & 9,280 & 21,730 & 15,314 \\ \hline
-		10 & 20,881 & 63,250 & 60,923 \\ \hline
-		3 & 51,693 & 204,975 & 286,032 \\ \hline
-		1 & 158,652 & 798,608 & 1,869,193 \\ \hline
-	  \end{tabular}
-      \caption{Frequency of tokens, bigrams and trigrams}
-      \label{tab:frequency_tokens_bigrams_trigrams}
-	\end{table}
-  
-    \begin{figure}[H]
-      \begin{floatrow}
-      \capbtabbox[7cm]{%
-	  \begin{tabular}{ | c | r | }
-		\hline
-		Length & Count \\ \hline
-		0-4 & 92,519 \\ \hline
-		5-9 & 154,412 \\ \hline
-		10-14 & 105,778 \\ \hline
-		15-19 & 77,983 \\ \hline
-		20-29 & 52,802 \\ \hline
-		30-49 & 21,480 \\ \hline
-		50-99 & 5,653 \\ \hline
-		100-199 & 586 \\ \hline
-		200+ & 60 \\ \hline
-	  \end{tabular}
-      }{%
-        \caption{Comment length in tokens}
-        \label{tab:comment_length}
-      }
-      \ffigbox[10cm]{%
-	    \includegraphics[scale=0.75]{images/comment_length}
-      }{%
-	    \caption{Count and cumulative count of comment length}
-        \label{fig:comment_length}
-      }
-      \end{floatrow}
-    \end{figure}
+ => class=1 (1772.0/733.0)
+	  \end{lstlisting}
+      \caption{Rules for the 3-class position annotation problem}
+      \label{fig:position_rules}
+	\end{figure}
+	
+    As in the tables, the rules for the move and position annotation problem are largely comprehensible, whether intuitive or not. In addition, the comment length seems to be relevant as it is used as part of rules in both models. The rules of the move vs. position problem, on the other hand, are less comprehensible and it is questionable whether they could also be successfully applied in other data sets.
+    	
+	\begin{figure}[H]
+	  \centering
+	  \begin{lstlisting}	  
+(count(/) >= 1) and (count(/_\) <= 0) => class=2 (699.0/49.0)
+(count(and) >= 1) and (number_of_tokens <= 19) and (count(white) >= 1) 
+	=> class=2 (153.0/35.0)
+(count(to) <= 0) and (count(and) >= 1) and (count(ha) >= 1) => class=2 (71.0/12.0)
+(count(this) <= 0) and (count(to) <= 0) and (count(.) >= 1) and (count(the) <= 0) and 
+	(count(with) >= 1) => class=2 (97.0/16.0)
+(count(move) <= 0) and (count(be) >= 1) and (count(the) <= 1) and (count(.) >= 1) and 
+	(count(this) <= 0) => class=2 (504.0/194.0)
+(count(move) <= 0) and (count(_comma_) >= 2) and (count(to) <= 0) 
+	=> class=2 (117.0/45.0)
+(count(move) <= 0) and (count(ha) >= 1) and (count(to) <= 0) => class=2 (85.0/32.0)
+
+ => class=1 (2274.0/657.0)
+	  \end{lstlisting}
+      \caption{Rules for the move vs. position annotation problem}
+      \label{fig:move_vs_position_rules}
+	\end{figure}
+	
+    For the word embeddings an evaluation like for the count- and TF-IDF-based models is not useful, because the concrete statements by the attributes of the word embeddings are unknown. Instead, the learned vectors of the vocabulary can be compared directly with each other to check whether the semantics of the comments have been captured meaningfully. For this purpose, the most similar words to the (chess) terms "check" and "blunder" with respect to the cosine similarity are compared for the word embedding learned on the chess comments (see table~\ref{tab:cosine_similarities_w2v_own}) and the word embedding learned on Google News (see table~\ref{tab:cosine_similarities_w2v_pretrained}).
 
     \begin{figure}[H]
       \begin{floatrow}
-      \capbtabbox[8.5cm]{%
+      \capbtabbox[8.1cm]{%
       \subfloat[Most similar to "check"]{
       \begin{tabular}{| l | r |}
 		\hline
@@ -1331,7 +1355,7 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
         \caption{Cosine similarities in chess word2vec-model}
         \label{tab:cosine_similarities_w2v_own}
       }
-      \capbtabbox[8.5cm]{%
+      \capbtabbox[8.9cm]{%
       \subfloat[Most similar to "check"]{
       \begin{tabular}{| l | r |}
 		\hline
@@ -1372,6 +1396,10 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \end{floatrow}
 	\end{figure}
 
+    The self-trained word embedding gives as expected a list of related chess terms, while the pretrained word embedding calculates more general terms, which should be irrelevant for the chess comments. For the two words "mistake" and "miscalculation", which occur in both tables, the self-trained word embedding has higher similarity values to the given word "blunder" than the pretrained word embedding. Furthermore, the self-trained word embedding achieves a similarity of 97.78\% for the two words "white" and "black", whereas in the pretrained word embedding it is only 80.92\%. In principle, a similarity of these terms is desired, but a similarity that is too high could make it difficult to distinguish the two words from each other and thus complicate decisions whether a position is in favor of white or in favor of black.
+    
+  \subsection{Misclassifications}
+    
   \clearpage  
   
   \section{Summary and Outlook}

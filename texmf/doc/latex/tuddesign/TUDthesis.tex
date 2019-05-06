@@ -14,6 +14,7 @@
 \newfloatcommand{capbtabbox}{table}[][\FBwidth]
 \restylefloat{table}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \usepackage[
     backend=biber, % biber ist das Standard-Backend für Biblatex. Für die Abwärtskompatibilität kann hier auch bibtex oder bibtex8 gewählt werden (siehe biblatex-Dokumentation)
@@ -998,10 +999,10 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
 	\end{table}
 
     The removal of the regular expressions for PGN or NAG non-standard codes as well as the removal of those for move- or position-annotating symbols had a slight deterioration of the accuracy as a consequence while the removal of the remis symbol as a token had no effect at all. The removal of the regular expression for abbreviations which also matches move counts, had a negative influence on the accuracy in eight of ten cases. For the regular expression for multiple dots, there were three improvements and three deteriorations, with the deteriorations weighing heavier. In the last three regular expressions for merged words, words and remaining non-whitespace characters, more than half of the accuracy values deteriorated. There are noticeable improvements for the position annotation problem with seven classes by the exclusion of words, i.e. the positions could be determined better by the counts of the letters than by the counts of the words. At the same time, however, this adaptation also led to significant deteriorations in the other problems. Overall, for all comparison configurations, the sum of the degradations is at least as large as the sum of the improvements, which is why the initial configuration of the tokenizer is retained. \\\\
-    The tokenizer tests were executed before the additional chess files of the Mega Database 2012 were available. For this reason, the ChessBase data sets were not included, which results in a different class distribution, especially in the move vs. position annotations problem. The high values of over 85\% accuracy in the first column can be explained by the fact that in this first test data set about seven eighths of the comments were move annotations. Thus, the baseline is even above the best accuracy. In order to have absolute certainty that the best tokenizer configuration in the tests will also perform best for the new datasets, the datasets would have to be recreated and re-tested.
+    The tokenizer tests were executed before the additional chess files of the Mega Database 2012 were available. For this reason, the ChessBase data sets were not included, which results in a different class distribution, especially in the move vs. position annotation problem. The high values of over 85\% accuracy in the first column can be explained by the fact that in this first test data set about seven eighths of the comments were move annotations. Thus, the baseline is even above the best accuracy. In order to have absolute certainty that the best tokenizer configuration in the tests will also perform best for the new datasets, the datasets would have to be recreated and re-tested.
  
   \subsection{Data Set Evaluation}    
-    After the discretion of the tokenizer, the used comment data can be processed uniformly into tokens. For a better understanding of the data, some statistics regarding those tokens are created. In the evaluations in this section, the tokens were converted to lowercase, but not lemmatized. Filtering by language or minimum comment length was also not performed. \\\\
+    After the determination of the tokenizer, the used comment data can be processed uniformly into tokens. For a better understanding of the data, some statistics regarding those tokens are created. In the evaluations in this section, the tokens were converted to lowercase, but not lemmatized. Filtering by language or minimum comment length was also not performed. \\\\
     In the first step, the number of comments is analyzed depending on their length in tokens. The statistics are shown in table~\ref{tab:comment_length} and figure~\ref{fig:comment_length}. It can be seen that about half of the comments have a maximum token count of nine. 99 of these comments do not even contain a single token, since they consist only of whitespace characters. Of the remaining comments, only a small portion has a length of at least 50 tokens. Due to these circumstances, a length of three to nine tokens was defined for short comments and a length of ten to 49 tokens for long comments.
 
     \begin{figure}[H]
@@ -1019,6 +1020,8 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
 		50-99 & 5,653 \\ \hline
 		100-199 & 586 \\ \hline
 		200+ & 60 \\ \hline
+		\hline
+		all & 511,273 \\ \hline
 	  \end{tabular}
       }{%
         \caption{Comment length in tokens}
@@ -1198,7 +1201,7 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
 
   \subsection{Model Evaluation}    
     Before the classification is performed, some analyses can already be done on the underlying models. In the two models, where each attribute correlates with a certain term, namely the count-based model and the TF-IDF-based model, meaningful attributes and thus terms that are relevant for classification decisions can be determined by calculating values such as the gain ratio. Table~\ref{tab:most_informative_attributes} shows the ten best attributes by gain ratio for the move vs. position annotation problem, the move annotation problem with two classes and the position annotation problem with three classes. In the following, no distinction is made between the count-based model and the TF-IDF-based model, since the values are very similar in both models. \\\\
-    The best attributes for the move annotation problem all indicate a poor move and are intuitive or at least comprehensible like count("be too"). The position annotation problem also includes three intuitively useful attributes: count(white loose), count(balance) and count(equalize). For the rest, it is not obvious at first glance to what extent the classes are differentiated by the attribute. Even less obvious are the statements of the best rated attributes (except the last one) of the move vs. position annotation problems. Though, here the gain ratio values are generally lower.
+    The best attributes for the move annotation problem all indicate a poor move and are intuitive or at least comprehensible like count("be too"). The position annotation problem also includes three intuitively useful attributes: count(white loose), count(balance) and count(equalize). For the rest, it is not obvious at first glance to what extent the classes are differentiated by the attribute. Even less obvious are the statements of the best rated attributes (except the last one) of the move vs. position annotation problem. Though, here the gain ratio values are generally lower.
     
 	\begin{table}[H]
       \subfloat[Move vs. position]{
@@ -1291,7 +1294,7 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \label{fig:position_rules}
 	\end{figure}
 	
-    As in the tables, the rules for the move and position annotation problem are largely comprehensible, whether intuitive or not. In addition, the comment length seems to be relevant as it is used as part of rules in both models. The rules of the move vs. position problem, on the other hand, are less comprehensible and it is questionable whether they could also be successfully applied in other data sets.
+    As in the tables, the rules for the move and position annotation problem are largely comprehensible, whether intuitive or not. In addition, the comment length seems to be relevant as it is used as part of rules in both models. The rules of the move vs. position annotation problem, on the other hand, are less comprehensible and it is questionable whether they could also be successfully applied in other data sets.
     	
 	\begin{figure}[H]
 	  \centering
@@ -1399,8 +1402,139 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
 
     The self-trained word embedding gives as expected a list of related chess terms, while the pretrained word embedding calculates more general terms, which should be irrelevant for the chess comments. For the two words "mistake" and "miscalculation", which occur in both tables, the self-trained word embedding has higher similarity values to the given word "blunder" than the pretrained word embedding. Furthermore, the self-trained word embedding achieves a similarity of 97.78\% for the two words "white" and "black", whereas in the pretrained word embedding it is only 80.92\%. In principle, a similarity of these terms is desired, but a similarity that is too high could make it difficult to distinguish the two words from each other and thus complicate decisions whether a position is in favor of white or in favor of black.
     
+  \subsection{Classification Results}
+
   \subsection{Misclassifications}
-    
+    The classification results obtained in the previous section have so far only been evaluated according to the accuracy value. In this section, the misclassifications are examined and it is checked whether the previously optimal results remain optimal even after weighting the misclassifications with costs. First, the confusion matrices are used to analyze which types of misclassifications frequently occur. The confusion matrices of the ordinal class classifier in table~\ref{tab:confusion_matrices} are considered as examples; the matrices of other data sets and other classifications show similar patterns. The binary classification problems already result in the same values as with direct application of random forest.
+      
+    \begin{table}[H]
+      \subfloat[Move vs. position]{
+      \begin{tabular}{R{0.8cm}|R{0.8cm}|R{0.8cm}|}
+        \cline{2-3}
+        \multicolumn{1}{ c| }{} & \multicolumn{2}{ c| }{predicted} \\ \cline{2-3}
+        \multicolumn{1}{ c| }{} & 1 & 2 \\ \cline{1-3}
+        \multicolumn{1}{ |c| }{1} & 1692 &  308 \\ \cline{1-3}
+        \multicolumn{1}{ |c| }{2} &  562 & 1438 \\ \cline{1-3}
+      \end{tabular}
+      }      
+      \quad      
+      \subfloat[Move (2 classes)]{
+      \begin{tabular}{R{0.8cm}|R{0.8cm}|R{0.8cm}|}
+        \cline{2-3}
+        \multicolumn{1}{ c| }{} & \multicolumn{2}{ c| }{predicted} \\ \cline{2-3}
+        \multicolumn{1}{ c| }{} & 1 & 2 \\ \cline{1-3}
+        \multicolumn{1}{ |c| }{1} & 1222 &   94 \\ \cline{1-3}
+        \multicolumn{1}{ |c| }{2} &  388 &  296 \\ \cline{1-3}
+      \end{tabular}
+      }      
+      \quad      
+      \subfloat[Position (3 classes)]{
+      \begin{tabular}{R{0.8cm}|R{0.8cm}|R{0.8cm}|R{0.8cm}|}
+        \cline{2-4}
+        \multicolumn{1}{ c| }{} & \multicolumn{3}{ c| }{predicted} \\ \cline{2-4}
+        \multicolumn{1}{ c| }{} & 1 & 2 & 3 \\ \cline{1-4}
+        \multicolumn{1}{ |c| }{1} & 951 & 113 &  46 \\ \cline{1-4}
+        \multicolumn{1}{ |c| }{2} & 326 & 131 &  13 \\ \cline{1-4}
+        \multicolumn{1}{ |c| }{3} & 336 &  52 &  32 \\ \cline{1-4}
+      \end{tabular}
+      }      
+      \quad      
+      \subfloat[Move (6 classes)]{
+      \begin{tabular}{R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|}
+        \cline{2-7}
+        \multicolumn{1}{ c| }{} & \multicolumn{6}{ c| }{predicted} \\ \cline{2-7}
+        \multicolumn{1}{ c| }{} & 1 & 2 & 3 & 4 & 5 & 6 \\ \cline{1-7}
+        \multicolumn{1}{ |c| }{1} &   0 &  18 &   1 &   0 &   1 &   0 \\ \cline{1-7}
+        \multicolumn{1}{ |c| }{2} &   0 & 798 &  49 &  21 &  18 &   0 \\ \cline{1-7}
+        \multicolumn{1}{ |c| }{3} &   0 & 260 & 119 &  20 &  11 &   0 \\ \cline{1-7}
+        \multicolumn{1}{ |c| }{4} &   0 & 180 &  35 &  49 &  39 &   1 \\ \cline{1-7}
+        \multicolumn{1}{ |c| }{5} &   0 & 159 &  19 &  31 & 129 &   4 \\ \cline{1-7}
+        \multicolumn{1}{ |c| }{6} &   0 &  14 &   1 &   2 &  21 &   0 \\ \cline{1-7}
+      \end{tabular}
+      }      
+      \quad      
+      \subfloat[Position (7 classes)]{
+      \begin{tabular}{R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|R{0.6cm}|}
+        \cline{2-8}
+        \multicolumn{1}{ c| }{} & \multicolumn{7}{ c| }{predicted} \\ \cline{2-8}
+        \multicolumn{1}{ c| }{} & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{1} &  88 &  52 &  32 &  37 &   4 &   3 &  14 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{2} &  37 &  96 & 152 &  83 &   6 &  10 &   3 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{3} &  15 &  92 & 222 & 143 &  13 &   5 &   3 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{4} &  14 &  68 & 135 & 239 &   7 &   7 &   0 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{5} &  14 &  19 &  57 &  53 &  10 &   1 &   1 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{6} &   9 &  33 &  43 &  39 &   2 &   6 &   3 \\ \cline{1-8}
+        \multicolumn{1}{ |c| }{7} &  38 &  26 &  24 &  26 &   2 &   2 &  12 \\ \cline{1-8}
+      \end{tabular}
+      }      
+      \caption{Confusion matrices of ordinal class classifier}
+      \label{tab:confusion_matrices}
+    \end{table}
+
+    As desired, the confusion matrix of the move vs. position annotation problem has the highest values on the main diagonal, which is also determined by the equilibrium of the instances per class. With the move annotation problem with two classes it looks different; here class 2 (poor move) is rarer than class 1 and is predicted much less often. This even leads to the fact that class 1 is predicted more often than class 2 by the instances of class 2. The same happens with the other three problems: With the move annotation problem with six classes class 2 dominates, with the position annotation problem with three classes class 1 and with the position annotation problem with seven classes class 3 and 4. From this it can be concluded that the classifier for many comments does not find a sufficiently strong decision for any class and therefore chooses the most frequently occurring class. \\\\
+    However, a closer look at the misclassified instances revealed that some simple mistakes were made in addition to comments that were difficult to classify. Table~\ref{tab:misclassified_instances} shows six examples in tokenized and lemmatized form that were misclassified by the random forest classifier in all four models. The comments have no particular complications and error-free class assignment is a prerequisite for using the classification model for non-test purposes. However, none of the classification models fulfils this requirement, so that further improvements in preprocessing, model building or classification are necessary.
+
+	\begin{table}[H]
+      \begin{tabular}{| l | l | r | r |}
+		\cline{1-4}
+		Problem & Instance & Actual class & Predicted class \\ \cline{1-4}
+		\multirow{2}{*}{Move vs. position annotation} & with the threat rf6 and re4 & 1 & 2 \\ \cline{2-4}
+		 & black find himself in quiet passive position & 2 & 1 \\ \cline{1-4}
+		\multirow{2}{*}{Move (2 classes)} & lead to a decisive advantage . & 1 & 2 \\ \cline{2-4}
+		 & now he also lose pair of bishop . & 2 & 1 \\ \cline{1-4}
+		\multirow{2}{*}{Position (3 classes)} & and i don't see more for white than a draw . & 2 & 1 \\ \cline{2-4}
+		 & with small advantage for black . e.g. & 3 & 1 \\ \cline{1-4}
+	  \end{tabular}
+      \caption{Simple misclassified instances}
+      \label{tab:misclassified_instances}
+	\end{table}
+
+    As already mentioned in section~\ref{subsec:evaluation_methods}, binary classification problems do not need to be re-examined for optimality if the cost matrix is symmetrical and contains equal values on the main diagonal. For the other three problems, the best two configurations of the accuracies are compared using the absolute and squared costs as defined in section~\ref{subsec:cost_sensitive_learning}. The results are shown in table~\ref{tab:comparison_costs}, the lower costs of both configurations are marked in bold.
+      
+	\begin{table}[H]
+      \subfloat[Move (6 classes)]{
+      \begin{tabular}{| l | l | r | r |}
+		\cline{1-4}
+		Data set & Configuration & Absolute cost & Squared cost \\ \cline{1-4}
+		\multirow{2}{*}{mixed} & Count - MCC0 & 1565 & 3367 \\ \cline{2-4}
+		 & Count - OCC & \textbf{1541} & \textbf{3259} \\ \cline{1-4}
+		\multirow{2}{*}{short} & Count - NDD & \textbf{1463} & \textbf{3137} \\ \cline{2-4}
+		 & Count - MCC3P & 1488 & 3232 \\ \cline{1-4}
+		\multirow{2}{*}{long} & Count - MCC0 & \textbf{1672} & 3668 \\ \cline{2-4}
+		 & Count - NDC & 1684 & \textbf{3658} \\ \cline{1-4}
+	  \end{tabular}
+      }
+      \quad
+      \subfloat[Position (3 classes)]{
+      \begin{tabular}{| l | l | r | r |}
+		\cline{1-4}
+		Data set & Configuration & Absolute cost & Squared cost \\ \cline{1-4}
+		\multirow{2}{*}{mixed} & Count - MCC3P & \textbf{1244} & \textbf{2004} \\ \cline{2-4}
+		 & Count - MCC0 & 1253 & 2027 \\ \cline{1-4}
+		\multirow{2}{*}{short} & Count - RF & \textbf{1207} & \textbf{2015} \\ \cline{2-4}
+		 & Count - NDD & 1214 & 2030 \\ \cline{1-4}
+		\multirow{2}{*}{long} & TF-IDF - NDD & \textbf{1135} & \textbf{1761} \\ \cline{2-4}
+		 & TF-IDF - MCC0 & 1154 & 1812 \\ \cline{1-4}
+	  \end{tabular}
+      }
+      \quad
+      \subfloat[Position (7 classes)]{
+      \begin{tabular}{| l | l | r | r |}
+		\cline{1-4}
+		Data set & Configuration & Absolute cost & Squared cost \\ \cline{1-4}
+		\multirow{2}{*}{mixed} & Count - NDC & \textbf{2518} & 7178 \\ \cline{2-4}
+		 & Count - MCC3P & 2523 & \textbf{7153} \\ \cline{1-4}
+		\multirow{2}{*}{short} & Count - NDC & 2786 & 9758 \\ \cline{2-4}
+		 & Count - MCC3P & \textbf{2743} & \textbf{9365} \\ \cline{1-4}
+		\multirow{2}{*}{long} & Count - NDD & 2281 & 5475 \\ \cline{2-4}
+		 & Count - MCC3P & \textbf{2243} & \textbf{5247} \\ \cline{1-4}
+	  \end{tabular}
+      }
+      \caption{Comparison of absolute and squared costs}
+      \label{tab:comparison_costs}
+	\end{table}
+
+    In three out of nine cases, the second configuration is better than the first in absolute costs, and in squared costs it is in even five out of nine cases. Of these, all five cost improvements have occurred in problems with more than three classes. This suggests that for these problems the optimization of accuracy occurs at the expense of cost. It also would have been expected that the ordinal class classifier beats the other classifiers taking into account the costs, as is the case for the mixed-length data set with the move annotation problem. It is the only classifier that takes into account the order of classes and should therefore be less likely to confuse classes that are further apart. However, this expectation could not be confirmed in general, as can also be seen in the confusion matrices of the \ref{tab:confusion_matrices} table.    
   \clearpage  
   
   \section{Summary and Outlook}

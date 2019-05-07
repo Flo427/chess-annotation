@@ -400,7 +400,7 @@ Note that the use of the costs as in one of the approaches presented here does n
     Features need not be dependent of only one token. There are more advanced features that use accumulation of several tokens like the average token length. The above-mentioned values can also all be calculated if the tokens are grouped by category \autocite{Wang2010}. For problems concerning long input texts in natural languages like author detection another appropriate feature is the lexical diversity. It calculates the ratio between the count of distinct words (vocabulary) and the total word count. \\\\
     If the collection is passed in list representation, we can additionally create features by using combinations of sequential tokens. These sequences are called n-grams in general; 2-grams (bigrams) and 3-grams (trigrams) are particularly frequently used. With n-grams, the context also flows into the analysis, which is an advantage, for example, when recognizing negations (“not”, “good” vs. “not good”). \\\\
     It makes sense to find in the first step as much features as possible while the computing and storage capacities are not exceeded. Thus, we get a large amount of potentially informative features. However, before passing the feature data to the learning algorithm, the dimension should be reduced to avoid redundancy and to accelerate the learning process. This step called feature selection is of particular importance for classifiers that, unlike Naïve Bayes, are expensive to train. Second, feature selection often increases classification accuracy by eliminating noise features. A noise feature is one that, when added to the document representation, increases the classification error on new data. Such an incorrect generalization from an accidental property of the training set is called overfitting \autocite[section~13.5]{Manning2008}. \\\\
-    Selecting a subset of features requires a measurement value to compare the utilities of the features. Typical methods are Gini index, information gain, mutual information, $\chi^2$ or frequency-based feature selection \autocite[section~2.1]{Aggarwal2012}. All of those methods are greedy, which can lead to redundant features. There are non-greedy methods that avoid redundancy, but they are rarely used in practice due to increased computing effort \autocite[section~13.5]{Manning2008}. Finally, regardless of the choice of measurement features the features can be selected if they exceed a threshold value or all features are ranked and the best n features are selected. \\\\
+    Selecting a subset of features requires a measurement value to compare the utilities of the features. Typical methods are Gini index, information gain, mutual information, $\chi^2$ or frequency-based feature selection \autocite[section~2.1]{Aggarwal2012}. All of those methods are greedy, which can lead to redundant features. There are non-greedy methods that avoid redundancy, but they are rarely used in practice due to increased computing effort \autocite[section~13.5]{Manning2008}. Finally, regardless of the choice of measurement features the features can be selected if they exceed a threshold value or all features are ranked and the best $n$ features are selected. \\\\
     A different approach for representing text data are word embeddings. The previous approaches are based on the one-hot representation: the feature vector has the same length as the size of the vocabulary. Besides the already mentioned problems due to less meaningful features and overfitting, in a one-hot representation the model cannot handle words that do not appear in the labeled training data \autocite{Turian2010}. In contrast to this, word embeddings offer a distributed representation which is dense, lowdimensional, and real-valued. They are learned on a big general corpus and can therefore associate each word with a corresponding vector. The combination of those vectors yields the document vector. The features and advantages of word embeddings have already been discussed in section~\ref{subsec:word_embeddings}.
 
   \subsection{Analysis}
@@ -878,8 +878,8 @@ In the following four different models are built in order to offer an appropriat
         \lstset{keywordstyle=\color{blue},keywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
         \begin{lstlisting}
 @RELATION comment-move-1
-@ATTRIBUTE count("brilliant") NUMERIC
-@ATTRIBUTE tfidf("mistake") REAL
+@ATTRIBUTE count(brilliant) NUMERIC
+@ATTRIBUTE tfidf(mistake) REAL
 @ATTRIBUTE class {1,2}
 @DATA
 1, 0.0, 1
@@ -891,8 +891,8 @@ In the following four different models are built in order to offer an appropriat
         \lstset{keywordstyle=\color{blue},keywords={@RELATION,@ATTRIBUTE,@DATA,NUMERIC,REAL}}
         \begin{lstlisting}
 @RELATION comment-move-1
-@ATTRIBUTE count("brilliant") NUMERIC
-@ATTRIBUTE tfidf("mistake") REAL
+@ATTRIBUTE count(brilliant) NUMERIC
+@ATTRIBUTE tfidf(mistake) REAL
 @ATTRIBUTE class {1,2}
 @DATA
 {0 1, 2 1}
@@ -1215,7 +1215,7 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
 
   \subsection{Model Evaluation}    
     Before the classification is performed, some analyses can already be done on the underlying models. In the two models, where each attribute correlates with a certain term, namely the count-based model and the TF-IDF-based model, meaningful attributes and thus terms that are relevant for classification decisions can be determined by calculating values such as the gain ratio. Table~\ref{tab:most_informative_attributes} shows the ten best attributes by gain ratio for the move vs. position annotation problem, the move annotation problem with two classes and the position annotation problem with three classes. In the following, no distinction is made between the count-based model and the TF-IDF-based model, since the values are very similar in both models. \\\\
-    The best attributes for the move annotation problem all indicate a poor move and are intuitive or at least comprehensible like count("be too"). The position annotation problem also includes three intuitively useful attributes: count(white loose), count(balance) and count(equalize). For the rest, it is not obvious at first glance to what extent the classes are differentiated by the attribute. Even less obvious are the statements of the best rated attributes (except the last one) of the move vs. position annotation problem. Though, here the gain ratio values are generally lower.
+    The best attributes for the move annotation problem all indicate a poor move and are intuitive or at least comprehensible like count(be too). The position annotation problem also includes three intuitively useful attributes: count(white loose), count(balance) and count(equalize). For the rest, it is not obvious at first glance to what extent the classes are differentiated by the attribute. Even less obvious are the statements of the best rated attributes (except the last one) of the move vs. position annotation problem. Though, here the gain ratio values are generally lower.
     
 	\begin{table}[H]
       \subfloat[Move vs. position]{
@@ -1270,7 +1270,7 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
       \label{tab:most_informative_attributes}
 	\end{table}
 	
-    The attributes shown in table~\ref{tab:most_informative_attributes}, however, show partly strong dependencies to each other. If the attribute count("mistake") is already selected in the case of the move annotation problem, the attributes count("mistake .") and count("mistake ,") are redundant and no longer provide any additional information gain. For this reason, the rule-based classifier J48 was used to create a classification model with rules for the three problems mentioned in order to investigate suitable attribute combinations. The learned rules are structured according to the scheme "(condition A) and (condition B) => prediction (true positive count, false positive count) and can be seen in figure~\ref{fig:move_rules},~\ref{fig:position_rules}~and~\ref{fig:move_vs_position_rules}. Note that in each case the last rule has no condition and predicts the most frequent class.
+    The attributes shown in table~\ref{tab:most_informative_attributes}, however, show partly strong dependencies to each other. If the attribute count(mistake) is already selected in the case of the move annotation problem, the attributes count(mistake .) and count(mistake ,) are redundant and no longer provide any additional information gain. For this reason, the rule-based classifier J48 was used to create a classification model with rules for the three problems mentioned in order to investigate suitable attribute combinations. The learned rules are structured according to the scheme "(condition A) and (condition B) => prediction (true positive count, false positive count) and can be seen in figure~\ref{fig:move_rules},~\ref{fig:position_rules}~and~\ref{fig:move_vs_position_rules}. Note that in each case the last rule has no condition and predicts the most frequent class.
         
 	\begin{figure}[H]
 	  \centering

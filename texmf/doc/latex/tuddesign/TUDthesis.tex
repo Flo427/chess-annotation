@@ -1403,6 +1403,185 @@ However, the two above-mentioned conditions can be represented by a cost-sensiti
     The self-trained word embedding gives as expected a list of related chess terms, while the pretrained word embedding calculates more general terms, which should be irrelevant for the chess comments. For the two words "mistake" and "miscalculation", which occur in both tables, the self-trained word embedding has higher similarity values to the given word "blunder" than the pretrained word embedding. Furthermore, the self-trained word embedding achieves a similarity of 97.78\% for the two words "white" and "black", whereas in the pretrained word embedding it is only 80.92\%. In principle, a similarity of these terms is desired, but a similarity that is too high could make it difficult to distinguish the two words from each other and thus complicate decisions whether a position is in favor of white or in favor of black.
     
   \subsection{Classification Results}
+    In this thesis five different problems, four different models, ten different classifiers and three different data sets were presented. For all meaningful combinations of these variables, a classification was performed and the accuracy calculated. This section summarizes these results. All accuracies of the first data set are displayed and analyzed in tabular and graphical form for each problem. The best values are then compared with those of the two remaining data sets. \\\\
+    In all tables the classifiers have the abbreviations as described in section~\ref{subsec:classification_algorithms}, furthermore the word embeddings are abbreviated with w2v-C for the model learned on the chess comments and w2v-GN for the model learned on Google News. The highest value of each table is marked in bold. In the case of the multiclass classification problems, the accuracies of the two error-correcting output code classifiers (MCC1 \& MCC2) were not determined due to excessive computation time. Therefore, these two classifiers, as well as the Naïve Bayes classifier, whose values fell sharply compared to the rest, are not shown in the diagrams.
+
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[8.5cm]{%
+	  \begin{tabular}{ | l | r | r | r | r | }
+		\hline
+		   & count  & TF-IDF & w2v-C  & w2v-GN  \\ \hline
+		ND & 0.7785 & 0.7725 & 0.7345 & 0.7258  \\ \hline
+		RF & \textbf{0.7825} & 0.7728 & 0.7368 & 0.7180  \\ \hline
+		NB & 0.6963 & 0.7030 & 0.6630 & 0.6265  \\ \hline
+		Baseline & \multicolumn{4}{c|}{0.5000} \\ \hline
+	  \end{tabular}
+       }{%
+        \caption{Accuracies for move vs. position annotation problem}
+        \label{tab:total}
+      }
+      \ffigbox[8.5cm]{%
+	    \includegraphics{images/total}
+      }{%
+	    \caption{Comparison of accuracies for move vs. position annotation problem}
+        \label{fig:total}
+      }
+      \end{floatrow}
+    \end{figure}
+
+On the move vs. position annotations only the classifiers random forest, nested dichotomy and Naïve Bayes are applied because it is a binary classification problem. As seen in table~\ref{tab:total} and figure~\ref{fig:total}, a maximum accuracy of 78.25\% is achieved with the count-based model and the random forest classifier. The same classifiers are also applied to the second binary classification problem of move annotations (see table~\ref{tab:move_1} and figure~\ref{fig:move_1}). This time, the classifier nested dichotomy reaches the best accuracy of 76.90\%, again using the count-based model.
+
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[8.5cm]{%
+	  \begin{tabular}{ | l | r | r | r | r | }
+		\hline
+		   & count  & TF-IDF & w2v-C  & w2v-GN  \\ \hline
+		ND & \textbf{0.7690} & 0.7575 & 0.6735 & 0.7305  \\ \hline
+		RF & 0.7590 & 0.7610 & 0.6670 & 0.7335  \\ \hline
+		NB & 0.6355 & 0.5990 & 0.4555 & 0.6895  \\ \hline
+		Baseline & \multicolumn{4}{c|}{0.6580} \\ \hline
+	  \end{tabular}
+       }{%
+        \caption{Accuracies for move annotation problem (2~classes)}
+        \label{tab:move_1}
+      }
+      \ffigbox[8.5cm]{%
+	    \includegraphics{images/move_1}
+      }{%
+	    \caption{Comparison of accuracies for move annotation problem (2~classes)}
+        \label{fig:move_1}
+      }
+      \end{floatrow}
+    \end{figure}
+
+All ten classifiers are applied to the three multiclass classification problems. Table~\ref{tab:move_2} shows the results for the move annotation problem with six classes and a best value of 54.90\% for the count-based model and the one-against-all classifier. It can be seen in figure~\ref{fig:move_2} that for all classifiers the count-based model achieves the highest accuracies, closely followed by the TF-IDF model. The accuracies of the Google News word embeddings are about five percentage points below these models and the chess word embeddings even about ten percentage points below. This ranking of the models had already been indicated by the first two problems.
+
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[8.5cm]{%
+	  \begin{tabular}{ | l | r | r | r | r | }
+		\hline
+		      & count  & TF-IDF & w2v-C  & w2v-GN \\ \hline
+		MCC0  & \textbf{0.5490} & 0.5405 & 0.4445 & 0.4985 \\ \hline
+		MCC3  & 0.5420 & 0.5265 & 0.4415 & 0.4930 \\ \hline
+		MCC3P & 0.5425 & 0.5300 & 0.4470 & 0.4855 \\ \hline
+		OCC   & 0.5475 & 0.5320 & 0.4360 & 0.4990 \\ \hline
+		NDC   & 0.5445 & 0.5295 & 0.4465 & 0.4960 \\ \hline
+		NDD   & 0.5435 & 0.5285 & 0.4525 & 0.4895 \\ \hline
+		RF    & 0.5330 & 0.5285 & 0.4400 & 0.4920 \\ \hline
+		NB    & 0.4025 & 0.1750 & 0.1945 & 0.2435 \\ \hline
+		MCC1  & \multicolumn{2}{r|}{} & 0.4085 & 0.4790 \\ \hline
+		MCC2  & \multicolumn{2}{r|}{} & 0.4550 & 0.4975 \\ \hline
+		Baseline & \multicolumn{4}{c|}{0.4430}   \\ \hline
+	  \end{tabular}
+       }{%
+        \caption{Accuracies for move annotation problem (6~classes)}
+        \label{tab:move_2}
+      }
+      \ffigbox[8.5cm]{%
+	    \includegraphics{images/move_2}
+      }{%
+	    \caption{Comparison of accuracies for move annotation problem (6~classes)}
+        \label{fig:move_2}
+      }
+      \end{floatrow}
+    \end{figure}
+
+As well for the position annotation problem with three classes the count-based model proves to be the best (see table~\ref{tab:position_1} and figure~\ref{fig:position_1}). Again, the maximum value is achieved with another classifier, this time the one-against-one classifier with pairwise coupling. The accuracy value of 56.80\% is only slightly above the baseline, which corresponds to a kappa statistic of less than three percent. Previously, maximum kappa values of 56.5\% (move vs. position), 36.5\% (move, 2 classes) and 19\% (move, 6 classes) were reached. For the position annotation problem with seven classes the kappa value is again over 15\%. These values are therefore very low overall, although this is partly due to class imbalance.
+
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[8.5cm]{%
+	  \begin{tabular}{ | l | r | r | r | r | }
+		\hline
+		      & count  & TF-IDF & w2v-C  & w2v-GN \\ \hline
+		MCC0  & 0.5670 & 0.5570 & 0.5410 & 0.5645 \\ \hline
+		MCC3  & 0.5620 & 0.5600 & 0.5410 & 0.5600 \\ \hline
+		MCC3P & \textbf{0.5680} & 0.5620 & 0.5455 & 0.5620 \\ \hline
+		OCC   & 0.5570 & 0.5560 & 0.5395 & 0.5645 \\ \hline
+		NDC   & 0.5595 & 0.5520 & 0.5385 & 0.5615 \\ \hline
+		NDD   & 0.5595 & 0.5560 & 0.5500 & 0.5615 \\ \hline
+		RF    & 0.5600 & 0.5645 & 0.5445 & 0.5640 \\ \hline
+		NB    & 0.4100 & 0.3545 & 0.2755 & 0.3080 \\ \hline
+		MCC1  & \multicolumn{2}{r|}{} & 0.5300 & 0.5460 \\ \hline
+		MCC2  & \multicolumn{2}{r|}{} & 0.5435 & 0.5660 \\ \hline
+		Baseline & \multicolumn{4}{c|}{0.5550}   \\ \hline
+	  \end{tabular}
+       }{%
+        \caption{Accuracies for position annotation problem (3~classes)}
+        \label{tab:position_1}
+      }
+      \ffigbox[8.5cm]{%
+	    \includegraphics{images/position_1}
+      }{%
+	    \caption{Comparison of accuracies for position annotation problem (3~classes)}
+        \label{fig:position_1}
+      }
+      \end{floatrow}
+    \end{figure}
+
+The lowest accuracies by far are achieved in the position annotation problem with seven classes (see table~\ref{tab:position_2} and figure~\ref{fig:position_2}). The maximum value of 36,20\% is reached in the count-based model by the one-against-one classifier with pairwise coupling as well as by the class balanced nested dichotomy classifier. Again the diagram shows the clear ranking of the models: count-based-model followed by TF-IDF-based model, Google News word embedding and chess word embedding.
+
+    \begin{figure}[H]
+      \begin{floatrow}
+      \capbtabbox[8.5cm]{%
+	  \begin{tabular}{ | l | r | r | r | r | }
+		\hline
+		      & count  & TF-IDF & w2v-C  & w2v-GN \\ \hline
+		MCC0  & 0.3520 & 0.3490 & 0.2940 & 0.3100 \\ \hline
+		MCC3  & 0.3565 & 0.3480 & 0.2905 & 0.3250 \\ \hline
+		MCC3P & \textbf{0.3620} & 0.3525 & 0.2905 & 0.3360 \\ \hline
+		OCC   & 0.3365 & 0.3420 & 0.2855 & 0.2980 \\ \hline
+		NDC   & \textbf{0.3620} & 0.3340 & 0.2880 & 0.3160 \\ \hline
+		NDD   & 0.3545 & 0.3420 & 0.2875 & 0.3205 \\ \hline
+		RF    & 0.3425 & 0.3405 & 0.2790 & 0.2865 \\ \hline
+		NB    & 0.2525 & 0.2190 & 0.1815 & 0.1930 \\ \hline
+		MCC1  & \multicolumn{2}{r|}{} & 0.2620 & 0.2805 \\ \hline
+		MCC2  & \multicolumn{2}{r|}{} & 0.2900 & 0.3295 \\ \hline
+		Baseline & \multicolumn{4}{c|}{0.2465}   \\ \hline
+	  \end{tabular}
+       }{%
+        \caption{Accuracies for position annotation problem (7~classes)}
+        \label{tab:position_2}
+      }
+      \ffigbox[8.5cm]{%
+	    \includegraphics{images/position_2}
+      }{%
+	    \caption{Comparison of accuracies for position annotation problem (7~classes)}
+        \label{fig:position_2}
+      }
+      \end{floatrow}
+    \end{figure}
+
+Overall, the results of the five tables and figures show that the count-based model is the best, followed by the TF-IDF-based model and the chess word embedding is the worst. Among the classifiers, there was no clear trend which is best. These observations are also confirmed by the other two data sets. The count-based model has the highest average accuracy holding 13 of the 15 best accuracy values (see table~\ref{tab:comparison_accuracies}. The other two best values are reached by the TF-IDF-based model, which is partially superior to the count-based model in the data set with long comments. The nested dichotomies classifiers achieve the best values overall, whereby the accuracies are only slightly above those of the other classifiers and therefore no conclusion can be drawn. \\\\
+However, it is noticeable that the data set with the short comments achieves significantly better accuracies than the mixed-length data set. The only exception is the move vs. position annotation problem. The accuracies for the data set with long comments are on average slightly lower than for the mixed-length data set. These values suggest that either the short comments are generally more meaningful or that the condition that at least three English words must occur in the comment filters out qualitatively inferior short comments, while most qualitatively inferior long comments remain in the data set.
+
+    \begin{table}[H]
+      \subfloat[Accuracies]{
+	  \begin{tabular}{ | l | r | r | r | r | r | }
+		\hline
+		Data set & Position vs. Move & Move (2 classes) & Move (6 classes) & Position (3 Classes) & Position (7 Classes) \\ \hline
+		mixed & 0.7825 & 0.7690 & 0.5490 & 0.5680 & 0.3620 \\ \hline
+		short & 0.7495 & 0.8134 & 0.5670 & 0.5985 & 0.4210 \\ \hline
+		long  & 0.7813 & 0.7535 & 0.5275 & 0.5890 & 0.3535 \\ \hline
+	  \end{tabular}
+      }      
+      \quad      
+      \subfloat[Model + Classifier]{
+	  \begin{tabular}{ | l | r | r | r | r | r | }
+		\hline
+		Data set & Position vs. Move & Move (2 classes) & Move (6 classes) & Position (3 Classes) & Position (7 Classes) \\ \hline
+		mixed & Count + RF & Count + ND & Count + MCC0 & Count + MCC3P & Count + NDC/MCC3P \\ \hline
+		short & Count + ND & Count + ND & Count + NDD & Count + RF & Count + NDC \\ \hline
+		long & TF-IDF + ND & Count + ND & Count + MCC0 & TF-IDF + NDD & Count + NDD \\ \hline
+	  \end{tabular}
+      }
+      \caption{Comparison of the best achieved accuracies}
+      \label{tab:comparison_accuracies}
+	\end{table}
+  \clearpage
 
   \subsection{Misclassifications}
     The classification results obtained in the previous section have so far only been evaluated according to the accuracy value. In this section, the misclassifications are examined and it is checked whether the previously optimal results remain optimal even after weighting the misclassifications with costs. First, the confusion matrices are used to analyze which types of misclassifications frequently occur. The confusion matrices of the ordinal class classifier in table~\ref{tab:confusion_matrices} are considered as examples; the matrices of other data sets and other classifications show similar patterns. The binary classification problems already result in the same values as with direct application of random forest.

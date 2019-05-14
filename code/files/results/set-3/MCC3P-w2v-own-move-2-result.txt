@@ -1,0 +1,155 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.MultiClassClassifier -M 3 -P -R 2.0 -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-move-2
+Instances:    2000
+Attributes:   102
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+MultiClassClassifier
+
+Classifier 1, 1 vs 2
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 2, 1 vs 3
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 3, 1 vs 4
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 4, 1 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 5, 1 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 6, 2 vs 3
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 7, 2 vs 4
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 8, 2 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 9, 2 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 10, 3 vs 4
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 11, 3 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 12, 3 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 13, 4 vs 5
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 14, 4 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 15, 5 vs 6
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+
+Time taken to build model: 12.51 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         892               44.6    %
+Incorrectly Classified Instances      1108               55.4    %
+Kappa statistic                          0.1192
+Mean absolute error                      0.2213
+Root mean squared error                  0.3341
+Relative absolute error                 93.5653 %
+Root relative squared error             97.1762 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,000    0,000    ?          0,000    ?          ?        0,587     0,021     1
+                 0,829    0,648    0,504      0,829    0,627      0,203    0,688     0,636     2
+                 0,163    0,095    0,312      0,163    0,215      0,090    0,610     0,328     3
+                 0,130    0,079    0,261      0,130    0,174      0,069    0,594     0,216     4
+                 0,155    0,062    0,293      0,155    0,203      0,123    0,676     0,236     5
+                 0,000    0,000    ?          0,000    ?          ?        0,730     0,069     6
+Weighted Avg.    0,446    0,329    ?          0,446    ?          ?        0,653     0,423     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   <-- classified as
+   0  20   0   1   3   0 |   a = 1
+   0 734  69  42  40   0 |   b = 2
+   0 276  68  48  24   0 |   c = 3
+   0 227  50  46  30   0 |   d = 4
+   0 177  26  37  44   0 |   e = 5
+   0  22   5   2   9   0 |   f = 6
+

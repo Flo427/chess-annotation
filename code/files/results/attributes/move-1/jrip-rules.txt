@@ -1,0 +1,56 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.rules.JRip -F 3 -N 2.0 -O 2 -S 1
+Relation:     comment-move-1
+Instances:    2000
+Attributes:   2002
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+JRIP rules:
+===========
+
+(count(mistake) >= 1) => class=2 (65.0/2.0)
+(number_of_tokens <= 5) and (count(.) <= 0) and (count(of) >= 1) => class=2 (17.0/2.0)
+(count(but) >= 1) and (count(this) >= 1) and (count(of) <= 0) => class=2 (49.0/16.0)
+(count(lose) >= 1) and (number_of_tokens <= 13) => class=2 (37.0/7.0)
+(number_of_tokens <= 5) and (count(by) >= 1) => class=2 (17.0/1.0)
+(count(miss) >= 1) and (count(miss_this) <= 0) => class=2 (30.0/4.0)
+(count(wa) >= 1) and (number_of_tokens >= 10) and (count(_comma_) <= 0) => class=2 (48.0/15.0)
+(count(blunder) >= 1) => class=2 (21.0/0.0)
+(number_of_tokens <= 6) and (count(too) >= 1) => class=2 (9.0/0.0)
+(count(allow) >= 1) => class=2 (35.0/10.0)
+ => class=1 (1672.0/413.0)
+
+Number of Rules : 11
+
+
+Time taken to build model: 33.27 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1434               71.7    %
+Incorrectly Classified Instances       566               28.3    %
+Kappa statistic                          0.2814
+Mean absolute error                      0.3823
+Root mean squared error                  0.4447
+Relative absolute error                 84.9388 %
+Root relative squared error             93.7435 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,920    0,674    0,724      0,920    0,811      0,315    0,636     0,727     1
+                 0,326    0,080    0,680      0,326    0,441      0,315    0,636     0,556     2
+Weighted Avg.    0,717    0,471    0,709      0,717    0,684      0,315    0,636     0,669     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1211  105 |    a = 1
+  461  223 |    b = 2
+

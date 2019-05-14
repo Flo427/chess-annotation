@@ -1,0 +1,1852 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.NaiveBayes 
+Relation:     comment-move-1
+Instances:    2000
+Attributes:   302
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Naive Bayes Classifier
+
+                        Class
+Attribute                   1       2
+                       (0.66)  (0.34)
+======================================
+number_of_tokens
+  mean                 15.1178 14.3406
+  std. dev.             9.8516   9.711
+  weight sum              1316     684
+  precision                  1       1
+
+w2v-pretrained(1)
+  mean                   0.138  0.1967
+  std. dev.             0.3259  0.3214
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(2)
+  mean                   0.134  0.1402
+  std. dev.              0.265  0.2732
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(3)
+  mean                  0.0333  0.1146
+  std. dev.             0.2779  0.2834
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(4)
+  mean                  0.3729  0.3742
+  std. dev.             0.2864  0.2769
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(5)
+  mean                 -0.2335 -0.3147
+  std. dev.             0.2909  0.3053
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(6)
+  mean                  0.0123  0.0362
+  std. dev.             0.2881  0.3262
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(7)
+  mean                  0.1628  0.2458
+  std. dev.             0.3399  0.3035
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(8)
+  mean                 -0.3086 -0.3363
+  std. dev.             0.2934  0.2948
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(9)
+  mean                  0.3512   0.384
+  std. dev.             0.2772  0.2812
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(10)
+  mean                  0.3427  0.4181
+  std. dev.             0.2818  0.3081
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(11)
+  mean                 -0.2733 -0.2463
+  std. dev.             0.2694  0.2787
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(12)
+  mean                 -0.3858 -0.4594
+  std. dev.             0.3027   0.323
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(13)
+  mean                  -0.122  -0.112
+  std. dev.             0.2882   0.289
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(14)
+  mean                  0.1918  0.2049
+  std. dev.             0.3284  0.3063
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(15)
+  mean                 -0.4896 -0.5317
+  std. dev.             0.2697  0.2704
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(16)
+  mean                  0.2331  0.2939
+  std. dev.             0.3019  0.3075
+  weight sum              1316     684
+  precision             0.0012  0.0012
+
+w2v-pretrained(17)
+  mean                  0.2513  0.2965
+  std. dev.             0.3002  0.2847
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(18)
+  mean                  0.4411  0.3906
+  std. dev.             0.3144  0.3158
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(19)
+  mean                  -0.024  0.0163
+  std. dev.             0.2811    0.28
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(20)
+  mean                 -0.3219 -0.3634
+  std. dev.             0.2838  0.2821
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(21)
+  mean                 -0.0104  0.0234
+  std. dev.             0.3289  0.3223
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(22)
+  mean                  0.1047  0.0994
+  std. dev.             0.3231  0.3102
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(23)
+  mean                  0.1735  0.2392
+  std. dev.             0.3625  0.3891
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(24)
+  mean                 -0.0047  0.0374
+  std. dev.             0.2613  0.2517
+  weight sum              1316     684
+  precision             0.0011  0.0011
+
+w2v-pretrained(25)
+  mean                  0.1123  0.2321
+  std. dev.             0.3035  0.3318
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(26)
+  mean                 -0.0058  0.0089
+  std. dev.             0.2696  0.2865
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(27)
+  mean                 -0.4748 -0.4088
+  std. dev.             0.3126  0.3223
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(28)
+  mean                  0.1692  0.1313
+  std. dev.             0.3023  0.2955
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(29)
+  mean                   0.116  0.1421
+  std. dev.             0.2596  0.2797
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(30)
+  mean                  0.0661  0.0865
+  std. dev.             0.2978  0.2978
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(31)
+  mean                 -0.0253 -0.0767
+  std. dev.             0.2909  0.2948
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(32)
+  mean                  0.0675   0.097
+  std. dev.             0.2782  0.3214
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(33)
+  mean                 -0.0841 -0.1307
+  std. dev.             0.2875  0.2919
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(34)
+  mean                 -0.0893 -0.0979
+  std. dev.             0.2937  0.2962
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(35)
+  mean                 -0.0665  0.0412
+  std. dev.              0.353  0.3333
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(36)
+  mean                 -0.0112 -0.0154
+  std. dev.             0.2721  0.2664
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(37)
+  mean                  0.0212  0.0632
+  std. dev.             0.2949  0.2818
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(38)
+  mean                  0.1389  0.1008
+  std. dev.             0.3438  0.2845
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(39)
+  mean                  0.1763  0.2025
+  std. dev.             0.2691  0.2811
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(40)
+  mean                  0.1806   0.181
+  std. dev.             0.3122  0.3076
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(41)
+  mean                   0.522  0.5692
+  std. dev.             0.3176     0.3
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(42)
+  mean                  -0.172 -0.1863
+  std. dev.             0.2683  0.3135
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(43)
+  mean                    0.54  0.6398
+  std. dev.             0.3372   0.385
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(44)
+  mean                 -0.0886 -0.2108
+  std. dev.             0.3106  0.3431
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(45)
+  mean                 -0.1848 -0.1813
+  std. dev.             0.2731  0.2632
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(46)
+  mean                 -0.2514 -0.2423
+  std. dev.             0.3058  0.2808
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(47)
+  mean                 -0.0882   -0.13
+  std. dev.             0.2518  0.2731
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(48)
+  mean                 -0.0449 -0.0107
+  std. dev.              0.309  0.3069
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(49)
+  mean                  0.0353   0.022
+  std. dev.             0.2893  0.3288
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(50)
+  mean                  0.1032  0.1166
+  std. dev.             0.2837  0.2983
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(51)
+  mean                  0.0023 -0.0244
+  std. dev.             0.3229  0.3627
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(52)
+  mean                  0.3488  0.3403
+  std. dev.              0.324  0.3149
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(53)
+  mean                 -0.0397 -0.0073
+  std. dev.             0.2805  0.2846
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(54)
+  mean                 -0.1414 -0.1706
+  std. dev.             0.3044  0.2881
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(55)
+  mean                 -0.0958 -0.1531
+  std. dev.             0.2952  0.2959
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(56)
+  mean                  0.2152  0.1852
+  std. dev.             0.2885  0.2845
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(57)
+  mean                 -0.1818 -0.0997
+  std. dev.             0.2915  0.3318
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(58)
+  mean                 -0.4306 -0.4039
+  std. dev.             0.3032  0.2938
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(59)
+  mean                  0.1524   0.185
+  std. dev.              0.256  0.2639
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(60)
+  mean                 -0.3752 -0.3595
+  std. dev.             0.2701  0.2683
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(61)
+  mean                 -0.2342 -0.1518
+  std. dev.             0.3004  0.3105
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(62)
+  mean                    0.23  0.2911
+  std. dev.             0.3027  0.3188
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(63)
+  mean                 -0.3993 -0.3679
+  std. dev.             0.3169  0.2772
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(64)
+  mean                 -0.3278 -0.3643
+  std. dev.              0.294   0.271
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(65)
+  mean                 -0.0611 -0.1146
+  std. dev.             0.2642  0.2509
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(66)
+  mean                 -0.0973 -0.1212
+  std. dev.             0.3303  0.3021
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(67)
+  mean                 -0.1452 -0.1177
+  std. dev.              0.296  0.2601
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(68)
+  mean                  0.2908  0.3796
+  std. dev.             0.3233  0.3044
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(69)
+  mean                 -0.2097 -0.2783
+  std. dev.             0.3029  0.3491
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(70)
+  mean                  0.4965  0.4549
+  std. dev.             0.3211  0.3311
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(71)
+  mean                  0.1617  0.1203
+  std. dev.             0.2742   0.286
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(72)
+  mean                  0.0848  0.0923
+  std. dev.             0.2771  0.3017
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(73)
+  mean                  0.3862  0.3343
+  std. dev.             0.2836  0.3037
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(74)
+  mean                 -0.0615 -0.0363
+  std. dev.             0.2773   0.283
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(75)
+  mean                 -0.5112 -0.5318
+  std. dev.             0.2852  0.2941
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(76)
+  mean                 -0.3466 -0.2761
+  std. dev.             0.3071  0.3658
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(77)
+  mean                  0.3684  0.4034
+  std. dev.             0.2617  0.2641
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(78)
+  mean                  0.3307  0.3699
+  std. dev.             0.2875  0.2768
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(79)
+  mean                  0.0833  0.1275
+  std. dev.             0.2628  0.2793
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(80)
+  mean                  0.3504   0.459
+  std. dev.              0.347  0.3459
+  weight sum              1316     684
+  precision             0.0022  0.0022
+
+w2v-pretrained(81)
+  mean                  0.1163  0.0781
+  std. dev.             0.2717  0.2971
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(82)
+  mean                 -0.1548 -0.1667
+  std. dev.             0.3045  0.2726
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(83)
+  mean                  0.1827  0.1978
+  std. dev.             0.2663  0.2882
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(84)
+  mean                   0.037 -0.0059
+  std. dev.             0.2737  0.2656
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(85)
+  mean                  0.0448  0.0474
+  std. dev.             0.3665   0.394
+  weight sum              1316     684
+  precision             0.0024  0.0024
+
+w2v-pretrained(86)
+  mean                 -0.1587 -0.2658
+  std. dev.             0.2971  0.3532
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(87)
+  mean                 -0.3935 -0.3599
+  std. dev.             0.2632  0.2709
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(88)
+  mean                  0.4683  0.5073
+  std. dev.             0.2946  0.3363
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(89)
+  mean                  0.1239  0.1178
+  std. dev.              0.327  0.3346
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(90)
+  mean                    0.15  0.0423
+  std. dev.             0.2588  0.2815
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(91)
+  mean                  0.1596  0.1626
+  std. dev.             0.3014  0.2858
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(92)
+  mean                   0.028  0.0457
+  std. dev.              0.322  0.3054
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(93)
+  mean                 -0.3579 -0.3125
+  std. dev.              0.256  0.2853
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(94)
+  mean                 -0.2264 -0.2691
+  std. dev.             0.3145  0.3009
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(95)
+  mean                  0.0649  0.0542
+  std. dev.             0.2711  0.2763
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(96)
+  mean                 -0.3242 -0.3905
+  std. dev.             0.3166  0.3306
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(97)
+  mean                  0.0649  0.1023
+  std. dev.             0.2751  0.2922
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(98)
+  mean                  0.0947  0.1742
+  std. dev.             0.3055   0.308
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(99)
+  mean                  0.0058  -0.015
+  std. dev.             0.3277  0.3182
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(100)
+  mean                 -0.0075 -0.0488
+  std. dev.             0.2705  0.2835
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(101)
+  mean                 -0.1389 -0.0895
+  std. dev.             0.2499   0.272
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(102)
+  mean                 -0.1968 -0.1597
+  std. dev.             0.2855   0.284
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(103)
+  mean                  0.0374  0.0936
+  std. dev.             0.2555  0.2616
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(104)
+  mean                 -0.0017  0.0632
+  std. dev.             0.2542  0.2753
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(105)
+  mean                 -0.2123 -0.2202
+  std. dev.             0.2862  0.2948
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(106)
+  mean                  -0.169 -0.1486
+  std. dev.              0.303  0.3079
+  weight sum              1316     684
+  precision             0.0022  0.0022
+
+w2v-pretrained(107)
+  mean                 -0.1174 -0.1006
+  std. dev.             0.2812  0.2768
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(108)
+  mean                 -0.2155 -0.3105
+  std. dev.             0.3086  0.3158
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(109)
+  mean                  0.1149  0.1302
+  std. dev.             0.2584  0.2619
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(110)
+  mean                 -0.1416 -0.1794
+  std. dev.              0.275  0.2819
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(111)
+  mean                 -0.1024 -0.1159
+  std. dev.             0.3099  0.2959
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(112)
+  mean                 -0.0199 -0.0449
+  std. dev.             0.3016  0.3035
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(113)
+  mean                  -0.095 -0.1214
+  std. dev.             0.3014  0.2992
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(114)
+  mean                 -0.0603 -0.0603
+  std. dev.             0.2929  0.2827
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(115)
+  mean                  0.3553   0.457
+  std. dev.             0.2871   0.325
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(116)
+  mean                  0.0402 -0.0429
+  std. dev.             0.2801  0.2892
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(117)
+  mean                  0.2397  0.2582
+  std. dev.             0.2548  0.2704
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(118)
+  mean                 -0.1623 -0.0958
+  std. dev.             0.3063  0.2981
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(119)
+  mean                  0.3508  0.2976
+  std. dev.             0.2906  0.2607
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(120)
+  mean                  0.3177  0.3705
+  std. dev.             0.3096  0.3457
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(121)
+  mean                 -0.2159 -0.3574
+  std. dev.             0.3555  0.3793
+  weight sum              1316     684
+  precision             0.0025  0.0025
+
+w2v-pretrained(122)
+  mean                 -0.0466 -0.0259
+  std. dev.             0.2809  0.2635
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(123)
+  mean                 -0.2199 -0.1959
+  std. dev.             0.2779  0.2791
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(124)
+  mean                  0.2072  0.2916
+  std. dev.               0.31  0.3225
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(125)
+  mean                 -0.1873 -0.2738
+  std. dev.             0.3347  0.3513
+  weight sum              1316     684
+  precision             0.0022  0.0022
+
+w2v-pretrained(126)
+  mean                 -0.1527 -0.1865
+  std. dev.             0.2903  0.2867
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(127)
+  mean                 -0.0942 -0.1172
+  std. dev.             0.3069  0.2893
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(128)
+  mean                 -0.1284 -0.1986
+  std. dev.             0.3179  0.2886
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(129)
+  mean                  0.1059  0.1021
+  std. dev.             0.2641  0.2888
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(130)
+  mean                  0.1402  0.1171
+  std. dev.             0.2873  0.3028
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(131)
+  mean                   0.067 -0.0532
+  std. dev.             0.3801  0.3963
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(132)
+  mean                 -0.3131 -0.3249
+  std. dev.              0.314  0.2939
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(133)
+  mean                 -0.2173 -0.2172
+  std. dev.             0.2776  0.3296
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(134)
+  mean                  0.0022 -0.0289
+  std. dev.             0.2795  0.2819
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(135)
+  mean                 -0.0171 -0.0527
+  std. dev.             0.3076   0.326
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(136)
+  mean                  -0.233 -0.3602
+  std. dev.               0.32  0.3331
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(137)
+  mean                  0.0366  0.0626
+  std. dev.             0.3127  0.2809
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(138)
+  mean                  0.0933  0.1345
+  std. dev.              0.283  0.3018
+  weight sum              1316     684
+  precision             0.0023  0.0023
+
+w2v-pretrained(139)
+  mean                 -0.0812 -0.1538
+  std. dev.             0.3621  0.4202
+  weight sum              1316     684
+  precision             0.0022  0.0022
+
+w2v-pretrained(140)
+  mean                    0.42  0.4267
+  std. dev.              0.317  0.3378
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(141)
+  mean                  0.3013   0.263
+  std. dev.             0.3104  0.2965
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(142)
+  mean                 -0.3871 -0.4141
+  std. dev.              0.313  0.3161
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(143)
+  mean                  0.1046  0.1082
+  std. dev.             0.2815  0.2696
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(144)
+  mean                  0.0329  0.0555
+  std. dev.             0.2877   0.306
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(145)
+  mean                 -0.0404 -0.0124
+  std. dev.             0.3317  0.2998
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(146)
+  mean                   0.054  0.0493
+  std. dev.             0.2929  0.2796
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(147)
+  mean                 -0.2307 -0.2884
+  std. dev.              0.297  0.2601
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(148)
+  mean                 -0.2025 -0.1873
+  std. dev.             0.3206  0.3502
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(149)
+  mean                 -0.3026 -0.3032
+  std. dev.             0.3038  0.3043
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(150)
+  mean                 -0.0335 -0.0029
+  std. dev.             0.2889  0.3073
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(151)
+  mean                  0.2739  0.2605
+  std. dev.             0.2966  0.2814
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(152)
+  mean                  0.0335  0.0745
+  std. dev.             0.3733   0.349
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(153)
+  mean                 -0.3989 -0.3972
+  std. dev.             0.2569   0.262
+  weight sum              1316     684
+  precision             0.0012  0.0012
+
+w2v-pretrained(154)
+  mean                   0.187  0.2452
+  std. dev.             0.2925  0.3056
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(155)
+  mean                 -0.1253 -0.0824
+  std. dev.              0.252  0.2458
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(156)
+  mean                 -0.1621 -0.0959
+  std. dev.             0.2918  0.2995
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(157)
+  mean                 -0.1346 -0.1911
+  std. dev.             0.2634  0.2694
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(158)
+  mean                   -0.26 -0.3496
+  std. dev.             0.3503  0.3802
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(159)
+  mean                 -0.2502 -0.2954
+  std. dev.             0.2927  0.2922
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(160)
+  mean                 -0.0879 -0.0904
+  std. dev.             0.2885  0.2822
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(161)
+  mean                 -0.0623 -0.0864
+  std. dev.             0.2667    0.27
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(162)
+  mean                  0.2849  0.2581
+  std. dev.             0.2886  0.2831
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(163)
+  mean                  0.1984  0.2714
+  std. dev.             0.2814  0.3274
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(164)
+  mean                 -0.1551 -0.1553
+  std. dev.             0.3344  0.3382
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(165)
+  mean                  0.0357 -0.0072
+  std. dev.             0.2933  0.3474
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(166)
+  mean                 -0.2771 -0.3147
+  std. dev.             0.3004  0.3097
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(167)
+  mean                  0.3257   0.361
+  std. dev.             0.3303  0.3139
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(168)
+  mean                  -0.207 -0.1934
+  std. dev.             0.2897  0.2633
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(169)
+  mean                 -0.0352  0.0417
+  std. dev.             0.2972   0.322
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(170)
+  mean                 -0.0024 -0.0915
+  std. dev.             0.2889  0.2756
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(171)
+  mean                 -0.4824 -0.4501
+  std. dev.              0.288  0.3333
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(172)
+  mean                 -0.1698 -0.1831
+  std. dev.             0.2753  0.2596
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(173)
+  mean                 -0.1203 -0.2428
+  std. dev.             0.2809  0.3119
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(174)
+  mean                  -0.249 -0.2824
+  std. dev.             0.2863  0.2958
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(175)
+  mean                 -0.0231 -0.0435
+  std. dev.             0.2737  0.2999
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(176)
+  mean                 -0.0198 -0.0599
+  std. dev.             0.2992  0.3022
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(177)
+  mean                  0.3891  0.3873
+  std. dev.             0.3074  0.2914
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(178)
+  mean                 -0.4109 -0.3823
+  std. dev.             0.3021  0.3273
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(179)
+  mean                 -0.0123  0.0287
+  std. dev.              0.292  0.3767
+  weight sum              1316     684
+  precision             0.0022  0.0022
+
+w2v-pretrained(180)
+  mean                 -0.0017  0.0578
+  std. dev.             0.2986  0.3091
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(181)
+  mean                 -0.3872 -0.4074
+  std. dev.              0.278  0.2871
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(182)
+  mean                 -0.3183 -0.3637
+  std. dev.             0.2556  0.2571
+  weight sum              1316     684
+  precision             0.0012  0.0012
+
+w2v-pretrained(183)
+  mean                  0.0235   0.037
+  std. dev.             0.2822  0.2858
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(184)
+  mean                  0.0278  0.1476
+  std. dev.             0.2898  0.2977
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(185)
+  mean                 -0.1344 -0.1617
+  std. dev.             0.3079  0.3284
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(186)
+  mean                 -0.1128 -0.0898
+  std. dev.             0.2933  0.3143
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(187)
+  mean                  0.0061 -0.0397
+  std. dev.             0.3071  0.2973
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(188)
+  mean                  0.1041  0.1783
+  std. dev.             0.2893  0.3408
+  weight sum              1316     684
+  precision             0.0023  0.0023
+
+w2v-pretrained(189)
+  mean                  0.3185  0.2581
+  std. dev.             0.2782  0.2791
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(190)
+  mean                  0.2344  0.3003
+  std. dev.             0.2966  0.2855
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(191)
+  mean                  0.0427  0.0635
+  std. dev.             0.3112  0.2851
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(192)
+  mean                 -0.0359 -0.0468
+  std. dev.             0.2755  0.2903
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(193)
+  mean                  0.0917  0.1239
+  std. dev.             0.3123  0.2895
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(194)
+  mean                  0.0083  0.1172
+  std. dev.             0.3101  0.3028
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(195)
+  mean                 -0.1597 -0.2402
+  std. dev.             0.2992  0.3233
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(196)
+  mean                  0.0178  0.0136
+  std. dev.             0.2749  0.2426
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(197)
+  mean                 -0.0539 -0.0331
+  std. dev.             0.2764  0.2756
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(198)
+  mean                 -0.0312 -0.0504
+  std. dev.             0.2806  0.2779
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(199)
+  mean                 -0.2117 -0.2082
+  std. dev.             0.2974  0.3077
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(200)
+  mean                 -0.4743 -0.4409
+  std. dev.             0.2964  0.3064
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(201)
+  mean                  0.0619  0.0877
+  std. dev.             0.3228  0.3189
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(202)
+  mean                  0.2384   0.242
+  std. dev.             0.2742  0.2642
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(203)
+  mean                 -0.1426 -0.0918
+  std. dev.             0.2967  0.2947
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(204)
+  mean                 -0.1243 -0.0817
+  std. dev.              0.323  0.3229
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(205)
+  mean                  0.1178  0.1724
+  std. dev.             0.2935  0.3144
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(206)
+  mean                 -0.1717 -0.1387
+  std. dev.             0.2718  0.2722
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(207)
+  mean                 -0.0661 -0.0572
+  std. dev.             0.3092  0.2929
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(208)
+  mean                 -0.0919 -0.0754
+  std. dev.              0.271  0.2679
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(209)
+  mean                  0.0529  0.0306
+  std. dev.             0.3019  0.3094
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(210)
+  mean                 -0.0866 -0.1541
+  std. dev.             0.3109  0.3322
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(211)
+  mean                   -0.08 -0.0938
+  std. dev.             0.2774  0.2882
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(212)
+  mean                  0.3831  0.3774
+  std. dev.             0.3051  0.3398
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(213)
+  mean                  -0.155  0.0034
+  std. dev.             0.3198  0.3465
+  weight sum              1316     684
+  precision             0.0027  0.0027
+
+w2v-pretrained(214)
+  mean                  0.2496  0.3193
+  std. dev.             0.2723   0.288
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(215)
+  mean                 -0.4846 -0.5302
+  std. dev.             0.2768  0.3167
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(216)
+  mean                 -0.1376 -0.1376
+  std. dev.             0.3071   0.308
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(217)
+  mean                  0.3508   0.391
+  std. dev.             0.2738  0.2615
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(218)
+  mean                   -0.12 -0.1494
+  std. dev.             0.2868   0.296
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(219)
+  mean                 -0.3996 -0.4636
+  std. dev.             0.2871  0.3257
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(220)
+  mean                  0.1058  0.0805
+  std. dev.             0.2628  0.3303
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(221)
+  mean                 -0.1537 -0.1443
+  std. dev.             0.2757  0.2725
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(222)
+  mean                   0.127  0.0994
+  std. dev.             0.2953  0.2685
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(223)
+  mean                 -0.1003 -0.1841
+  std. dev.             0.3241  0.3173
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(224)
+  mean                 -0.0806 -0.0868
+  std. dev.             0.2784  0.2758
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(225)
+  mean                  0.2446  0.2678
+  std. dev.             0.2906  0.3257
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(226)
+  mean                 -0.1041 -0.1779
+  std. dev.             0.2852  0.2887
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(227)
+  mean                  0.2806  0.4259
+  std. dev.             0.2756  0.3619
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(228)
+  mean                  0.0683  0.0085
+  std. dev.             0.2985  0.3028
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(229)
+  mean                  0.2676  0.2905
+  std. dev.             0.2733  0.2752
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(230)
+  mean                  0.1205  0.1791
+  std. dev.             0.3074  0.2944
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(231)
+  mean                  0.1601  0.2024
+  std. dev.             0.2631  0.2809
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(232)
+  mean                 -0.1641 -0.1332
+  std. dev.             0.2735  0.2753
+  weight sum              1316     684
+  precision             0.0012  0.0012
+
+w2v-pretrained(233)
+  mean                  0.1096  0.1159
+  std. dev.              0.279  0.2519
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(234)
+  mean                  0.0636  0.0575
+  std. dev.             0.2516  0.2406
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(235)
+  mean                  0.3349  0.3408
+  std. dev.             0.3034  0.2797
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(236)
+  mean                 -0.0489 -0.0317
+  std. dev.             0.2661  0.2467
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(237)
+  mean                 -0.1911 -0.1867
+  std. dev.             0.2974  0.3032
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(238)
+  mean                 -0.2423 -0.2588
+  std. dev.             0.3004  0.3319
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(239)
+  mean                  0.3225  0.2848
+  std. dev.             0.2851  0.2767
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(240)
+  mean                  0.0587  0.0304
+  std. dev.             0.2545  0.2923
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(241)
+  mean                  0.0799  0.0745
+  std. dev.             0.2852  0.3236
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(242)
+  mean                  0.0501   0.052
+  std. dev.             0.2839  0.2685
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(243)
+  mean                  0.1954  0.1534
+  std. dev.             0.3042  0.2665
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(244)
+  mean                 -0.4484 -0.5151
+  std. dev.             0.2763  0.2868
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(245)
+  mean                 -0.0132 -0.0559
+  std. dev.             0.2673  0.2596
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(246)
+  mean                   0.122  0.1169
+  std. dev.             0.2626  0.2512
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(247)
+  mean                  0.0005  0.0555
+  std. dev.             0.2921  0.2789
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(248)
+  mean                  0.2447  0.2262
+  std. dev.             0.3244  0.2802
+  weight sum              1316     684
+  precision             0.0021  0.0021
+
+w2v-pretrained(249)
+  mean                   0.025  0.0246
+  std. dev.             0.3113  0.3091
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(250)
+  mean                 -0.0849 -0.0982
+  std. dev.             0.2813  0.2822
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(251)
+  mean                  0.0699  0.0698
+  std. dev.             0.2822  0.2547
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(252)
+  mean                  0.1609  0.0662
+  std. dev.             0.2634  0.2994
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(253)
+  mean                  0.1724  0.1651
+  std. dev.             0.2854  0.2908
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(254)
+  mean                  0.2687  0.2606
+  std. dev.             0.2842  0.2872
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(255)
+  mean                    0.24  0.2275
+  std. dev.             0.2707  0.2872
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(256)
+  mean                 -0.1957 -0.2002
+  std. dev.             0.2822  0.2974
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(257)
+  mean                  0.0466  0.1274
+  std. dev.             0.2694  0.2917
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(258)
+  mean                  0.0729  0.1611
+  std. dev.             0.2709  0.2685
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(259)
+  mean                 -0.2164 -0.2446
+  std. dev.             0.2929  0.3035
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(260)
+  mean                 -0.1923 -0.1935
+  std. dev.             0.2824  0.2913
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(261)
+  mean                  0.0976  0.0251
+  std. dev.             0.2689  0.2547
+  weight sum              1316     684
+  precision             0.0012  0.0012
+
+w2v-pretrained(262)
+  mean                   0.054  0.0944
+  std. dev.             0.2604  0.2769
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(263)
+  mean                  -0.257 -0.2155
+  std. dev.             0.3148  0.3434
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(264)
+  mean                  0.2221  0.2707
+  std. dev.             0.3219  0.3178
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(265)
+  mean                  0.2071  0.1869
+  std. dev.             0.2783  0.2618
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(266)
+  mean                  0.4531  0.4698
+  std. dev.             0.2733  0.2531
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(267)
+  mean                  -0.046 -0.0293
+  std. dev.             0.2783  0.2922
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(268)
+  mean                 -0.0632 -0.0799
+  std. dev.             0.3182  0.3055
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(269)
+  mean                 -0.4206 -0.4104
+  std. dev.             0.3115   0.294
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(270)
+  mean                 -0.1505 -0.1837
+  std. dev.             0.2645  0.2735
+  weight sum              1316     684
+  precision             0.0012  0.0012
+
+w2v-pretrained(271)
+  mean                  0.1676  0.1979
+  std. dev.             0.3135   0.308
+  weight sum              1316     684
+  precision             0.0019  0.0019
+
+w2v-pretrained(272)
+  mean                  0.3994  0.4223
+  std. dev.               0.29  0.2759
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(273)
+  mean                  0.3241   0.342
+  std. dev.             0.3244  0.3511
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(274)
+  mean                  0.0914  0.0781
+  std. dev.             0.2745  0.2986
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(275)
+  mean                  0.2764  0.2024
+  std. dev.             0.2584  0.2725
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(276)
+  mean                 -0.1778 -0.2448
+  std. dev.             0.2826  0.2932
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(277)
+  mean                 -0.2893  -0.261
+  std. dev.             0.2832  0.3476
+  weight sum              1316     684
+  precision             0.0025  0.0025
+
+w2v-pretrained(278)
+  mean                 -0.5315 -0.4524
+  std. dev.             0.3008  0.3355
+  weight sum              1316     684
+  precision             0.0024  0.0024
+
+w2v-pretrained(279)
+  mean                 -0.1785 -0.1134
+  std. dev.             0.2601  0.2858
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(280)
+  mean                  0.2659  0.2354
+  std. dev.             0.3779   0.381
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(281)
+  mean                  0.1061  0.1345
+  std. dev.             0.2748   0.285
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(282)
+  mean                  0.1005  0.0353
+  std. dev.             0.2908  0.2702
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(283)
+  mean                  0.1487  0.1325
+  std. dev.             0.2722  0.2861
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(284)
+  mean                  0.1929   0.178
+  std. dev.             0.2703  0.2716
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(285)
+  mean                 -0.0631 -0.0528
+  std. dev.             0.2967  0.2865
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(286)
+  mean                  0.0308  0.0111
+  std. dev.             0.2611  0.2765
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(287)
+  mean                 -0.3322 -0.3489
+  std. dev.             0.2837  0.2765
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(288)
+  mean                 -0.0304 -0.0548
+  std. dev.             0.2909  0.2814
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(289)
+  mean                  0.0272 -0.0262
+  std. dev.             0.2699   0.287
+  weight sum              1316     684
+  precision             0.0013  0.0013
+
+w2v-pretrained(290)
+  mean                 -0.0446 -0.0352
+  std. dev.             0.3118   0.326
+  weight sum              1316     684
+  precision             0.0016  0.0016
+
+w2v-pretrained(291)
+  mean                 -0.2629 -0.1989
+  std. dev.             0.3054  0.3383
+  weight sum              1316     684
+  precision              0.002   0.002
+
+w2v-pretrained(292)
+  mean                  0.1959    0.25
+  std. dev.              0.299  0.3166
+  weight sum              1316     684
+  precision             0.0018  0.0018
+
+w2v-pretrained(293)
+  mean                 -0.3682 -0.3656
+  std. dev.             0.2914  0.2872
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(294)
+  mean                  0.0383  0.0348
+  std. dev.             0.2924  0.2711
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(295)
+  mean                 -0.1876   -0.28
+  std. dev.             0.2811  0.3317
+  weight sum              1316     684
+  precision             0.0015  0.0015
+
+w2v-pretrained(296)
+  mean                  0.0472 -0.0105
+  std. dev.             0.3195  0.3112
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(297)
+  mean                 -0.0619 -0.0629
+  std. dev.               0.29  0.2847
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(298)
+  mean                  -0.187 -0.2145
+  std. dev.             0.2769  0.2749
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+w2v-pretrained(299)
+  mean                  0.0582  0.0631
+  std. dev.             0.2688  0.2722
+  weight sum              1316     684
+  precision             0.0014  0.0014
+
+w2v-pretrained(300)
+  mean                  0.0192 -0.0083
+  std. dev.             0.3456  0.3632
+  weight sum              1316     684
+  precision             0.0017  0.0017
+
+
+
+Time taken to build model: 1.06 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1379               68.95   %
+Incorrectly Classified Instances       621               31.05   %
+Kappa statistic                          0.2863
+Mean absolute error                      0.3195
+Root mean squared error                  0.5311
+Relative absolute error                 70.9834 %
+Root relative squared error            111.959  %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,800    0,523    0,746      0,800    0,772      0,288    0,696     0,788     1
+                 0,477    0,200    0,553      0,477    0,512      0,288    0,696     0,546     2
+Weighted Avg.    0,690    0,413    0,680      0,690    0,683      0,288    0,696     0,705     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1053  263 |    a = 1
+  358  326 |    b = 2
+

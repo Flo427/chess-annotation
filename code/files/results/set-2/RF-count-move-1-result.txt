@@ -1,0 +1,44 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-move-1
+Instances:    2000
+Attributes:   1633
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Time taken to build model: 29.97 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1608               80.4    %
+Incorrectly Classified Instances       392               19.6    %
+Kappa statistic                          0.5669
+Mean absolute error                      0.3033
+Root mean squared error                  0.3733
+Relative absolute error                 63.976  %
+Root relative squared error             76.6708 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,917    0,376    0,795      0,917    0,852      0,580    0,872     0,902     1
+                 0,624    0,083    0,825      0,624    0,711      0,580    0,872     0,839     2
+Weighted Avg.    0,804    0,263    0,807      0,804    0,797      0,580    0,872     0,878     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1126  102 |    a = 1
+  290  482 |    b = 2
+

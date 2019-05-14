@@ -1,0 +1,62 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.OrdinalClassClassifier -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-1
+Instances:    2000
+Attributes:   2002
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+OrdinalClassClassifier
+
+Classifier 1, using indicator values: Strings: 2-last 
+Invert: false
+Cols: 2,3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+Classifier 2, using indicator values: Strings: 3-last 
+Invert: false
+Cols: 3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+Time taken to build model: 83.62 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1114               55.7    %
+Incorrectly Classified Instances       886               44.3    %
+Kappa statistic                          0.1281
+Mean absolute error                      0.3614
+Root mean squared error                  0.4316
+Relative absolute error                 91.4482 %
+Root relative squared error             97.1053 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,857    0,744    0,590      0,857    0,698      0,142    0,636     0,679     1
+                 0,279    0,108    0,443      0,279    0,342      0,204    0,715     0,429     2
+                 0,076    0,037    0,352      0,076    0,125      0,076    0,615     0,312     3
+Weighted Avg.    0,557    0,446    0,505      0,557    0,494      0,143    0,651     0,543     
+
+=== Confusion Matrix ===
+
+   a   b   c   <-- classified as
+ 951 113  46 |   a = 1
+ 326 131  13 |   b = 2
+ 336  52  32 |   c = 3
+

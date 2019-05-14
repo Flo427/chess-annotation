@@ -1,0 +1,672 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.nestedDichotomies.ClassBalancedND -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-move-2
+Instances:    2000
+Attributes:   102
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+ClassBalancedND
+
+Node number: 1
+
+FilteredClassifier using weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1108425335 on data filtered through weka.filters.unsupervised.attribute.MakeIndicator -C 102 -V 1-2,6 -N
+
+Filtered Header
+@relation 'comment-move-2-weka.filters.unsupervised.attribute.MakeIndicator-C102-V1-2,6-N'
+
+@attribute number_of_tokens numeric
+@attribute w2v-own(1) numeric
+@attribute w2v-own(2) numeric
+@attribute w2v-own(3) numeric
+@attribute w2v-own(4) numeric
+@attribute w2v-own(5) numeric
+@attribute w2v-own(6) numeric
+@attribute w2v-own(7) numeric
+@attribute w2v-own(8) numeric
+@attribute w2v-own(9) numeric
+@attribute w2v-own(10) numeric
+@attribute w2v-own(11) numeric
+@attribute w2v-own(12) numeric
+@attribute w2v-own(13) numeric
+@attribute w2v-own(14) numeric
+@attribute w2v-own(15) numeric
+@attribute w2v-own(16) numeric
+@attribute w2v-own(17) numeric
+@attribute w2v-own(18) numeric
+@attribute w2v-own(19) numeric
+@attribute w2v-own(20) numeric
+@attribute w2v-own(21) numeric
+@attribute w2v-own(22) numeric
+@attribute w2v-own(23) numeric
+@attribute w2v-own(24) numeric
+@attribute w2v-own(25) numeric
+@attribute w2v-own(26) numeric
+@attribute w2v-own(27) numeric
+@attribute w2v-own(28) numeric
+@attribute w2v-own(29) numeric
+@attribute w2v-own(30) numeric
+@attribute w2v-own(31) numeric
+@attribute w2v-own(32) numeric
+@attribute w2v-own(33) numeric
+@attribute w2v-own(34) numeric
+@attribute w2v-own(35) numeric
+@attribute w2v-own(36) numeric
+@attribute w2v-own(37) numeric
+@attribute w2v-own(38) numeric
+@attribute w2v-own(39) numeric
+@attribute w2v-own(40) numeric
+@attribute w2v-own(41) numeric
+@attribute w2v-own(42) numeric
+@attribute w2v-own(43) numeric
+@attribute w2v-own(44) numeric
+@attribute w2v-own(45) numeric
+@attribute w2v-own(46) numeric
+@attribute w2v-own(47) numeric
+@attribute w2v-own(48) numeric
+@attribute w2v-own(49) numeric
+@attribute w2v-own(50) numeric
+@attribute w2v-own(51) numeric
+@attribute w2v-own(52) numeric
+@attribute w2v-own(53) numeric
+@attribute w2v-own(54) numeric
+@attribute w2v-own(55) numeric
+@attribute w2v-own(56) numeric
+@attribute w2v-own(57) numeric
+@attribute w2v-own(58) numeric
+@attribute w2v-own(59) numeric
+@attribute w2v-own(60) numeric
+@attribute w2v-own(61) numeric
+@attribute w2v-own(62) numeric
+@attribute w2v-own(63) numeric
+@attribute w2v-own(64) numeric
+@attribute w2v-own(65) numeric
+@attribute w2v-own(66) numeric
+@attribute w2v-own(67) numeric
+@attribute w2v-own(68) numeric
+@attribute w2v-own(69) numeric
+@attribute w2v-own(70) numeric
+@attribute w2v-own(71) numeric
+@attribute w2v-own(72) numeric
+@attribute w2v-own(73) numeric
+@attribute w2v-own(74) numeric
+@attribute w2v-own(75) numeric
+@attribute w2v-own(76) numeric
+@attribute w2v-own(77) numeric
+@attribute w2v-own(78) numeric
+@attribute w2v-own(79) numeric
+@attribute w2v-own(80) numeric
+@attribute w2v-own(81) numeric
+@attribute w2v-own(82) numeric
+@attribute w2v-own(83) numeric
+@attribute w2v-own(84) numeric
+@attribute w2v-own(85) numeric
+@attribute w2v-own(86) numeric
+@attribute w2v-own(87) numeric
+@attribute w2v-own(88) numeric
+@attribute w2v-own(89) numeric
+@attribute w2v-own(90) numeric
+@attribute w2v-own(91) numeric
+@attribute w2v-own(92) numeric
+@attribute w2v-own(93) numeric
+@attribute w2v-own(94) numeric
+@attribute w2v-own(95) numeric
+@attribute w2v-own(96) numeric
+@attribute w2v-own(97) numeric
+@attribute w2v-own(98) numeric
+@attribute w2v-own(99) numeric
+@attribute w2v-own(100) numeric
+@attribute class {neg_1-2_6,pos_1-2_6}
+
+@data
+
+
+Classifier Model
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1108425335 -do-not-check-capabilities
+
+Node number: 2
+
+FilteredClassifier using weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S -1255282548 on data filtered through weka.filters.unsupervised.attribute.MakeIndicator -C 102 -V 1-2 -N
+
+Filtered Header
+@relation 'comment-move-2-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C102-L1-2,6-V-weka.filters.unsupervised.attribute.MakeIndicator-C102-V1-2-N'
+
+@attribute number_of_tokens numeric
+@attribute w2v-own(1) numeric
+@attribute w2v-own(2) numeric
+@attribute w2v-own(3) numeric
+@attribute w2v-own(4) numeric
+@attribute w2v-own(5) numeric
+@attribute w2v-own(6) numeric
+@attribute w2v-own(7) numeric
+@attribute w2v-own(8) numeric
+@attribute w2v-own(9) numeric
+@attribute w2v-own(10) numeric
+@attribute w2v-own(11) numeric
+@attribute w2v-own(12) numeric
+@attribute w2v-own(13) numeric
+@attribute w2v-own(14) numeric
+@attribute w2v-own(15) numeric
+@attribute w2v-own(16) numeric
+@attribute w2v-own(17) numeric
+@attribute w2v-own(18) numeric
+@attribute w2v-own(19) numeric
+@attribute w2v-own(20) numeric
+@attribute w2v-own(21) numeric
+@attribute w2v-own(22) numeric
+@attribute w2v-own(23) numeric
+@attribute w2v-own(24) numeric
+@attribute w2v-own(25) numeric
+@attribute w2v-own(26) numeric
+@attribute w2v-own(27) numeric
+@attribute w2v-own(28) numeric
+@attribute w2v-own(29) numeric
+@attribute w2v-own(30) numeric
+@attribute w2v-own(31) numeric
+@attribute w2v-own(32) numeric
+@attribute w2v-own(33) numeric
+@attribute w2v-own(34) numeric
+@attribute w2v-own(35) numeric
+@attribute w2v-own(36) numeric
+@attribute w2v-own(37) numeric
+@attribute w2v-own(38) numeric
+@attribute w2v-own(39) numeric
+@attribute w2v-own(40) numeric
+@attribute w2v-own(41) numeric
+@attribute w2v-own(42) numeric
+@attribute w2v-own(43) numeric
+@attribute w2v-own(44) numeric
+@attribute w2v-own(45) numeric
+@attribute w2v-own(46) numeric
+@attribute w2v-own(47) numeric
+@attribute w2v-own(48) numeric
+@attribute w2v-own(49) numeric
+@attribute w2v-own(50) numeric
+@attribute w2v-own(51) numeric
+@attribute w2v-own(52) numeric
+@attribute w2v-own(53) numeric
+@attribute w2v-own(54) numeric
+@attribute w2v-own(55) numeric
+@attribute w2v-own(56) numeric
+@attribute w2v-own(57) numeric
+@attribute w2v-own(58) numeric
+@attribute w2v-own(59) numeric
+@attribute w2v-own(60) numeric
+@attribute w2v-own(61) numeric
+@attribute w2v-own(62) numeric
+@attribute w2v-own(63) numeric
+@attribute w2v-own(64) numeric
+@attribute w2v-own(65) numeric
+@attribute w2v-own(66) numeric
+@attribute w2v-own(67) numeric
+@attribute w2v-own(68) numeric
+@attribute w2v-own(69) numeric
+@attribute w2v-own(70) numeric
+@attribute w2v-own(71) numeric
+@attribute w2v-own(72) numeric
+@attribute w2v-own(73) numeric
+@attribute w2v-own(74) numeric
+@attribute w2v-own(75) numeric
+@attribute w2v-own(76) numeric
+@attribute w2v-own(77) numeric
+@attribute w2v-own(78) numeric
+@attribute w2v-own(79) numeric
+@attribute w2v-own(80) numeric
+@attribute w2v-own(81) numeric
+@attribute w2v-own(82) numeric
+@attribute w2v-own(83) numeric
+@attribute w2v-own(84) numeric
+@attribute w2v-own(85) numeric
+@attribute w2v-own(86) numeric
+@attribute w2v-own(87) numeric
+@attribute w2v-own(88) numeric
+@attribute w2v-own(89) numeric
+@attribute w2v-own(90) numeric
+@attribute w2v-own(91) numeric
+@attribute w2v-own(92) numeric
+@attribute w2v-own(93) numeric
+@attribute w2v-own(94) numeric
+@attribute w2v-own(95) numeric
+@attribute w2v-own(96) numeric
+@attribute w2v-own(97) numeric
+@attribute w2v-own(98) numeric
+@attribute w2v-own(99) numeric
+@attribute w2v-own(100) numeric
+@attribute class {neg_1-2,pos_1-2}
+
+@data
+
+
+Classifier Model
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S -1255282548 -do-not-check-capabilities
+
+Node number: 3
+
+FilteredClassifier using weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1883078510 on data filtered through weka.filters.unsupervised.attribute.MakeIndicator -C 102 -V 1 -N
+
+Filtered Header
+@relation 'comment-move-2-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C102-L1-2,6-V-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C102-L1-2-V-weka.filters.unsupervised.attribute.MakeIndicator-C102-V1-N'
+
+@attribute number_of_tokens numeric
+@attribute w2v-own(1) numeric
+@attribute w2v-own(2) numeric
+@attribute w2v-own(3) numeric
+@attribute w2v-own(4) numeric
+@attribute w2v-own(5) numeric
+@attribute w2v-own(6) numeric
+@attribute w2v-own(7) numeric
+@attribute w2v-own(8) numeric
+@attribute w2v-own(9) numeric
+@attribute w2v-own(10) numeric
+@attribute w2v-own(11) numeric
+@attribute w2v-own(12) numeric
+@attribute w2v-own(13) numeric
+@attribute w2v-own(14) numeric
+@attribute w2v-own(15) numeric
+@attribute w2v-own(16) numeric
+@attribute w2v-own(17) numeric
+@attribute w2v-own(18) numeric
+@attribute w2v-own(19) numeric
+@attribute w2v-own(20) numeric
+@attribute w2v-own(21) numeric
+@attribute w2v-own(22) numeric
+@attribute w2v-own(23) numeric
+@attribute w2v-own(24) numeric
+@attribute w2v-own(25) numeric
+@attribute w2v-own(26) numeric
+@attribute w2v-own(27) numeric
+@attribute w2v-own(28) numeric
+@attribute w2v-own(29) numeric
+@attribute w2v-own(30) numeric
+@attribute w2v-own(31) numeric
+@attribute w2v-own(32) numeric
+@attribute w2v-own(33) numeric
+@attribute w2v-own(34) numeric
+@attribute w2v-own(35) numeric
+@attribute w2v-own(36) numeric
+@attribute w2v-own(37) numeric
+@attribute w2v-own(38) numeric
+@attribute w2v-own(39) numeric
+@attribute w2v-own(40) numeric
+@attribute w2v-own(41) numeric
+@attribute w2v-own(42) numeric
+@attribute w2v-own(43) numeric
+@attribute w2v-own(44) numeric
+@attribute w2v-own(45) numeric
+@attribute w2v-own(46) numeric
+@attribute w2v-own(47) numeric
+@attribute w2v-own(48) numeric
+@attribute w2v-own(49) numeric
+@attribute w2v-own(50) numeric
+@attribute w2v-own(51) numeric
+@attribute w2v-own(52) numeric
+@attribute w2v-own(53) numeric
+@attribute w2v-own(54) numeric
+@attribute w2v-own(55) numeric
+@attribute w2v-own(56) numeric
+@attribute w2v-own(57) numeric
+@attribute w2v-own(58) numeric
+@attribute w2v-own(59) numeric
+@attribute w2v-own(60) numeric
+@attribute w2v-own(61) numeric
+@attribute w2v-own(62) numeric
+@attribute w2v-own(63) numeric
+@attribute w2v-own(64) numeric
+@attribute w2v-own(65) numeric
+@attribute w2v-own(66) numeric
+@attribute w2v-own(67) numeric
+@attribute w2v-own(68) numeric
+@attribute w2v-own(69) numeric
+@attribute w2v-own(70) numeric
+@attribute w2v-own(71) numeric
+@attribute w2v-own(72) numeric
+@attribute w2v-own(73) numeric
+@attribute w2v-own(74) numeric
+@attribute w2v-own(75) numeric
+@attribute w2v-own(76) numeric
+@attribute w2v-own(77) numeric
+@attribute w2v-own(78) numeric
+@attribute w2v-own(79) numeric
+@attribute w2v-own(80) numeric
+@attribute w2v-own(81) numeric
+@attribute w2v-own(82) numeric
+@attribute w2v-own(83) numeric
+@attribute w2v-own(84) numeric
+@attribute w2v-own(85) numeric
+@attribute w2v-own(86) numeric
+@attribute w2v-own(87) numeric
+@attribute w2v-own(88) numeric
+@attribute w2v-own(89) numeric
+@attribute w2v-own(90) numeric
+@attribute w2v-own(91) numeric
+@attribute w2v-own(92) numeric
+@attribute w2v-own(93) numeric
+@attribute w2v-own(94) numeric
+@attribute w2v-own(95) numeric
+@attribute w2v-own(96) numeric
+@attribute w2v-own(97) numeric
+@attribute w2v-own(98) numeric
+@attribute w2v-own(99) numeric
+@attribute w2v-own(100) numeric
+@attribute class {neg_1,pos_1}
+
+@data
+
+
+Classifier Model
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1883078510 -do-not-check-capabilities
+
+Node number: 4
+
+null
+
+Node number: 5
+
+null
+
+Node number: 6
+
+null
+
+Node number: 7
+
+FilteredClassifier using weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S -1915974060 on data filtered through weka.filters.unsupervised.attribute.MakeIndicator -C 102 -V 3-4 -N
+
+Filtered Header
+@relation comment-move-2-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C102-L3-5-V-weka.filters.unsupervised.attribute.MakeIndicator-C102-V3-4-N
+
+@attribute number_of_tokens numeric
+@attribute w2v-own(1) numeric
+@attribute w2v-own(2) numeric
+@attribute w2v-own(3) numeric
+@attribute w2v-own(4) numeric
+@attribute w2v-own(5) numeric
+@attribute w2v-own(6) numeric
+@attribute w2v-own(7) numeric
+@attribute w2v-own(8) numeric
+@attribute w2v-own(9) numeric
+@attribute w2v-own(10) numeric
+@attribute w2v-own(11) numeric
+@attribute w2v-own(12) numeric
+@attribute w2v-own(13) numeric
+@attribute w2v-own(14) numeric
+@attribute w2v-own(15) numeric
+@attribute w2v-own(16) numeric
+@attribute w2v-own(17) numeric
+@attribute w2v-own(18) numeric
+@attribute w2v-own(19) numeric
+@attribute w2v-own(20) numeric
+@attribute w2v-own(21) numeric
+@attribute w2v-own(22) numeric
+@attribute w2v-own(23) numeric
+@attribute w2v-own(24) numeric
+@attribute w2v-own(25) numeric
+@attribute w2v-own(26) numeric
+@attribute w2v-own(27) numeric
+@attribute w2v-own(28) numeric
+@attribute w2v-own(29) numeric
+@attribute w2v-own(30) numeric
+@attribute w2v-own(31) numeric
+@attribute w2v-own(32) numeric
+@attribute w2v-own(33) numeric
+@attribute w2v-own(34) numeric
+@attribute w2v-own(35) numeric
+@attribute w2v-own(36) numeric
+@attribute w2v-own(37) numeric
+@attribute w2v-own(38) numeric
+@attribute w2v-own(39) numeric
+@attribute w2v-own(40) numeric
+@attribute w2v-own(41) numeric
+@attribute w2v-own(42) numeric
+@attribute w2v-own(43) numeric
+@attribute w2v-own(44) numeric
+@attribute w2v-own(45) numeric
+@attribute w2v-own(46) numeric
+@attribute w2v-own(47) numeric
+@attribute w2v-own(48) numeric
+@attribute w2v-own(49) numeric
+@attribute w2v-own(50) numeric
+@attribute w2v-own(51) numeric
+@attribute w2v-own(52) numeric
+@attribute w2v-own(53) numeric
+@attribute w2v-own(54) numeric
+@attribute w2v-own(55) numeric
+@attribute w2v-own(56) numeric
+@attribute w2v-own(57) numeric
+@attribute w2v-own(58) numeric
+@attribute w2v-own(59) numeric
+@attribute w2v-own(60) numeric
+@attribute w2v-own(61) numeric
+@attribute w2v-own(62) numeric
+@attribute w2v-own(63) numeric
+@attribute w2v-own(64) numeric
+@attribute w2v-own(65) numeric
+@attribute w2v-own(66) numeric
+@attribute w2v-own(67) numeric
+@attribute w2v-own(68) numeric
+@attribute w2v-own(69) numeric
+@attribute w2v-own(70) numeric
+@attribute w2v-own(71) numeric
+@attribute w2v-own(72) numeric
+@attribute w2v-own(73) numeric
+@attribute w2v-own(74) numeric
+@attribute w2v-own(75) numeric
+@attribute w2v-own(76) numeric
+@attribute w2v-own(77) numeric
+@attribute w2v-own(78) numeric
+@attribute w2v-own(79) numeric
+@attribute w2v-own(80) numeric
+@attribute w2v-own(81) numeric
+@attribute w2v-own(82) numeric
+@attribute w2v-own(83) numeric
+@attribute w2v-own(84) numeric
+@attribute w2v-own(85) numeric
+@attribute w2v-own(86) numeric
+@attribute w2v-own(87) numeric
+@attribute w2v-own(88) numeric
+@attribute w2v-own(89) numeric
+@attribute w2v-own(90) numeric
+@attribute w2v-own(91) numeric
+@attribute w2v-own(92) numeric
+@attribute w2v-own(93) numeric
+@attribute w2v-own(94) numeric
+@attribute w2v-own(95) numeric
+@attribute w2v-own(96) numeric
+@attribute w2v-own(97) numeric
+@attribute w2v-own(98) numeric
+@attribute w2v-own(99) numeric
+@attribute w2v-own(100) numeric
+@attribute class {neg_3-4,pos_3-4}
+
+@data
+
+
+Classifier Model
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S -1915974060 -do-not-check-capabilities
+
+Node number: 8
+
+FilteredClassifier using weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S -1735501014 on data filtered through weka.filters.unsupervised.attribute.MakeIndicator -C 102 -V 3 -N
+
+Filtered Header
+@relation comment-move-2-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C102-L3-5-V-weka.filters.unsupervised.instance.RemoveWithValues-S0.0-C102-L3-4-V-weka.filters.unsupervised.attribute.MakeIndicator-C102-V3-N
+
+@attribute number_of_tokens numeric
+@attribute w2v-own(1) numeric
+@attribute w2v-own(2) numeric
+@attribute w2v-own(3) numeric
+@attribute w2v-own(4) numeric
+@attribute w2v-own(5) numeric
+@attribute w2v-own(6) numeric
+@attribute w2v-own(7) numeric
+@attribute w2v-own(8) numeric
+@attribute w2v-own(9) numeric
+@attribute w2v-own(10) numeric
+@attribute w2v-own(11) numeric
+@attribute w2v-own(12) numeric
+@attribute w2v-own(13) numeric
+@attribute w2v-own(14) numeric
+@attribute w2v-own(15) numeric
+@attribute w2v-own(16) numeric
+@attribute w2v-own(17) numeric
+@attribute w2v-own(18) numeric
+@attribute w2v-own(19) numeric
+@attribute w2v-own(20) numeric
+@attribute w2v-own(21) numeric
+@attribute w2v-own(22) numeric
+@attribute w2v-own(23) numeric
+@attribute w2v-own(24) numeric
+@attribute w2v-own(25) numeric
+@attribute w2v-own(26) numeric
+@attribute w2v-own(27) numeric
+@attribute w2v-own(28) numeric
+@attribute w2v-own(29) numeric
+@attribute w2v-own(30) numeric
+@attribute w2v-own(31) numeric
+@attribute w2v-own(32) numeric
+@attribute w2v-own(33) numeric
+@attribute w2v-own(34) numeric
+@attribute w2v-own(35) numeric
+@attribute w2v-own(36) numeric
+@attribute w2v-own(37) numeric
+@attribute w2v-own(38) numeric
+@attribute w2v-own(39) numeric
+@attribute w2v-own(40) numeric
+@attribute w2v-own(41) numeric
+@attribute w2v-own(42) numeric
+@attribute w2v-own(43) numeric
+@attribute w2v-own(44) numeric
+@attribute w2v-own(45) numeric
+@attribute w2v-own(46) numeric
+@attribute w2v-own(47) numeric
+@attribute w2v-own(48) numeric
+@attribute w2v-own(49) numeric
+@attribute w2v-own(50) numeric
+@attribute w2v-own(51) numeric
+@attribute w2v-own(52) numeric
+@attribute w2v-own(53) numeric
+@attribute w2v-own(54) numeric
+@attribute w2v-own(55) numeric
+@attribute w2v-own(56) numeric
+@attribute w2v-own(57) numeric
+@attribute w2v-own(58) numeric
+@attribute w2v-own(59) numeric
+@attribute w2v-own(60) numeric
+@attribute w2v-own(61) numeric
+@attribute w2v-own(62) numeric
+@attribute w2v-own(63) numeric
+@attribute w2v-own(64) numeric
+@attribute w2v-own(65) numeric
+@attribute w2v-own(66) numeric
+@attribute w2v-own(67) numeric
+@attribute w2v-own(68) numeric
+@attribute w2v-own(69) numeric
+@attribute w2v-own(70) numeric
+@attribute w2v-own(71) numeric
+@attribute w2v-own(72) numeric
+@attribute w2v-own(73) numeric
+@attribute w2v-own(74) numeric
+@attribute w2v-own(75) numeric
+@attribute w2v-own(76) numeric
+@attribute w2v-own(77) numeric
+@attribute w2v-own(78) numeric
+@attribute w2v-own(79) numeric
+@attribute w2v-own(80) numeric
+@attribute w2v-own(81) numeric
+@attribute w2v-own(82) numeric
+@attribute w2v-own(83) numeric
+@attribute w2v-own(84) numeric
+@attribute w2v-own(85) numeric
+@attribute w2v-own(86) numeric
+@attribute w2v-own(87) numeric
+@attribute w2v-own(88) numeric
+@attribute w2v-own(89) numeric
+@attribute w2v-own(90) numeric
+@attribute w2v-own(91) numeric
+@attribute w2v-own(92) numeric
+@attribute w2v-own(93) numeric
+@attribute w2v-own(94) numeric
+@attribute w2v-own(95) numeric
+@attribute w2v-own(96) numeric
+@attribute w2v-own(97) numeric
+@attribute w2v-own(98) numeric
+@attribute w2v-own(99) numeric
+@attribute w2v-own(100) numeric
+@attribute class {neg_3,pos_3}
+
+@data
+
+
+Classifier Model
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S -1735501014 -do-not-check-capabilities
+
+Node number: 9
+
+null
+
+Node number: 10
+
+null
+
+Node number: 11
+
+null
+
+Time taken to build model: 5 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         880               44      %
+Incorrectly Classified Instances      1120               56      %
+Kappa statistic                          0.1178
+Mean absolute error                      0.2204
+Root mean squared error                  0.335 
+Relative absolute error                 93.1851 %
+Root relative squared error             97.4438 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,000    0,000    ?          0,000    ?          ?        0,580     0,018     1
+                 0,816    0,616    0,512      0,816    0,629      0,217    0,686     0,635     2
+                 0,190    0,104    0,325      0,190    0,240      0,107    0,619     0,335     3
+                 0,122    0,098    0,210      0,122    0,154      0,029    0,589     0,210     4
+                 0,127    0,062    0,252      0,127    0,169      0,087    0,672     0,228     5
+                 0,000    0,000    ?          0,000    ?          ?        0,731     0,061     6
+Weighted Avg.    0,440    0,320    ?          0,440    ?          ?        0,653     0,422     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   <-- classified as
+   0  18   2   2   2   0 |   a = 1
+   0 722  71  57  35   0 |   b = 2
+   0 260  79  52  25   0 |   c = 3
+   0 216  57  43  37   0 |   d = 4
+   0 172  29  47  36   0 |   e = 5
+   0  21   5   4   8   0 |   f = 6
+

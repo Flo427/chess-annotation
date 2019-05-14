@@ -1,0 +1,65 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.MultiClassClassifier -M 3 -R 2.0 -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-1
+Instances:    2000
+Attributes:   302
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+MultiClassClassifier
+
+Classifier 1, 1 vs 2
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 2, 1 vs 3
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 3, 2 vs 3
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+
+Time taken to build model: 27.78 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        1120               56      %
+Incorrectly Classified Instances       880               44      %
+Kappa statistic                          0.0501
+Mean absolute error                      0.3564
+Root mean squared error                  0.4563
+Relative absolute error                 90.1975 %
+Root relative squared error            102.6656 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,957    0,928    0,563      0,957    0,708      0,062    0,515     0,563     1
+                 0,104    0,026    0,551      0,104    0,175      0,161    0,623     0,311     2
+                 0,021    0,009    0,391      0,021    0,041      0,048    0,560     0,236     3
+Weighted Avg.    0,560    0,523    0,524      0,560    0,443      0,082    0,550     0,435     
+
+=== Confusion Matrix ===
+
+    a    b    c   <-- classified as
+ 1062   37   11 |    a = 1
+  418   49    3 |    b = 2
+  408    3    9 |    c = 3
+

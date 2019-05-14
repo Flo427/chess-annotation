@@ -1,0 +1,682 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.meta.MultiClassClassifier -M 2 -R 2.0 -S 1 -W weka.classifiers.trees.RandomForest -- -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     comment-position-2
+Instances:    2000
+Attributes:   302
+              [list of attributes omitted]
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+MultiClassClassifier
+
+Classifier 1, using indicator values: Strings: 1 
+Invert: false
+Cols: 1
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 2, using indicator values: Strings: 1 7 
+Invert: false
+Cols: 1,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 3, using indicator values: Strings: 1 6 
+Invert: false
+Cols: 1,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 4, using indicator values: Strings: 1 6 7 
+Invert: false
+Cols: 1,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 5, using indicator values: Strings: 1 5 
+Invert: false
+Cols: 1,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 6, using indicator values: Strings: 1 5 7 
+Invert: false
+Cols: 1,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 7, using indicator values: Strings: 1 5 6 
+Invert: false
+Cols: 1,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 8, using indicator values: Strings: 1 5 6 7 
+Invert: false
+Cols: 1,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 9, using indicator values: Strings: 1 4 
+Invert: false
+Cols: 1,4
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 10, using indicator values: Strings: 1 4 7 
+Invert: false
+Cols: 1,4,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 11, using indicator values: Strings: 1 4 6 
+Invert: false
+Cols: 1,4,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 12, using indicator values: Strings: 1 4 6 7 
+Invert: false
+Cols: 1,4,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 13, using indicator values: Strings: 1 4 5 
+Invert: false
+Cols: 1,4,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 14, using indicator values: Strings: 1 4 5 7 
+Invert: false
+Cols: 1,4,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 15, using indicator values: Strings: 1 4 5 6 
+Invert: false
+Cols: 1,4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 16, using indicator values: Strings: 1 4 5 6 7 
+Invert: false
+Cols: 1,4,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 17, using indicator values: Strings: 1 3 
+Invert: false
+Cols: 1,3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 18, using indicator values: Strings: 1 3 7 
+Invert: false
+Cols: 1,3,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 19, using indicator values: Strings: 1 3 6 
+Invert: false
+Cols: 1,3,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 20, using indicator values: Strings: 1 3 6 7 
+Invert: false
+Cols: 1,3,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 21, using indicator values: Strings: 1 3 5 
+Invert: false
+Cols: 1,3,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 22, using indicator values: Strings: 1 3 5 7 
+Invert: false
+Cols: 1,3,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 23, using indicator values: Strings: 1 3 5 6 
+Invert: false
+Cols: 1,3,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 24, using indicator values: Strings: 1 3 5 6 7 
+Invert: false
+Cols: 1,3,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 25, using indicator values: Strings: 1 3 4 
+Invert: false
+Cols: 1,3,4
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 26, using indicator values: Strings: 1 3 4 7 
+Invert: false
+Cols: 1,3,4,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 27, using indicator values: Strings: 1 3 4 6 
+Invert: false
+Cols: 1,3,4,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 28, using indicator values: Strings: 1 3 4 6 7 
+Invert: false
+Cols: 1,3,4,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 29, using indicator values: Strings: 1 3 4 5 
+Invert: false
+Cols: 1,3,4,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 30, using indicator values: Strings: 1 3 4 5 7 
+Invert: false
+Cols: 1,3,4,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 31, using indicator values: Strings: 1 3 4 5 6 
+Invert: false
+Cols: 1,3,4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 32, using indicator values: Strings: 1 3 4 5 6 7 
+Invert: false
+Cols: 1,3,4,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 33, using indicator values: Strings: 1 2 
+Invert: false
+Cols: 1,2
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 34, using indicator values: Strings: 1 2 7 
+Invert: false
+Cols: 1,2,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 35, using indicator values: Strings: 1 2 6 
+Invert: false
+Cols: 1,2,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 36, using indicator values: Strings: 1 2 6 7 
+Invert: false
+Cols: 1,2,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 37, using indicator values: Strings: 1 2 5 
+Invert: false
+Cols: 1,2,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 38, using indicator values: Strings: 1 2 5 7 
+Invert: false
+Cols: 1,2,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 39, using indicator values: Strings: 1 2 5 6 
+Invert: false
+Cols: 1,2,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 40, using indicator values: Strings: 1 2 5 6 7 
+Invert: false
+Cols: 1,2,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 41, using indicator values: Strings: 1 2 4 
+Invert: false
+Cols: 1,2,4
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 42, using indicator values: Strings: 1 2 4 7 
+Invert: false
+Cols: 1,2,4,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 43, using indicator values: Strings: 1 2 4 6 
+Invert: false
+Cols: 1,2,4,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 44, using indicator values: Strings: 1 2 4 6 7 
+Invert: false
+Cols: 1,2,4,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 45, using indicator values: Strings: 1 2 4 5 
+Invert: false
+Cols: 1,2,4,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 46, using indicator values: Strings: 1 2 4 5 7 
+Invert: false
+Cols: 1,2,4,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 47, using indicator values: Strings: 1 2 4 5 6 
+Invert: false
+Cols: 1,2,4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 48, using indicator values: Strings: 1 2 4 5 6 7 
+Invert: false
+Cols: 1,2,4,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 49, using indicator values: Strings: 1 2 3 
+Invert: false
+Cols: 1,2,3
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 50, using indicator values: Strings: 1 2 3 7 
+Invert: false
+Cols: 1,2,3,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 51, using indicator values: Strings: 1 2 3 6 
+Invert: false
+Cols: 1,2,3,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 52, using indicator values: Strings: 1 2 3 6 7 
+Invert: false
+Cols: 1,2,3,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 53, using indicator values: Strings: 1 2 3 5 
+Invert: false
+Cols: 1,2,3,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 54, using indicator values: Strings: 1 2 3 5 7 
+Invert: false
+Cols: 1,2,3,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 55, using indicator values: Strings: 1 2 3 5 6 
+Invert: false
+Cols: 1,2,3,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 56, using indicator values: Strings: 1 2 3 5 6 7 
+Invert: false
+Cols: 1,2,3,5,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 57, using indicator values: Strings: 1 2 3 4 
+Invert: false
+Cols: 1,2,3,4
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 58, using indicator values: Strings: 1 2 3 4 7 
+Invert: false
+Cols: 1,2,3,4,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 59, using indicator values: Strings: 1 2 3 4 6 
+Invert: false
+Cols: 1,2,3,4,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 60, using indicator values: Strings: 1 2 3 4 6 7 
+Invert: false
+Cols: 1,2,3,4,6,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 61, using indicator values: Strings: 1 2 3 4 5 
+Invert: false
+Cols: 1,2,3,4,5
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 62, using indicator values: Strings: 1 2 3 4 5 7 
+Invert: false
+Cols: 1,2,3,4,5,7
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Classifier 63, using indicator values: Strings: 1 2 3 4 5 6 
+Invert: false
+Cols: 1,2,3,4,5,6
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+
+
+Time taken to build model: 235.05 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances         828               41.4    %
+Incorrectly Classified Instances      1172               58.6    %
+Kappa statistic                          0.2624
+Mean absolute error                      0.2405
+Root mean squared error                  0.344 
+Relative absolute error                101.699  %
+Root relative squared error            100.0382 %
+Total Number of Instances             2000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0,504    0,124    0,475      0,504    0,489      0,372    0,795     0,485     1
+                 0,281    0,100    0,368      0,281    0,318      0,203    0,687     0,322     2
+                 0,395    0,141    0,385      0,395    0,390      0,251    0,734     0,400     3
+                 0,768    0,349    0,417      0,768    0,541      0,363    0,807     0,648     4
+                 0,063    0,008    0,391      0,063    0,109      0,135    0,678     0,173     5
+                 0,017    0,007    0,133      0,017    0,030      0,027    0,537     0,070     6
+                 0,090    0,012    0,432      0,090    0,150      0,166    0,742     0,272     7
+Weighted Avg.    0,414    0,153    0,396      0,414    0,370      0,263    0,740     0,416     
+
+=== Confusion Matrix ===
+
+   a   b   c   d   e   f   g   <-- classified as
+ 184  36  26  99   1   2  17 |   a = 1
+  43  96  63 131   1   6   2 |   b = 2
+  20  43 144 148   6   3   1 |   c = 3
+  29  24  55 377   4   2   0 |   d = 4
+   7  17  52  56   9   0   1 |   e = 5
+  17  33  23  43   0   2   0 |   f = 6
+  87  12  11  49   2   0  16 |   g = 7
+

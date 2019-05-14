@@ -6,7 +6,7 @@ in the context of the master thesis "Sentiment Classification of
 Chess Annotations" at TU Darmstadt. It is structured as follows:
 
 -----------------------------------------------------------------
-1. /code
+1 /code
 -----------------------------------------------------------------
 
 This folder contains the main.py, which is the only file to be 

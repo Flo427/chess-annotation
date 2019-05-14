@@ -460,6 +460,7 @@ def write_arff(comment_data, data_set, feature_type, problem_name, classes, outp
             buff += (str(feature + 2) + " " + str(value) + ", ")
         buff += (str(len(feature_names) + 2) + " " + str(output_class[comment_data[comment][1]]) + "}\n")        
     arff.write(buff)
+	arff.close()
 
 for (data_set, comment_data) in [("set-1", comment_data_set_1), ("set-2", comment_data_set_2), ("set-3", comment_data_set_3)]:
 	for (feature_type, feature_names, matrix) in [("count", count_feature_names, count_matrix), ("tfidf", tfidf_feature_names, tfidf_matrix), ("w2v-own", w2v_own_feature_names, w2v_own_matrix), ("w2v-pretrained", w2v_pretrained_feature_names, w2v_pretrained_matrix)]:
